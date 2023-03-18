@@ -23,7 +23,7 @@ const IndexPage: NextPage<PostDataListProps> = ({
         <title>Home page</title>
       </Head>
 
-      <h1>List of posts</h1>
+      <h1 className="text-3xl font-bold">List of posts</h1>
 
       <section>
         {postDataList.map((post: PostData) => (
