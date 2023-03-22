@@ -14,7 +14,7 @@ const Layout = ({ children, pageTitle = "All In One Frenchies" }: LayoutProps) =
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-            <main className="flex-grow">{children}</main>
+            <main className="container mx-auto">{children}</main>
         </div>
     );
 };

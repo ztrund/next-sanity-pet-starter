@@ -11,10 +11,8 @@ type AboutProps = {
 const About = ({ title, content }: InferGetStaticPropsType<typeof getStaticProps>) => {
     return (
         <Layout pageTitle="About Us">
-            <div className="container mx-auto">
-                <h1 className="text-3xl font-bold my-8">{title}</h1>
-                <PortableText value={content} />
-            </div>
+            <h1 className="text-3xl font-bold my-8">{title}</h1>
+            <PortableText value={content} />
         </Layout>
     );
 };
