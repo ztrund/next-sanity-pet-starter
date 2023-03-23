@@ -1,23 +1,87 @@
-import Layout from "../components/layout";
+import { useState } from 'react';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import Link from 'next/link';
+import sanityClient from '../lib/sanityClient';
+import Layout from '../components/layout';
 
-const PuppiesPage = () => {
+type PuppyProps = {
+    name: string;
+    birthdate: string;
+    gender: string;
+    color: string;
+    weight: number;
+    temperament: string[];
+    photos: {
+        asset: {
+            url: string;
+        };
+    }[];
+    availability: string;
+};
+
+type PuppiesProps = {
+    puppies: PuppyProps[];
+};
+
+const Puppies = ({ puppies }: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredPuppies = puppies.filter((puppy) => {
+        return (
+            puppy.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
+
     return (
         <Layout pageTitle="Puppies">
-            <h1>Puppies</h1>
-            <p>Check out our available puppies:</p>
-            <ul>
-                <li>
-                    <a href="#">Puppy 1</a>
-                </li>
-                <li>
-                    <a href="#">Puppy 2</a>
-                </li>
-                <li>
-                    <a href="#">Puppy 3</a>
-                </li>
-            </ul>
+            <div className="container mx-auto my-8">
+                <div className="flex justify-between items-center mb-4">
+                    <h1 className="text-3xl font-bold">Puppies</h1>
+                    <input
+                        className="border-2 rounded py-1 px-2 w-64"
+                        type="text"
+                        placeholder="Search puppies"
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        value={searchTerm}
+                    />
+                </div>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {filteredPuppies.map((puppy) => (
+                        <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name} className="border border-gray-200 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                            <div className="h-48 overflow-hidden">
+                                <img src={puppy.photos[0]?.asset?.url} alt={puppy.name} className="w-full h-full object-cover" />
+                            </div>
+                            <div className="p-4">
+                                <h2 className="text-lg font-bold">{puppy.name}</h2>
+                                <p className="text-gray-700">{puppy.gender} - {puppy.color}</p>
+                                <p className="text-gray-700">{puppy.availability}</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </div>
         </Layout>
     );
 };
 
-export default PuppiesPage;
+export const getStaticProps: GetStaticProps<PuppiesProps> = async () => {
+    const puppies = await sanityClient.fetch(
+        `*[_type == "puppies"]{
+      name,
+      birthdate,
+      gender,
+      color,
+      weight,
+      temperament,
+      photos,
+      availability
+    }`
+    );
+
+    return {
+        props: { puppies },
+        revalidate: 60,
+    };
+};
+
+export default Puppies;
