@@ -3,6 +3,7 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
 import sanityClient from '../lib/sanityClient';
 import Layout from '../components/layout';
+import imageUrlBuilder from "@sanity/image-url";
 
 type PuppyProps = {
     name: string;
@@ -11,12 +12,18 @@ type PuppyProps = {
     color: string;
     weight: number;
     temperament: string[];
-    photos: {
+    photo: {
         asset: {
-            url: string;
+            _id: string;
+            metadata: {
+                palette: {
+                    darkMuted: string;
+                };
+            };
         };
-    }[];
+    };
     availability: string;
+    price: number;
 };
 
 type PuppiesProps = {
@@ -31,6 +38,8 @@ const Puppies = ({ puppies }: InferGetStaticPropsType<typeof getStaticProps>) =>
             puppy.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
     });
+
+    const imageBuilder = imageUrlBuilder(sanityClient);
 
     return (
         <Layout pageTitle="Puppies">
@@ -49,7 +58,7 @@ const Puppies = ({ puppies }: InferGetStaticPropsType<typeof getStaticProps>) =>
                     {filteredPuppies.map((puppy) => (
                         <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name} className="border border-gray-200 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                             <div className="h-48 overflow-hidden">
-                                <img src={puppy.photos[0]?.asset?.url} alt={puppy.name} className="w-full h-full object-cover" />
+                                <img src={imageBuilder.image(puppy.photo.asset).url()} alt={puppy.name} className="w-full h-full object-cover" />
                             </div>
                             <div className="p-4">
                                 <h2 className="text-lg font-bold">{puppy.name}</h2>
@@ -73,8 +82,18 @@ export const getStaticProps: GetStaticProps<PuppiesProps> = async () => {
       color,
       weight,
       temperament,
-      photos,
-      availability
+      "photo": photos[0]{
+        asset->{
+          _id,
+          metadata {
+            palette {
+              darkMuted
+            }
+          }
+        }
+      },
+      availability,
+      price
     }`
     );
 
