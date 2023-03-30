@@ -53,61 +53,61 @@ const Puppy = ({puppy}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
     return (
         <Layout pageTitle={name}>
-            <div className="container mx-auto my-8">
-                <h1 className="text-3xl font-bold my-4">{name}</h1>
-                <div className="flex flex-wrap">
-                    <div className="w-full md:w-1/2 p-4">
-                        <Carousel
-                            showThumbs={true}
-                            showArrows={true}
-                            emulateTouch={true}
-                            infiniteLoop={true}
-                            autoPlay={true}
-                            showStatus={false}
-                            interval={5000}
-                            selectedItem={selectedPhotoIndex}
-                            onChange={onCarouselChange}
-                        >
-                            {photos.map((photo, index) => (
-                                <div key={photo.asset._id}>
-                                    <img
-                                        src={imageBuilder.image(photo.asset).url()}
-                                        alt={name}
-                                        className="w-full"
-                                        style={{
-                                            backgroundColor: photo.asset.metadata.palette.darkMuted,
-                                        }}
-                                    />
-                                </div>
-                            ))}
-                        </Carousel>
-                    </div>
-                    <div className="w-full md:w-1/2 p-4">
-                        <p>
-                            <strong>Birthdate:</strong> {new Date(birthdate).toLocaleDateString()}
-                        </p>
-                        <p>
-                            <strong>Gender:</strong> {gender}
-                        </p>
-                        <p>
-                            <strong>Color:</strong> {color}
-                        </p>
-                        <p>
-                            <strong>Weight:</strong> {weight} lbs
-                        </p>
-                        <p>
-                            <strong>Temperament:</strong> {temperament.join(', ')}
-                        </p>
-                        <p>
-                            <strong>Description:</strong> {description}
-                        </p>
-                        <p>
-                            <strong>Availability:</strong> {availability}
-                        </p>
-                        <p>
-                            <strong>Price:</strong> ${price}
-                        </p>
-                    </div>
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="w-full md:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
+                    <Carousel
+                        showThumbs={true}
+                        showArrows={true}
+                        emulateTouch={true}
+                        infiniteLoop={true}
+                        autoPlay={true}
+                        dynamicHeight={false}
+                        showStatus={false}
+                        interval={5000}
+                        selectedItem={selectedPhotoIndex}
+                        onChange={onCarouselChange}
+                        className=""
+                    >
+                        {photos.map((photo, index) => (
+                            <div key={photo.asset._id}>
+                                <img
+                                    src={imageBuilder.image(photo.asset).url()}
+                                    alt={name}
+                                    className="w-full"
+                                    style={{
+                                        backgroundColor: photo.asset.metadata.palette.darkMuted,
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </Carousel>
+                </div>
+                <div className="w-full md:w-1/2 h-min p-2 bg-light-shades drop-shadow-lg rounded-lg">
+                    <h1 className="text-3xl font-bold mb-2">{name}</h1>
+                    <p>
+                        <strong>Birthdate:</strong> {new Date(birthdate).toLocaleDateString()}
+                    </p>
+                    <p>
+                        <strong>Gender:</strong> {gender}
+                    </p>
+                    <p>
+                        <strong>Color:</strong> {color}
+                    </p>
+                    <p>
+                        <strong>Weight:</strong> {weight} lbs
+                    </p>
+                    <p>
+                        <strong>Temperament:</strong> {temperament.join(', ')}
+                    </p>
+                    <p>
+                        <strong>Description:</strong> {description}
+                    </p>
+                    <p>
+                        <strong>Availability:</strong> {availability}
+                    </p>
+                    <p>
+                        <strong>Price:</strong> ${price}
+                    </p>
                 </div>
             </div>
         </Layout>
