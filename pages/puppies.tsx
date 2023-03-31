@@ -54,7 +54,7 @@ const Puppies = ({ puppies }: InferGetStaticPropsType<typeof getStaticProps>) =>
                         value={searchTerm}
                     />
                 </div>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                     {filteredPuppies.map((puppy) => (
                         <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name} className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                             <div className="h-48 overflow-hidden">
