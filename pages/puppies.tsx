@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import {useState} from 'react';
+import {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Link from 'next/link';
 import sanityClient from '../lib/sanityClient';
 import Layout from '../components/layout';
 import imageUrlBuilder from "@sanity/image-url";
+import {MediaItem} from "../components/CustomCarousel";
 
 type PuppyProps = {
     name: string;
@@ -11,17 +12,7 @@ type PuppyProps = {
     gender: string;
     color: string;
     weight: number;
-    temperament: string[];
-    photo: {
-        asset: {
-            _id: string;
-            metadata: {
-                palette: {
-                    darkMuted: string;
-                };
-            };
-        };
-    };
+    mediaItems: MediaItem[];
     availability: string;
     price: number;
 };
@@ -30,7 +21,7 @@ type PuppiesProps = {
     puppies: PuppyProps[];
 };
 
-const Puppies = ({ puppies }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Puppies = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredPuppies = puppies.filter((puppy) => {
@@ -56,9 +47,12 @@ const Puppies = ({ puppies }: InferGetStaticPropsType<typeof getStaticProps>) =>
                 </div>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                     {filteredPuppies.map((puppy) => (
-                        <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name} className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                        <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name}
+                              className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                             <div className="h-48 overflow-hidden">
-                                <img src={imageBuilder.image(puppy.photo.asset).url()} alt={puppy.name} className="w-full h-full object-cover" />
+                                <img
+                                    src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).url()}
+                                    alt={puppy.name} className="w-full h-full object-cover"/>
                             </div>
                             <div className="p-2">
                                 <h2 className="text-lg font-bold">{puppy.name}</h2>
@@ -81,24 +75,14 @@ export const getStaticProps: GetStaticProps<PuppiesProps> = async () => {
       gender,
       color,
       weight,
-      temperament,
-      "photo": photos[0]{
-        asset->{
-          _id,
-          metadata {
-            palette {
-              darkMuted
-            }
-          }
-        }
-      },
+      mediaItems,
       availability,
       price
     }`
     );
 
     return {
-        props: { puppies },
+        props: {puppies},
         revalidate: 60,
     };
 };

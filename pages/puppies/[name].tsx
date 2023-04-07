@@ -1,10 +1,9 @@
 import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
-import imageUrlBuilder from '@sanity/image-url';
 import sanityClient from '../../lib/sanityClient';
 import Layout from '../../components/layout';
-import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import {useState} from "react";
+import CustomCarousel from "../../components/CustomCarousel";
+import {MediaItem} from "../../components/CustomCarousel";
 
 type PuppyProps = {
     name: string;
@@ -12,18 +11,8 @@ type PuppyProps = {
     gender: string;
     color: string;
     weight: number;
-    temperament: string[];
     description: string;
-    photos: {
-        asset: {
-            _id: string;
-            metadata: {
-                palette: {
-                    darkMuted: string;
-                };
-            };
-        };
-    }[];
+    mediaItems: MediaItem[];
     availability: string;
     price: number;
 };
@@ -36,51 +25,17 @@ const Puppy = ({puppy}: InferGetStaticPropsType<typeof getStaticProps>) => {
         gender,
         color,
         weight,
-        temperament,
         description,
-        photos,
+        mediaItems,
         availability,
         price,
     } = puppy;
-
-    const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
-
-    const imageBuilder = imageUrlBuilder(sanityClient);
-
-    const onCarouselChange = (index: number) => {
-        setSelectedPhotoIndex(index);
-    };
 
     return (
         <Layout pageTitle={name}>
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="w-full md:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
-                    <Carousel
-                        showThumbs={true}
-                        showArrows={true}
-                        emulateTouch={true}
-                        infiniteLoop={true}
-                        autoPlay={true}
-                        dynamicHeight={false}
-                        showStatus={false}
-                        interval={5000}
-                        selectedItem={selectedPhotoIndex}
-                        onChange={onCarouselChange}
-                        className=""
-                    >
-                        {photos.map((photo, index) => (
-                            <div key={photo.asset._id}>
-                                <img
-                                    src={imageBuilder.image(photo.asset).url()}
-                                    alt={name}
-                                    className="w-full"
-                                    style={{
-                                        backgroundColor: photo.asset.metadata.palette.darkMuted,
-                                    }}
-                                />
-                            </div>
-                        ))}
-                    </Carousel>
+                    <CustomCarousel mediaItems={mediaItems}/>
                 </div>
                 <div className="w-full md:w-1/2 h-min p-2 bg-light-shades drop-shadow-lg rounded-lg">
                     <h1 className="text-3xl font-bold mb-2">{name}</h1>
@@ -95,9 +50,6 @@ const Puppy = ({puppy}: InferGetStaticPropsType<typeof getStaticProps>) => {
                     </p>
                     <p>
                         <strong>Weight:</strong> {weight} lbs
-                    </p>
-                    <p>
-                        <strong>Temperament:</strong> {temperament.join(', ')}
                     </p>
                     <p>
                         <strong>Description:</strong> {description}
@@ -131,18 +83,8 @@ export const getStaticProps: GetStaticProps<{ puppy: PuppyProps }> = async ({par
       gender,
       color,
       weight,
-      temperament,
       description,
-      "photos": photos[] {
-        asset->{ 
-          _id,
-          metadata {
-            palette {
-              darkMuted
-            }
-          }
-        }
-      },
+      mediaItems,
       availability,
       price
     }`,

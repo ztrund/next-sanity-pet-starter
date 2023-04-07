@@ -4,6 +4,9 @@ import sanityClient from "../lib/sanityClient";
 import imageUrlBuilder from "@sanity/image-url";
 import Link from "next/link";
 import {useEffect, useState} from "react";
+import {PortableText} from "@portabletext/react";
+import YoutubeLiveEmbed from "../components/YoutubeLiveEmbed";
+import {MediaItem} from "../components/CustomCarousel";
 
 type PuppyProps = {
     name: string;
@@ -11,24 +14,15 @@ type PuppyProps = {
     gender: string;
     color: string;
     weight: number;
-    temperament: string[];
-    photo: {
-        asset: {
-            _id: string;
-            metadata: {
-                palette: {
-                    darkMuted: string;
-                };
-            };
-        };
-    };
+    mediaItems: MediaItem[];
     availability: string;
     price: number;
-};
+}
 
 type PuppiesProps = {
     puppies: PuppyProps[];
-};
+    content: any[];
+}
 
 function shuffleArray(array: any) {
     const shuffledArray = [...array];
@@ -44,11 +38,9 @@ function getRandomSample(array: any, count: number) {
     return shuffledArray.slice(0, count);
 }
 
-const HomePage = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const HomePage = ({puppies, content}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
     const imageBuilder = imageUrlBuilder(sanityClient);
-
-    // const randomPuppies = getRandomSample(puppies, 4);
 
     const [randomPuppies, setRandomPuppies] = useState<PuppyProps[]>([]);
 
@@ -58,28 +50,14 @@ const HomePage = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => 
 
     return (
         <Layout pageTitle="Home Page">
-            <div className="flex flex-col xl:flex-row gap-4 mb-4 items-stretch">
-                <div className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
-                    <p className="text-lg mb-4">
-                        Welcome to All In One Frenchies! We are a dedicated French Bulldog breeder located in Central Texas, committed to raising happy, healthy, and well-socialized Frenchies that make perfect companions for families and individuals alike.
-                    </p>
-                    <p className="text-lg mb-4">
-                        At All In One Frenchies, we take great pride in our breeding program, focusing on quality genetics, temperament, and health. Our Frenchies are raised in a loving and nurturing environment, ensuring they grow up to be well-adjusted and affectionate pets.
-                    </p>
-                    <p className="text-lg mb-4">
-                        Explore our website to learn more about our available puppies, breeding practices, and the wonderful world of French Bulldogs. We look forward to helping you find your perfect Frenchie companion from All In One Frenchies!
-                    </p>
+            <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
+                <div
+                    className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
+                    <div className="prose max-w-none"><PortableText value={content}/></div>
                 </div>
-                <div className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
-                    <div className="relative w-full" style={{paddingBottom: '56.25%'}}>
-                        <iframe
-                            className="absolute top-0 left-0 w-full h-full"
-                            src="https://www.youtube.com/embed/live_stream?channel=YOUR_CHANNEL_ID"
-                            title="YouTube Live Stream"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                        ></iframe>
-                    </div>
+                <div
+                    className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
+                    <YoutubeLiveEmbed/>
                 </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 mb-4">
@@ -87,8 +65,9 @@ const HomePage = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => 
                     <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name}
                           className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                         <div className="h-48 overflow-hidden">
-                            <img src={imageBuilder.image(puppy.photo.asset).url()} alt={puppy.name}
-                                 className="w-full h-full object-cover"/>
+                            <img
+                                src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).url()}
+                                alt={puppy.name} className="w-full h-full object-cover"/>
                         </div>
                         <div className="p-2">
                             <h2 className="text-lg font-bold">{puppy.name}</h2>
@@ -100,7 +79,7 @@ const HomePage = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => 
             </div>
             <Link href="/puppies"
                   className="flex items-center justify-center p-2 bg-light-shades rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-                <h1 className="text-2xl font-bold mb-2">Click to see the rest of the puppies</h1>
+                <h1 className="text-2xl font-medium">See the rest of the puppies</h1>
             </Link>
         </Layout>
     );
@@ -114,24 +93,20 @@ export const getStaticProps: GetStaticProps<PuppiesProps> = async () => {
       gender,
       color,
       weight,
-      temperament,
-      "photo": photos[0]{
-        asset->{
-          _id,
-          metadata {
-            palette {
-              darkMuted
-            }
-          }
-        }
-      },
+      mediaItems,
       availability,
       price
     }`
     );
 
+    const homepage = await sanityClient.fetch(
+        `*[_type == "homepage"][0]{
+      content
+    }`
+    );
+
     return {
-        props: {puppies},
+        props: {puppies, content: homepage.content},
         revalidate: 60,
     };
 };
