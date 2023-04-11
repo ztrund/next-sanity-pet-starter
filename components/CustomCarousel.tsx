@@ -5,6 +5,7 @@ import sanityClient from "../lib/sanityClient";
 import Player = YT.Player;
 import PlayerEvent = YT.PlayerEvent;
 import OnStateChangeEvent = YT.OnStateChangeEvent;
+import {extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 
 const loadYouTubeAPI = () => {
     if (!document.getElementById("youtube-api")) {
@@ -59,12 +60,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
             // Video is paused, buffering, or ended
             setAutoPlay(true);
         }
-    };
-
-    const extractYoutubeVideoId = (url: string): string | null => {
-        const regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-        const match = url.match(regex);
-        return match && match[2].length === 11 ? match[2] : null;
     };
 
     const renderThumb = (item: MediaItem, index: number) => {

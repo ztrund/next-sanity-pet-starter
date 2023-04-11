@@ -4,8 +4,8 @@ import sanityClient from '../lib/sanityClient';
 
 interface YoutubeSettings {
     apiKey: string;
-    channelId: string;
-    fallbackVideoId: string;
+    channelUrl: string;
+    fallbackVideoUrl: string;
 }
 
 const useYoutubeSettings = (): YoutubeSettings | null => {
@@ -14,17 +14,17 @@ const useYoutubeSettings = (): YoutubeSettings | null => {
     useEffect(() => {
         const fetchYoutubeSettings = async () => {
             try {
-                const data = await sanityClient.fetch<{ channelId: string; fallbackVideoId: string }>(
+                const data = await sanityClient.fetch<{ channelUrl: string; fallbackVideoUrl: string }>(
                     `*[_type == "youtubeSettings"] | order(_updatedAt desc) [0] {
-            channelId,
-            fallbackVideoId
+            channelUrl,
+            fallbackVideoUrl
           }`
                 );
 
                 setYoutubeSettings({
                     apiKey: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY || '',
-                    channelId: data.channelId,
-                    fallbackVideoId: data.fallbackVideoId,
+                    channelUrl: data.channelUrl,
+                    fallbackVideoUrl: data.fallbackVideoUrl,
                 });
             } catch (error) {
                 console.error('Error fetching YouTube settings:', error);
