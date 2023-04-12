@@ -2,8 +2,8 @@ import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
 import sanityClient from '../../lib/sanityClient';
 import Layout from '../../components/layout';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import CustomCarousel from "../../components/CustomCarousel";
-import {MediaItem} from "../../components/CustomCarousel";
+import CustomCarousel from "../../components/customCarousel";
+import {MediaItem} from "../../components/customCarousel";
 
 type PuppyProps = {
     name: string;

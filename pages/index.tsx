@@ -5,8 +5,8 @@ import imageUrlBuilder from "@sanity/image-url";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {PortableText} from "@portabletext/react";
-import YoutubeLiveEmbed from "../components/YoutubeLiveEmbed";
-import {MediaItem} from "../components/CustomCarousel";
+import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
+import {MediaItem} from "../components/customCarousel";
 
 type PuppyProps = {
     name: string;
