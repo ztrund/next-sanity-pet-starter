@@ -27,7 +27,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
 
     useEffect(() => {
         loadYouTubeAPI();
-    }, []);
+        generateThumbnails();
+    }, [mediaItems]);
 
     const loadYouTubeAPI = () => {
         if (!document.getElementById("youtube-api")) {
