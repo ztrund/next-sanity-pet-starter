@@ -6,13 +6,7 @@ import Player = YT.Player;
 import PlayerEvent = YT.PlayerEvent;
 import OnStateChangeEvent = YT.OnStateChangeEvent;
 import {extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
-
-export interface MediaItem {
-    _key: string;
-    type: "image" | "video";
-    image?: any; // Replace 'any' with the appropriate type for image from Sanity
-    videoUrl?: string;
-}
+import {MediaItem} from "../interfaces/mediaItem";
 
 interface CustomCarouselProps {
     mediaItems: MediaItem[];

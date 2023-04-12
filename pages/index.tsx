@@ -6,7 +6,7 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {PortableText} from "@portabletext/react";
 import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
-import {MediaItem} from "../components/customCarousel";
+import {MediaItem} from "../interfaces/mediaItem";
 
 type PuppyProps = {
     name: string;

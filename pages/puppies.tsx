@@ -4,7 +4,7 @@ import Link from 'next/link';
 import sanityClient from '../lib/sanityClient';
 import Layout from '../components/layout';
 import imageUrlBuilder from "@sanity/image-url";
-import {MediaItem} from "../components/customCarousel";
+import {MediaItem} from "../interfaces/mediaItem";
 
 type PuppyProps = {
     name: string;
