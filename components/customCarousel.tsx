@@ -121,7 +121,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                 >
                     {mediaItem.type === "image" && mediaItem.image && (
                         <img
-                            src={imageBuilder.image(mediaItem.image).url()}
+                            src={imageBuilder.image(mediaItem.image).width(768).auto('format').quality(75).url()}
                             alt="Puppy"
                             className="w-auto max-h-full"
                         />
