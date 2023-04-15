@@ -3,56 +3,56 @@ import Layout from "../components/layout";
 const ContactPage = () => {
     return (
         <Layout pageTitle="Contact Us">
-            <div className="container p-2 bg-light-shades drop-shadow-lg rounded-lg">
-                <h1>Contact Us</h1>
-                <p>Please use the form below to get in touch with us:</p>
-                <form>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
-                            Name
-                        </label>
-                        <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="name"
-                            type="text"
-                            placeholder="Your Name"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label
-                            className="block text-gray-700 font-bold mb-2"
-                            htmlFor="email"
-                        >
-                            Email
-                        </label>
-                        <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="email"
-                            type="email"
-                            placeholder="Your Email"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label
-                            className="block text-gray-700 font-bold mb-2"
-                            htmlFor="message"
-                        >
-                            Message
-                        </label>
-                        <textarea
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="message"
-                            placeholder="Your Message"
-                            rows={5}
-                        ></textarea>
-                    </div>
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="submit"
-                    >
-                        Send Message
-                    </button>
-                </form>
+            <div className="container mx-auto p-4 bg-light-shades drop-shadow-lg rounded-lg max-w-3xl">
+                <h1 className="text-3xl font-bold text-center mb-8">Contact Us</h1>
+                <p className="text-center mb-12">Feel free to reach out to us through the following channels:</p>
+
+                {/* Additional contact information */}
+                <div className="mb-12 text-center">
+                    <h2 className="text-2xl font-bold mb-4">Other ways to reach us:</h2>
+                    <p>
+                        <strong>Email:</strong> info@example.com
+                    </p>
+                    <p>
+                        <strong>Phone:</strong> +1 (123) 456-7890
+                    </p>
+                    <p>
+                        <strong>Address:</strong> 123 Main St, Suite 200, Anytown, USA
+                    </p>
+                </div>
+
+                {/* Social Media Links */}
+                <div className="mb-12 text-center">
+                    <h2 className="text-2xl font-bold mb-4">Follow us on social media:</h2>
+                    <p>
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="mr-4 hover:text-blue-600">
+                            Facebook
+                        </a>
+                        <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" className="mr-4 hover:text-blue-500">
+                            Twitter
+                        </a>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="mr-4 hover:text-pink-500">
+                            Instagram
+                        </a>
+                        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-800">
+                            LinkedIn
+                        </a>
+                    </p>
+                </div>
+
+                {/* Business Hours */}
+                <div className="text-center">
+                    <h2 className="text-2xl font-bold mb-4">Business Hours:</h2>
+                    <p>
+                        <strong>Monday - Friday:</strong> 9:00am - 5:00pm
+                    </p>
+                    <p>
+                        <strong>Saturday:</strong> 10:00am - 2:00pm
+                    </p>
+                    <p>
+                        <strong>Sunday:</strong> Closed
+                    </p>
+                </div>
             </div>
         </Layout>
     );

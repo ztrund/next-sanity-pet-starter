@@ -22,12 +22,16 @@ const Footer = () => {
             url: '/',
         },
         {
+            name: 'About Us',
+            url: '/about',
+        },
+        {
             name: 'Puppies',
             url: '/puppies',
         },
         {
-            name: 'About Us',
-            url: '/about',
+            name: 'Parents',
+            url: '/parents',
         },
         {
             name: 'Contact Us',
