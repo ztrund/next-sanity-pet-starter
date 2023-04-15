@@ -17,7 +17,11 @@ const Header = () => {
     };
 
     const NavigationLinks = ({ isVertical }: { isVertical: boolean }) => (
-        <div className={`flex ${isVertical ? "flex-col" : "space-x-4"}`}>
+        <div
+            className={`flex ${
+                isVertical ? "flex-col items-end space-y-4" : "space-x-4"
+            }`}
+        >
             <Link href="/" className={getLinkClassName("/")}>
                 Home
             </Link>
@@ -26,6 +30,9 @@ const Header = () => {
             </Link>
             <Link href="/puppies" className={getLinkClassName("/puppies")}>
                 Puppies
+            </Link>
+            <Link href="/parents" className={getLinkClassName("/parents")}>
+                Parents
             </Link>
             <Link href="/contact" className={getLinkClassName("/contact")}>
                 Contact Us
@@ -49,11 +56,18 @@ const Header = () => {
                                         {open ? <FiX size={24} /> : <FiMenu size={24} />}
                                     </Disclosure.Button>
                                 </div>
-                                {open && (
-                                    <div className="lg:hidden">
+                                <div
+                                    className={`fixed top-0 right-0 w-64 h-full bg-dark-shades z-10 transform ${
+                                        open ? "translate-x-0" : "translate-x-full"
+                                    } transition-transform duration-300 ease-in-out lg:hidden`}
+                                >
+                                    <div className="pt-20 pr-4">
+                                        <Disclosure.Button className="absolute top-4 right-4 text-white focus:outline-none">
+                                            <FiX size={24} />
+                                        </Disclosure.Button>
                                         <NavigationLinks isVertical={true} />
                                     </div>
-                                )}
+                                </div>
                             </>
                         )}
                     </Disclosure>
