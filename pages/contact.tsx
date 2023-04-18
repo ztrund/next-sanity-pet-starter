@@ -1,6 +1,21 @@
-import Layout from "../components/layout";
+import sanityClient from '../lib/sanityClient';
+import Layout from '../components/layout';
+import {ContactInfo} from '../types';
+import React from "react";
+import * as Icons from "react-icons/fa";
 
-const ContactPage = () => {
+
+interface ContactPageProps {
+    contactInfo: ContactInfo;
+}
+
+
+const ContactPage: React.FC<ContactPageProps> = ({contactInfo}) => {
+    const DynamicFontAwesomeIcon = (name: string) => {
+        const IconComponent = (Icons as any)[name];
+        return IconComponent ? <IconComponent className="mr-2" /> : null;
+    };
+
     return (
         <Layout pageTitle="Contact Us">
             <div className="container mx-auto p-4 bg-light-shades drop-shadow-lg rounded-lg max-w-3xl">
@@ -11,51 +26,71 @@ const ContactPage = () => {
                 <div className="mb-12 text-center">
                     <h2 className="text-2xl font-bold mb-4">Other ways to reach us:</h2>
                     <p>
-                        <strong>Email:</strong> info@example.com
+                        <strong>Email:</strong> {contactInfo.email}
                     </p>
                     <p>
-                        <strong>Phone:</strong> +1 (123) 456-7890
+                        <strong>Phone:</strong> {contactInfo.phone}
                     </p>
                     <p>
-                        <strong>Address:</strong> 123 Main St, Suite 200, Anytown, USA
+                        <strong>Location:</strong> {contactInfo.location}
                     </p>
                 </div>
 
                 {/* Social Media Links */}
                 <div className="mb-12 text-center">
                     <h2 className="text-2xl font-bold mb-4">Follow us on social media:</h2>
-                    <p>
-                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="mr-4 hover:text-blue-600">
-                            Facebook
+                    {contactInfo.socialMediaLinks.map((link) => (
+                        <a
+                            key={link.platform}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mr-4 hover:text-blue-600 inline-flex items-center"
+                        >
+                            {DynamicFontAwesomeIcon(link.icon.name)}
+                            {link.platform}
                         </a>
-                        <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" className="mr-4 hover:text-blue-500">
-                            Twitter
-                        </a>
-                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="mr-4 hover:text-pink-500">
-                            Instagram
-                        </a>
-                        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-800">
-                            LinkedIn
-                        </a>
-                    </p>
+                    ))}
                 </div>
 
                 {/* Business Hours */}
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Business Hours:</h2>
-                    <p>
-                        <strong>Monday - Friday:</strong> 9:00am - 5:00pm
-                    </p>
-                    <p>
-                        <strong>Saturday:</strong> 10:00am - 2:00pm
-                    </p>
-                    <p>
-                        <strong>Sunday:</strong> Closed
-                    </p>
+                    {contactInfo.businessHours.map((hours) => (
+                        <p key={hours.day}>
+                            <strong>{hours.day}:</strong> {hours.hours}
+                        </p>
+                    ))}
                 </div>
             </div>
         </Layout>
     );
 };
+
+export async function getStaticProps() {
+    const query = `*[_type == "contactInfo"][0]{
+    email,
+    phone,
+    location,
+    businessHours[] {
+      day,
+      hours
+    },
+    socialMediaLinks[] {
+      platform,
+      url,
+      icon
+    }
+  }`;
+
+    const contactInfo = await sanityClient.fetch(query);
+
+    return {
+        props: {
+            contactInfo,
+        },
+    };
+}
+
 
 export default ContactPage;

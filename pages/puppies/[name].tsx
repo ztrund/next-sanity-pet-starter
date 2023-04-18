@@ -2,7 +2,7 @@ import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
 import sanityClient from '../../lib/sanityClient';
 import Layout from '../../components/layout';
 import CustomCarousel from "../../components/customCarousel";
-import {MediaItem} from "../../interfaces/mediaItem";
+import {MediaItem} from "../../types";
 
 type PuppyProps = {
     name: string;
