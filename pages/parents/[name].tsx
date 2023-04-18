@@ -4,7 +4,7 @@ import Layout from '../../components/layout';
 import CustomCarousel from "../../components/customCarousel";
 import {MediaItem} from "../../types";
 
-type PuppyProps = {
+type ParentProps = {
     name: string;
     birthdate: string;
     gender: string;
@@ -12,12 +12,10 @@ type PuppyProps = {
     weight: number;
     description: string;
     mediaItems: MediaItem[];
-    availability: string;
-    price: number;
 };
 
 
-const Puppy = ({puppy}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Parent = ({parent}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {
         name,
         birthdate,
@@ -26,9 +24,7 @@ const Puppy = ({puppy}: InferGetStaticPropsType<typeof getStaticProps>) => {
         weight,
         description,
         mediaItems,
-        availability,
-        price,
-    } = puppy;
+    } = parent;
 
     return (
         <Layout pageTitle={name}>
@@ -53,12 +49,6 @@ const Puppy = ({puppy}: InferGetStaticPropsType<typeof getStaticProps>) => {
                     <p>
                         <strong>Description:</strong> {description}
                     </p>
-                    <p>
-                        <strong>Availability:</strong> {availability}
-                    </p>
-                    <p>
-                        <strong>Price:</strong> ${price}
-                    </p>
                 </div>
             </div>
         </Layout>
@@ -66,17 +56,17 @@ const Puppy = ({puppy}: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const puppies = await sanityClient.fetch(`*[_type == "puppies"]{ name }`);
-    const paths = puppies.map((puppy: { name: string }) => ({
-        params: {name: puppy.name.toLowerCase()},
+    const parents = await sanityClient.fetch(`*[_type == "parents"]{ name }`);
+    const paths = parents.map((parent: { name: string }) => ({
+        params: {name: parent.name.toLowerCase()},
     }));
 
     return {paths, fallback: false};
 };
 
-export const getStaticProps: GetStaticProps<{ puppy: PuppyProps }> = async ({params}) => {
-    const puppy = await sanityClient.fetch(
-        `*[_type == "puppies" && name match $name][0]{
+export const getStaticProps: GetStaticProps<{ parent: ParentProps }> = async ({params}) => {
+    const parent = await sanityClient.fetch(
+        `*[_type == "parents" && name match $name][0]{
       name,
       birthdate,
       gender,
@@ -84,16 +74,14 @@ export const getStaticProps: GetStaticProps<{ puppy: PuppyProps }> = async ({par
       weight,
       description,
       mediaItems,
-      availability,
-      price
     }`,
         {name: params?.name}
     );
 
     return {
-        props: {puppy},
+        props: {parent},
         revalidate: 60,
     };
 };
 
-export default Puppy;
+export default Parent;

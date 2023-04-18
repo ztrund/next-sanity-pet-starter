@@ -6,7 +6,7 @@ import Player = YT.Player;
 import PlayerEvent = YT.PlayerEvent;
 import OnStateChangeEvent = YT.OnStateChangeEvent;
 import {extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
-import {MediaItem} from "../interfaces/mediaItem";
+import {MediaItem} from "../types";
 
 interface CustomCarouselProps {
     mediaItems: MediaItem[];
