@@ -1,19 +1,20 @@
-import sanityClient from '../lib/sanityClient';
 import Layout from '../components/layout';
-import {ContactInfo} from '../types';
-import React from "react";
+import React, {useEffect} from "react";
 import * as Icons from "react-icons/fa";
+import useContactInfo from "../hooks/useContactInfo";
 
+const ContactPage: React.FC = () => {
+    const contactInfo = useContactInfo();
 
-interface ContactPageProps {
-    contactInfo: ContactInfo;
-}
+    useEffect(() => {
+        if (!contactInfo) {
+            return;
+        }
+    }, [contactInfo]);
 
-
-const ContactPage: React.FC<ContactPageProps> = ({contactInfo}) => {
     const DynamicFontAwesomeIcon = (name: string) => {
         const IconComponent = (Icons as any)[name];
-        return IconComponent ? <IconComponent className="mr-2" /> : null;
+        return IconComponent ? <IconComponent className="mr-2"/> : null;
     };
 
     return (
@@ -26,26 +27,26 @@ const ContactPage: React.FC<ContactPageProps> = ({contactInfo}) => {
                 <div className="mb-12 text-center">
                     <h2 className="text-2xl font-bold mb-4">Other ways to reach us:</h2>
                     <p>
-                        <strong>Email:</strong> {contactInfo.email}
+                        <strong>Email:</strong> {contactInfo?.email}
                     </p>
                     <p>
-                        <strong>Phone:</strong> {contactInfo.phone}
+                        <strong>Phone:</strong> {contactInfo?.phone}
                     </p>
                     <p>
-                        <strong>Location:</strong> {contactInfo.location}
+                        <strong>Location:</strong> {contactInfo?.location}
                     </p>
                 </div>
 
                 {/* Social Media Links */}
                 <div className="mb-12 text-center">
                     <h2 className="text-2xl font-bold mb-4">Follow us on social media:</h2>
-                    {contactInfo.socialMediaLinks.map((link) => (
+                    {contactInfo?.socialMediaLinks.map((link) => (
                         <a
                             key={link.platform}
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mr-4 hover:text-blue-600 inline-flex items-center"
+                            className="mr-4 hover:text-dark-accent inline-flex items-center"
                         >
                             {DynamicFontAwesomeIcon(link.icon.name)}
                             {link.platform}
@@ -56,7 +57,7 @@ const ContactPage: React.FC<ContactPageProps> = ({contactInfo}) => {
                 {/* Business Hours */}
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Business Hours:</h2>
-                    {contactInfo.businessHours.map((hours) => (
+                    {contactInfo?.businessHours.map((hours) => (
                         <p key={hours.day}>
                             <strong>{hours.day}:</strong> {hours.hours}
                         </p>
@@ -66,31 +67,5 @@ const ContactPage: React.FC<ContactPageProps> = ({contactInfo}) => {
         </Layout>
     );
 };
-
-export async function getStaticProps() {
-    const query = `*[_type == "contactInfo"][0]{
-    email,
-    phone,
-    location,
-    businessHours[] {
-      day,
-      hours
-    },
-    socialMediaLinks[] {
-      platform,
-      url,
-      icon
-    }
-  }`;
-
-    const contactInfo = await sanityClient.fetch(query);
-
-    return {
-        props: {
-            contactInfo,
-        },
-    };
-}
-
 
 export default ContactPage;

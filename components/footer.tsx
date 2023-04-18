@@ -1,20 +1,16 @@
 import Link from 'next/link';
+import React, {useEffect} from "react";
+import useContactInfo from "../hooks/useContactInfo";
+import * as Icons from "react-icons/fa";
 
-const Footer = () => {
-    const socialMediaLinks = [
-        {
-            name: 'Twitter',
-            url: 'https://twitter.com/',
-        },
-        {
-            name: 'Facebook',
-            url: 'https://www.facebook.com/',
-        },
-        {
-            name: 'Instagram',
-            url: 'https://www.instagram.com/',
-        },
-    ];
+const Footer: React.FC = () => {
+    const contactInfo = useContactInfo();
+
+    useEffect(() => {
+        if (!contactInfo) {
+            return;
+        }
+    }, [contactInfo]);
 
     const pages = [
         {
@@ -39,11 +35,10 @@ const Footer = () => {
         },
     ];
 
-    const businessHours = [
-        'Monday-Friday: 9am-5pm',
-        'Saturday: 10am-4pm',
-        'Sunday: Closed',
-    ];
+    const DynamicFontAwesomeIcon = (name: string) => {
+        const IconComponent = (Icons as any)[name];
+        return IconComponent ? <IconComponent className="mr-2" /> : null;
+    };
 
     return (
         <footer className="bg-dark-shades text-white">
@@ -52,15 +47,17 @@ const Footer = () => {
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
                         <h3 className="text-lg font-bold mb-2">Social Media</h3>
                         <ul>
-                            {socialMediaLinks.map((link) => (
-                                <li key={link.name} className="mb-2">
+                            {contactInfo?.socialMediaLinks.map((link) => (
+                                <li key={link.platform} className="mb-2">
                                     <a
+                                        key={link.platform}
                                         href={link.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="hover:drop-shadow"
+                                        className="mr-4 hover:text-dark-accent inline-flex items-center"
                                     >
-                                        {link.name}
+                                        {DynamicFontAwesomeIcon(link.icon.name)}
+                                        {link.platform}
                                     </a>
                                 </li>
                             ))}
@@ -79,19 +76,19 @@ const Footer = () => {
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
                         <h3 className="text-lg font-bold mb-2">Business Hours</h3>
                         <ul>
-                            {businessHours.map((hours) => (
-                                <li key={hours} className="mb-2">
-                                    <span className="">{hours}</span>
-                                </li>
+                            {contactInfo?.businessHours.map((hours) => (
+                                <p key={hours.day} className="mb-2">
+                                    <strong>{hours.day}:</strong> {hours.hours}
+                                </p>
                             ))}
                         </ul>
                     </div>
                 </div>
                 <div className="text-sm">
-                    <p>&copy; {new Date().getFullYear()} Your Company Name</p>
-                    <p>1234 Main Street, Anytown USA 12345</p>
-                    <p>Phone: 555-555-5555</p>
-                    <p>Email: info@yourcompany.com</p>
+                    <p>&copy; {new Date().getFullYear()} All In One Frenchies Inc.</p>
+                    <p>Email: {contactInfo?.email}</p>
+                    <p>Phone: {contactInfo?.phone}</p>
+                    <p>{contactInfo?.location}</p>
                 </div>
             </div>
         </footer>
