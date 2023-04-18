@@ -46,7 +46,7 @@ const ContactPage: React.FC = () => {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mr-4 hover:text-dark-accent inline-flex items-center"
+                            className="mx-2 hover:text-dark-accent inline-flex items-center"
                         >
                             {DynamicFontAwesomeIcon(link.icon.name)}
                             {link.platform}

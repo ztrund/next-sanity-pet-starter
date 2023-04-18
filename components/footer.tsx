@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
 
     return (
         <footer className="bg-dark-shades text-white">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto p-4">
                 <div className="flex flex-wrap mb-8">
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
                         <h3 className="text-lg font-bold mb-2">Social Media</h3>
@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
                                         href={link.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="mr-4 hover:text-dark-accent inline-flex items-center"
+                                        className="hover:text-dark-accent inline-flex items-center"
                                     >
                                         {DynamicFontAwesomeIcon(link.icon.name)}
                                         {link.platform}
@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
                         <ul>
                             {pages.map((page) => (
                                 <li key={page.name} className="mb-2">
-                                    <Link href={page.url} className="hover:drop-shadow">{page.name}</Link>
+                                    <Link href={page.url} className="hover:text-dark-accent">{page.name}</Link>
                                 </li>
                             ))}
                         </ul>

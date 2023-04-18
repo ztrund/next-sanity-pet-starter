@@ -9,7 +9,7 @@ const Header = () => {
 
     const getLinkClassName = (href: string) => {
         const isActive = router.pathname === href;
-        const baseClass = "hover:drop-shadow-lg focus:outline-none";
+        const baseClass = "hover:text-dark-accent focus:outline-none";
         const activeClass = "text-main-brand-color";
         const inactiveClass = "text-gray-100 hover:text-white";
 
