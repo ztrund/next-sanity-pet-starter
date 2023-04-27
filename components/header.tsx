@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Disclosure } from "@headlessui/react";
@@ -11,7 +10,7 @@ const Header = () => {
         const isActive = router.pathname === href;
         const baseClass = "hover:text-dark-accent focus:outline-none";
         const activeClass = "text-main-brand-color";
-        const inactiveClass = "text-gray-100 hover:text-white";
+        const inactiveClass = "text-gray-100";
 
         return `${baseClass} ${isActive ? activeClass : inactiveClass}`;
     };

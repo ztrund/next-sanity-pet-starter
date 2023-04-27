@@ -54,10 +54,15 @@ const Puppies = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => {
                                     src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).width(384).auto('format').quality(75).url()}
                                     alt={puppy.name} className="w-full h-full object-cover"/>
                             </div>
-                            <div className="p-2">
-                                <h2 className="text-lg font-bold">{puppy.name}</h2>
-                                <p className="">{puppy.gender} - {puppy.color}</p>
-                                <p className="">{puppy.availability}</p>
+                            <div className="flex justify-between flex-row items-center">
+                                <div className="p-2">
+                                    <h2 className="text-lg font-bold">{puppy.name}</h2>
+                                    <p className="">{puppy.gender} - {puppy.color}</p>
+                                    <p className="">{puppy.availability}</p>
+                                </div>
+                                <div className="p-2">
+                                    <p className="font-medium">${puppy.price}</p>
+                                </div>
                             </div>
                         </Link>
                     ))}

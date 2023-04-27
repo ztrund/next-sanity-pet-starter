@@ -3,6 +3,7 @@ import sanityClient from '../../lib/sanityClient';
 import Layout from '../../components/layout';
 import CustomCarousel from "../../components/customCarousel";
 import {MediaItem} from "../../types";
+import {getAge} from "../../helpers/getAge";
 
 type ParentProps = {
     name: string;
@@ -26,16 +27,20 @@ const Parent = ({parent}: InferGetStaticPropsType<typeof getStaticProps>) => {
         mediaItems,
     } = parent;
 
+    const { years, weeks, days } = getAge(birthdate);
+
     return (
         <Layout pageTitle={name}>
+            <div className="flex justify-between p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
+                <h1 className="text-3xl font-bold">{name}</h1>
+            </div>
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="w-full md:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
                     <CustomCarousel mediaItems={mediaItems}/>
                 </div>
                 <div className="w-full md:w-1/2 h-min p-2 bg-light-shades drop-shadow-lg rounded-lg">
-                    <h1 className="text-3xl font-bold mb-2">{name}</h1>
                     <p>
-                        <strong>Birthdate:</strong> {new Date(birthdate).toLocaleDateString()}
+                        <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
                     </p>
                     <p>
                         <strong>Gender:</strong> {gender}
