@@ -38,7 +38,7 @@ const Puppies = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <div className="flex justify-between items-center mb-4 bg-light-shades drop-shadow-lg rounded-lg p-2">
                     <h1 className="text-3xl font-bold on-secondary-text">Puppies</h1>
                     <input
-                        className="border-2 rounded py-1 px-2 w-64"
+                        className="border-2 rounded py-1 px-2 w-48 sm:w-64"
                         type="text"
                         placeholder="Search puppies"
                         onChange={(e) => setSearchTerm(e.target.value)}

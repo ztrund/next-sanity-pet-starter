@@ -36,9 +36,9 @@ const Puppy = ({puppy}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
     return (
         <Layout pageTitle={name}>
-            <div className="flex justify-between p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
+            <div className="flex justify-between items-center p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
                 <h1 className="text-3xl font-bold">{name}</h1>
-                <h1 className="text-3xl font-normal">{availability} - ${price}</h1>
+                <h1 className="text-2xl font-normal">{availability} - ${price}</h1>
             </div>
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="w-full md:w-1/2 h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">

@@ -52,12 +52,12 @@ const HomePage = ({puppies, content}: InferGetStaticPropsType<typeof getStaticPr
         <Layout pageTitle="Home Page">
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
-                    className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
-                    <div className="prose max-w-none"><PortableText value={content}/></div>
-                </div>
-                <div
                     className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
                     <YoutubeLiveEmbed/>
+                </div>
+                <div
+                    className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
+                    <div className="prose max-w-none"><PortableText value={content}/></div>
                 </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 mb-4">
