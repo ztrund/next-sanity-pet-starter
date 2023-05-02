@@ -2,8 +2,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Disclosure } from "@headlessui/react";
 import { FiMenu, FiX } from "react-icons/fi";
+import { SiteInfo } from "../types";
 
-const Header = () => {
+interface HeaderProps {
+    pageData?: SiteInfo;
+}
+
+const Header = ({ pageData }: HeaderProps) => {
     const router = useRouter();
 
     const getLinkClassName = (href: string) => {
@@ -47,7 +52,7 @@ const Header = () => {
                         {({ open }) => (
                             <>
                                 <div className="flex justify-between items-center">
-                                    <div className="text-xl font-bold">All In One Frenchies</div>
+                                    <div className="text-xl font-bold">{pageData?.companyInfo?.companyName}</div>
                                     <div className="hidden lg:flex">
                                         <NavigationLinks isVertical={false} />
                                     </div>

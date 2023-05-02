@@ -6,23 +6,8 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {PortableText} from "@portabletext/react";
 import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
-import {MediaItem} from "../types";
-
-type PuppyProps = {
-    name: string;
-    birthdate: string;
-    gender: string;
-    color: string;
-    weight: number;
-    mediaItems: MediaItem[];
-    availability: string;
-    price: number;
-}
-
-type PuppiesProps = {
-    puppies: PuppyProps[];
-    content: any[];
-}
+import {Puppy} from "../types";
+import fetchPageData from "../lib/fetchPageData";
 
 function shuffleArray(array: any) {
     const shuffledArray = [...array];
@@ -38,26 +23,28 @@ function getRandomSample(array: any, count: number) {
     return shuffledArray.slice(0, count);
 }
 
-const HomePage = ({puppies, content}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
+
+    const {puppies, homepage, youtubeSettings} = pageData;
 
     const imageBuilder = imageUrlBuilder(sanityClient);
 
-    const [randomPuppies, setRandomPuppies] = useState<PuppyProps[]>([]);
+    const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
 
     useEffect(() => {
         setRandomPuppies(getRandomSample(puppies, 4));
     }, []);
 
     return (
-        <Layout pageTitle="Home Page">
+        <Layout pageTitle="Home Page" pageData={pageData}>
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
                     className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
-                    <YoutubeLiveEmbed/>
+                    <YoutubeLiveEmbed youtubeSettings={youtubeSettings}/>
                 </div>
                 <div
                     className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
-                    <div className="prose max-w-none"><PortableText value={content}/></div>
+                    <div className="prose max-w-none"><PortableText value={homepage.content}/></div>
                 </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 mb-4">
@@ -85,9 +72,9 @@ const HomePage = ({puppies, content}: InferGetStaticPropsType<typeof getStaticPr
     );
 };
 
-export const getStaticProps: GetStaticProps<PuppiesProps> = async () => {
-    const puppies = await sanityClient.fetch(
-        `*[_type == "puppies"]{
+export const getStaticProps: GetStaticProps = async () => {
+    const additionalQuery = `
+    "puppies": *[_type == "puppies"] {
       name,
       birthdate,
       gender,
@@ -96,17 +83,22 @@ export const getStaticProps: GetStaticProps<PuppiesProps> = async () => {
       mediaItems,
       availability,
       price
-    }`
-    );
-
-    const homepage = await sanityClient.fetch(
-        `*[_type == "homepage"][0]{
+    },
+    "homepage": *[_type == "homepage"][0] {
       content
-    }`
-    );
+    },
+    "youtubeSettings": *[_type == "youtubeSettings"][0] {
+      channelUrl,
+      fallbackVideoUrl
+    },
+  `;
+
+    const pageData = await fetchPageData(additionalQuery);
 
     return {
-        props: {puppies, content: homepage.content},
+        props: {
+            pageData,
+        },
         revalidate: 60,
     };
 };

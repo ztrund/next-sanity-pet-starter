@@ -4,27 +4,15 @@ import Link from 'next/link';
 import sanityClient from '../lib/sanityClient';
 import Layout from '../components/layout';
 import imageUrlBuilder from "@sanity/image-url";
-import {MediaItem} from "../types";
+import {Puppy} from "../types";
+import fetchPageData from "../lib/fetchPageData";
 
-type PuppyProps = {
-    name: string;
-    birthdate: string;
-    gender: string;
-    color: string;
-    weight: number;
-    mediaItems: MediaItem[];
-    availability: string;
-    price: number;
-};
+const Puppies = ({ pageData }: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const { puppies } = pageData;
 
-type PuppiesProps = {
-    puppies: PuppyProps[];
-};
-
-const Puppies = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredPuppies = puppies.filter((puppy) => {
+    const filteredPuppies = puppies.filter((puppy: Puppy) => {
         return (
             puppy.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -33,7 +21,7 @@ const Puppies = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const imageBuilder = imageUrlBuilder(sanityClient);
 
     return (
-        <Layout pageTitle="Puppies">
+        <Layout pageTitle="Puppies" pageData={pageData}>
             <div className="container mx-auto">
                 <div className="flex justify-between items-center mb-4 bg-light-shades drop-shadow-lg rounded-lg p-2">
                     <h1 className="text-3xl font-bold on-secondary-text">Puppies</h1>
@@ -46,7 +34,7 @@ const Puppies = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => {
                     />
                 </div>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                    {filteredPuppies.map((puppy) => (
+                    {filteredPuppies.map((puppy: Puppy) => (
                         <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name}
                               className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                             <div className="h-48 overflow-hidden">
@@ -72,9 +60,9 @@ const Puppies = ({puppies}: InferGetStaticPropsType<typeof getStaticProps>) => {
     );
 };
 
-export const getStaticProps: GetStaticProps<PuppiesProps> = async () => {
-    const puppies = await sanityClient.fetch(
-        `*[_type == "puppies"]{
+export const getStaticProps: GetStaticProps = async () => {
+    const additionalQuery = `
+    "puppies": *[_type == "puppies"] {
       name,
       birthdate,
       gender,
@@ -83,11 +71,15 @@ export const getStaticProps: GetStaticProps<PuppiesProps> = async () => {
       mediaItems,
       availability,
       price
-    }`
-    );
+    },
+  `;
+
+    const pageData = await fetchPageData(additionalQuery);
 
     return {
-        props: {puppies},
+        props: {
+            pageData,
+        },
         revalidate: 60,
     };
 };

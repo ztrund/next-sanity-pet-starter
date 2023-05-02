@@ -4,25 +4,15 @@ import Link from 'next/link';
 import sanityClient from '../lib/sanityClient';
 import Layout from '../components/layout';
 import imageUrlBuilder from "@sanity/image-url";
-import {MediaItem} from "../types";
+import {Parent} from "../types";
+import fetchPageData from "../lib/fetchPageData";
 
-type ParentProps = {
-    name: string;
-    birthdate: string;
-    gender: string;
-    color: string;
-    weight: number;
-    mediaItems: MediaItem[];
-};
+const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const {parents} = pageData;
 
-type ParentsProps = {
-    parents: ParentProps[];
-};
-
-const Parents = ({parents}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredParents = parents.filter((parent) => {
+    const filteredParents = parents.filter((parent: Parent) => {
         return (
             parent.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -31,7 +21,7 @@ const Parents = ({parents}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const imageBuilder = imageUrlBuilder(sanityClient);
 
     return (
-        <Layout pageTitle="Parents">
+        <Layout pageTitle="Parents" pageData={pageData}>
             <div className="container mx-auto">
                 <div className="flex justify-between items-center mb-4 bg-light-shades drop-shadow-lg rounded-lg p-2">
                     <h1 className="text-3xl font-bold on-secondary-text">Parents</h1>
@@ -44,7 +34,7 @@ const Parents = ({parents}: InferGetStaticPropsType<typeof getStaticProps>) => {
                     />
                 </div>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                    {filteredParents.map((parent) => (
+                    {filteredParents.map((parent: Parent) => (
                         <Link href={`/parents/${parent.name.toLowerCase()}`} key={parent.name}
                               className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                             <div className="h-48 overflow-hidden">
@@ -64,20 +54,24 @@ const Parents = ({parents}: InferGetStaticPropsType<typeof getStaticProps>) => {
     );
 };
 
-export const getStaticProps: GetStaticProps<ParentsProps> = async () => {
-    const parents = await sanityClient.fetch(
-        `*[_type == "parents"]{
+export const getStaticProps: GetStaticProps = async () => {
+    const additionalQuery = `
+    "parents": *[_type == "parents"]{
       name,
       birthdate,
       gender,
       color,
       weight,
       mediaItems,
-    }`
-    );
+    },
+  `;
+
+    const pageData = await fetchPageData(additionalQuery);
 
     return {
-        props: {parents},
+        props: {
+            pageData,
+        },
         revalidate: 60,
     };
 };
