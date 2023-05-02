@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import React, {useEffect} from "react";
 import * as Icons from "react-icons/fa";
 import { SiteInfo } from '../types';
 
