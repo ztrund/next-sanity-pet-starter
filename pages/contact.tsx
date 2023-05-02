@@ -1,16 +1,12 @@
 import Layout from '../components/layout';
-import React, {useEffect} from "react";
+import React from "react";
 import * as Icons from "react-icons/fa";
-import useContactInfo from "../hooks/useContactInfo";
+import {GetStaticProps, InferGetStaticPropsType} from "next";
+import fetchPageData from "../lib/fetchPageData";
+import {BusinessHour, SocialMediaLink} from "../types";
 
-const ContactPage: React.FC = () => {
-    const contactInfo = useContactInfo();
-
-    useEffect(() => {
-        if (!contactInfo) {
-            return;
-        }
-    }, [contactInfo]);
+const ContactPage = ({ pageData }: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const { contactInfo } = pageData;
 
     const DynamicFontAwesomeIcon = (name: string) => {
         const IconComponent = (Icons as any)[name];
@@ -27,20 +23,20 @@ const ContactPage: React.FC = () => {
                 <div className="mb-12 text-center">
                     <h2 className="text-2xl font-bold mb-4">Other ways to reach us:</h2>
                     <p>
-                        <strong>Email:</strong> {contactInfo?.email}
+                        <strong>Email:</strong> {contactInfo.email}
                     </p>
                     <p>
-                        <strong>Phone:</strong> {contactInfo?.phone}
+                        <strong>Phone:</strong> {contactInfo.phone}
                     </p>
                     <p>
-                        <strong>Location:</strong> {contactInfo?.location}
+                        <strong>Location:</strong> {contactInfo.location}
                     </p>
                 </div>
 
                 {/* Social Media Links */}
                 <div className="mb-12 text-center">
                     <h2 className="text-2xl font-bold mb-4">Follow us on social media:</h2>
-                    {contactInfo?.socialMediaLinks.map((link) => (
+                    {contactInfo.socialMediaLinks.map((link: SocialMediaLink) => (
                         <a
                             key={link.platform}
                             href={link.url}
@@ -57,7 +53,7 @@ const ContactPage: React.FC = () => {
                 {/* Business Hours */}
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Business Hours:</h2>
-                    {contactInfo?.businessHours.map((hours) => (
+                    {contactInfo.businessHours.map((hours: BusinessHour) => (
                         <p key={hours.day}>
                             <strong>{hours.day}:</strong> {hours.hours}
                         </p>
@@ -66,6 +62,17 @@ const ContactPage: React.FC = () => {
             </div>
         </Layout>
     );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+    const pageData = await fetchPageData();
+
+    return {
+        props: {
+            pageData,
+        },
+        revalidate: 60,
+    };
 };
 
 export default ContactPage;

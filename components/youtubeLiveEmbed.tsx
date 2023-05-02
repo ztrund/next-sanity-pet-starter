@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import useYoutubeSettings from '../hooks/useYoutubeSettings';
-import {extractYoutubeChannelId, extractYoutubeVideoId} from '../helpers/youtubeLinkExtractor'; // Import the extractor functions
+import {extractYoutubeChannelId, extractYoutubeVideoId} from '../helpers/youtubeLinkExtractor';
+import {YoutubeSettings} from "../types"; // Import the extractor functions
 
-const YoutubeLiveEmbed: React.FC = () => {
-    const youtubeSettings = useYoutubeSettings();
+interface YoutubeLiveEmbedProps {
+    youtubeSettings: YoutubeSettings;
+}
+
+const YoutubeLiveEmbed: React.FC<YoutubeLiveEmbedProps> = ({ youtubeSettings }) => {
     const [videoId, setVideoId] = useState<string>('');
 
     useEffect(() => {
@@ -11,13 +14,12 @@ const YoutubeLiveEmbed: React.FC = () => {
             return;
         }
 
-        // Extract the channel and video IDs from the URLs
         const channelId = extractYoutubeChannelId(youtubeSettings.channelUrl) || '';
         const fallbackVideoId = extractYoutubeVideoId(youtubeSettings.fallbackVideoUrl) || '';
 
         const fetchLivestreamData = async () => {
             try {
-                const response: Response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=live&type=video&key=${youtubeSettings.apiKey}`);
+                const response: Response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=live&type=video&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`);
                 const data: { items: { id: { videoId: string } }[] } = await response.json();
 
                 if (data.items.length > 0) {

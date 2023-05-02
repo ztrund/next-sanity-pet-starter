@@ -1,16 +1,13 @@
 import Link from 'next/link';
 import React, {useEffect} from "react";
-import useContactInfo from "../hooks/useContactInfo";
 import * as Icons from "react-icons/fa";
+import { SiteInfo } from '../types';
 
-const Footer: React.FC = () => {
-    const contactInfo = useContactInfo();
+interface FooterProps {
+    siteInfo?: SiteInfo;
+}
 
-    useEffect(() => {
-        if (!contactInfo) {
-            return;
-        }
-    }, [contactInfo]);
+const Footer = ({ siteInfo }: FooterProps) => {
 
     const pages = [
         {
@@ -47,7 +44,7 @@ const Footer: React.FC = () => {
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
                         <h3 className="text-lg font-bold mb-2">Social Media</h3>
                         <ul>
-                            {contactInfo?.socialMediaLinks.map((link) => (
+                            {siteInfo?.contactInfo?.socialMediaLinks.map((link) => (
                                 <li key={link.platform} className="mb-2">
                                     <a
                                         key={link.platform}
@@ -76,7 +73,7 @@ const Footer: React.FC = () => {
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
                         <h3 className="text-lg font-bold mb-2">Business Hours</h3>
                         <ul>
-                            {contactInfo?.businessHours.map((hours) => (
+                            {siteInfo?.contactInfo?.businessHours.map((hours) => (
                                 <p key={hours.day} className="mb-2">
                                     <strong>{hours.day}:</strong> {hours.hours}
                                 </p>
@@ -85,10 +82,10 @@ const Footer: React.FC = () => {
                     </div>
                 </div>
                 <div className="text-sm">
-                    <p>&copy; {new Date().getFullYear()} All In One Frenchies Inc.</p>
-                    <p>Email: {contactInfo?.email}</p>
-                    <p>Phone: {contactInfo?.phone}</p>
-                    <p>{contactInfo?.location}</p>
+                    <p>&copy; {new Date().getFullYear()} {siteInfo?.companyInfo?.companyName}</p>
+                    <p>Email: {siteInfo?.contactInfo?.email}</p>
+                    <p>Phone: {siteInfo?.contactInfo?.phone}</p>
+                    <p>{siteInfo?.contactInfo?.location}</p>
                 </div>
             </div>
         </footer>
