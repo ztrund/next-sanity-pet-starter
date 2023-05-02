@@ -5,10 +5,10 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { SiteInfo } from "../types";
 
 interface HeaderProps {
-    siteInfo?: SiteInfo;
+    pageData?: SiteInfo;
 }
 
-const Header = ({ siteInfo }: HeaderProps) => {
+const Header = ({ pageData }: HeaderProps) => {
     const router = useRouter();
 
     const getLinkClassName = (href: string) => {
@@ -52,7 +52,7 @@ const Header = ({ siteInfo }: HeaderProps) => {
                         {({ open }) => (
                             <>
                                 <div className="flex justify-between items-center">
-                                    <div className="text-xl font-bold">{siteInfo?.companyInfo?.companyName}</div>
+                                    <div className="text-xl font-bold">{pageData?.companyInfo?.companyName}</div>
                                     <div className="hidden lg:flex">
                                         <NavigationLinks isVertical={false} />
                                     </div>

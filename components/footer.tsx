@@ -4,10 +4,10 @@ import * as Icons from "react-icons/fa";
 import { SiteInfo } from '../types';
 
 interface FooterProps {
-    siteInfo?: SiteInfo;
+    pageData?: SiteInfo;
 }
 
-const Footer = ({ siteInfo }: FooterProps) => {
+const Footer = ({ pageData }: FooterProps) => {
 
     const pages = [
         {
@@ -44,7 +44,7 @@ const Footer = ({ siteInfo }: FooterProps) => {
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
                         <h3 className="text-lg font-bold mb-2">Social Media</h3>
                         <ul>
-                            {siteInfo?.contactInfo?.socialMediaLinks.map((link) => (
+                            {pageData?.contactInfo?.socialMediaLinks.map((link) => (
                                 <li key={link.platform} className="mb-2">
                                     <a
                                         key={link.platform}
@@ -73,7 +73,7 @@ const Footer = ({ siteInfo }: FooterProps) => {
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
                         <h3 className="text-lg font-bold mb-2">Business Hours</h3>
                         <ul>
-                            {siteInfo?.contactInfo?.businessHours.map((hours) => (
+                            {pageData?.contactInfo?.businessHours.map((hours) => (
                                 <p key={hours.day} className="mb-2">
                                     <strong>{hours.day}:</strong> {hours.hours}
                                 </p>
@@ -82,10 +82,10 @@ const Footer = ({ siteInfo }: FooterProps) => {
                     </div>
                 </div>
                 <div className="text-sm">
-                    <p>&copy; {new Date().getFullYear()} {siteInfo?.companyInfo?.companyName}</p>
-                    <p>Email: {siteInfo?.contactInfo?.email}</p>
-                    <p>Phone: {siteInfo?.contactInfo?.phone}</p>
-                    <p>{siteInfo?.contactInfo?.location}</p>
+                    <p>&copy; {new Date().getFullYear()} {pageData?.companyInfo?.companyName}</p>
+                    <p>Email: {pageData?.contactInfo?.email}</p>
+                    <p>Phone: {pageData?.contactInfo?.phone}</p>
+                    <p>{pageData?.contactInfo?.location}</p>
                 </div>
             </div>
         </footer>

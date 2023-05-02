@@ -1,5 +1,5 @@
 import sanityClient from './sanityClient';
-import {About, CompanyInfo, ContactInfo, HomePage, Parent, Parents, Puppies, YoutubeSettings} from '../types';
+import {About, CompanyInfo, ContactInfo, HomePage, Parent, Parents, Puppies, Puppy, YoutubeSettings} from '../types';
 
 interface PageData {
     contactInfo: ContactInfo | null;
@@ -10,10 +10,11 @@ interface PageData {
     about: About | null;
     parents: Parents | null;
     parent: Parent | null;
+    puppy: Puppy | null;
     additionalQuery?: string;
 }
 
-const fetchPageData = async (additionalQuery = ''): Promise<PageData> => {
+const fetchPageData = async (additionalQuery = '', fetchParams = {}): Promise<PageData> => {
     const query = `
   {
     "contactInfo": *[_type == "contactInfo"][0] {
@@ -39,7 +40,7 @@ const fetchPageData = async (additionalQuery = ''): Promise<PageData> => {
   `;
 
     try {
-        return await sanityClient.fetch(query);
+        return await sanityClient.fetch(query, fetchParams);
     } catch (error) {
         console.error('Error fetching page data:', error);
         throw error;

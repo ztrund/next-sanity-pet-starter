@@ -5,8 +5,8 @@ import {GetStaticProps, InferGetStaticPropsType} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {BusinessHour, SocialMediaLink} from "../types";
 
-const ContactPage = ({ pageData }: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const { contactInfo } = pageData;
+const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const {contactInfo} = pageData;
 
     const DynamicFontAwesomeIcon = (name: string) => {
         const IconComponent = (Icons as any)[name];
@@ -14,7 +14,7 @@ const ContactPage = ({ pageData }: InferGetStaticPropsType<typeof getStaticProps
     };
 
     return (
-        <Layout pageTitle="Contact Us">
+        <Layout pageTitle="Contact Us" pageData={pageData}>
             <div className="container mx-auto p-4 bg-light-shades drop-shadow-lg rounded-lg max-w-3xl">
                 <h1 className="text-3xl font-bold text-center mb-8">Contact Us</h1>
                 <p className="text-center mb-12">Feel free to reach out to us through the following channels:</p>

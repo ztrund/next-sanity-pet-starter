@@ -23,9 +23,9 @@ function getRandomSample(array: any, count: number) {
     return shuffledArray.slice(0, count);
 }
 
-const HomePage = ({ pageData }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
-    const { puppies, homepage, youtubeSettings } = pageData;
+    const {puppies, homepage, youtubeSettings} = pageData;
 
     const imageBuilder = imageUrlBuilder(sanityClient);
 
@@ -36,7 +36,7 @@ const HomePage = ({ pageData }: InferGetStaticPropsType<typeof getStaticProps>) 
     }, []);
 
     return (
-        <Layout pageTitle="Home Page">
+        <Layout pageTitle="Home Page" pageData={pageData}>
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
                     className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
