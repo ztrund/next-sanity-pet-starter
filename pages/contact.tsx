@@ -1,16 +1,24 @@
 import Layout from '../components/layout';
 import React from "react";
-import * as Icons from "react-icons/fa";
+import {FaInstagram, FaFacebookF, FaYoutube, FaTwitter} from "react-icons/fa";
 import {GetStaticProps, InferGetStaticPropsType} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {BusinessHour, SocialMediaLink} from "../types";
+import {IconType} from "react-icons";
 
 const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {contactInfo} = pageData;
 
+    const iconComponents: { [key: string]: IconType } = {
+        FaInstagram,
+        FaFacebookF,
+        FaYoutube,
+        FaTwitter,
+    };
+
     const DynamicFontAwesomeIcon = (name: string) => {
-        const IconComponent = (Icons as any)[name];
-        return IconComponent ? <IconComponent className="mr-2"/> : null;
+        const IconComponent = iconComponents[name];
+        return IconComponent ? <IconComponent className="mr-2" /> : null;
     };
 
     return (

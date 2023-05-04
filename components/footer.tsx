@@ -1,6 +1,8 @@
 import Link from 'next/link';
-import * as Icons from "react-icons/fa";
 import { SiteInfo } from '../types';
+import {IconType} from "react-icons";
+import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from "react-icons/fa";
+import React from "react";
 
 interface FooterProps {
     pageData?: SiteInfo;
@@ -31,8 +33,15 @@ const Footer = ({ pageData }: FooterProps) => {
         },
     ];
 
+    const iconComponents: { [key: string]: IconType } = {
+        FaInstagram,
+        FaFacebookF,
+        FaYoutube,
+        FaTwitter,
+    };
+
     const DynamicFontAwesomeIcon = (name: string) => {
-        const IconComponent = (Icons as any)[name];
+        const IconComponent = iconComponents[name];
         return IconComponent ? <IconComponent className="mr-2" /> : null;
     };
 
