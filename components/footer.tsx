@@ -82,9 +82,9 @@ const Footer = ({ pageData }: FooterProps) => {
                         <h3 className="text-lg font-bold mb-2">Business Hours</h3>
                         <ul>
                             {pageData?.contactInfo?.businessHours.map((hours) => (
-                                <p key={hours.day} className="mb-2">
+                                <li key={hours.day} className="mb-2">
                                     <strong>{hours.day}:</strong> {hours.hours}
-                                </p>
+                                </li>
                             ))}
                         </ul>
                     </div>
