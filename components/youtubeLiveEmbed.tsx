@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import YouTube from 'react-youtube';
-import {
-    extractYoutubeChannelId,
-    extractYoutubeVideoId,
-} from '../helpers/youtubeLinkExtractor';
-import { YoutubeSettings } from '../types';
+import React, {useEffect, useState} from 'react';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import {extractYoutubeChannelId, extractYoutubeVideoId,} from '../helpers/youtubeLinkExtractor';
+import {YoutubeSettings} from '../types';
 
 interface YoutubeLiveEmbedProps {
     youtubeSettings: YoutubeSettings;
@@ -20,8 +17,7 @@ const YoutubeLiveEmbed: React.FC<YoutubeLiveEmbedProps> = ({
             return;
         }
 
-        const channelId =
-            extractYoutubeChannelId(youtubeSettings.channelUrl) || '';
+        const channelId = extractYoutubeChannelId(youtubeSettings.channelUrl) || '';
         const fallbackVideoId =
             extractYoutubeVideoId(youtubeSettings.fallbackVideoUrl) || '';
 
@@ -45,22 +41,18 @@ const YoutubeLiveEmbed: React.FC<YoutubeLiveEmbedProps> = ({
         fetchLivestreamData();
     }, [youtubeSettings]);
 
-    const opts = {
-        playerVars: {
-            autoplay: 1,
-            mute: 1,
-        },
-    };
-
     return (
-        <div className="aspect-w-16 aspect-h-9">
-            <YouTube
-                videoId={videoId}
-                opts={opts}
-                className="absolute inset-0 w-full h-full"
-                iframeClassName="absolute inset-0 w-full h-full"
-                onReady={(event) => event.target.playVideo()}
-            />
+        <div className="">
+            {videoId ? (
+                <LiteYouTubeEmbed
+                    id={videoId}
+                    title="YouTube Live"
+                    poster="hqdefault"
+                    params="autoplay=1&muted=1"
+                />
+            ) : (
+                <div className="aspect-w-16 aspect-h-9"/>
+            )}
         </div>
     );
 };

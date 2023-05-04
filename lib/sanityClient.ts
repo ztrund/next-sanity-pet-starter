@@ -1,4 +1,4 @@
-import { createClient } from "@sanity/client";
+import {createClient} from "@sanity/client";
 
 const sanityClient = createClient({
     projectId: "fcb9r3pv",

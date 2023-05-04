@@ -1,6 +1,6 @@
 import Layout from '../components/layout';
 import React from "react";
-import {FaInstagram, FaFacebookF, FaYoutube, FaTwitter} from "react-icons/fa";
+import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from "react-icons/fa";
 import {GetStaticProps, InferGetStaticPropsType} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {BusinessHour, SocialMediaLink} from "../types";

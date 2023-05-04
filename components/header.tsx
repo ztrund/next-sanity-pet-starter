@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { Disclosure } from "@headlessui/react";
-import { FiMenu, FiX } from "react-icons/fi";
-import { SiteInfo } from "../types";
+import {useRouter} from "next/router";
+import {Disclosure} from "@headlessui/react";
+import {FiMenu, FiX} from "react-icons/fi";
+import {SiteInfo} from "../types";
 
 interface HeaderProps {
     pageData?: SiteInfo;
