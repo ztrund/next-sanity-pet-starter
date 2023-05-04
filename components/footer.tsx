@@ -50,7 +50,7 @@ const Footer = ({ pageData }: FooterProps) => {
             <div className="container mx-auto p-4">
                 <div className="flex flex-wrap mb-8">
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
-                        <h3 className="text-lg font-bold mb-2">Social Media</h3>
+                        <div className="text-lg font-bold mb-2">Social Media</div>
                         <ul>
                             {pageData?.contactInfo?.socialMediaLinks.map((link) => (
                                 <li key={link.platform} className="mb-2">
@@ -69,7 +69,7 @@ const Footer = ({ pageData }: FooterProps) => {
                         </ul>
                     </div>
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
-                        <h3 className="text-lg font-bold mb-2">Pages</h3>
+                        <div className="text-lg font-bold mb-2">Pages</div>
                         <ul>
                             {pages.map((page) => (
                                 <li key={page.name} className="mb-2">
@@ -79,7 +79,7 @@ const Footer = ({ pageData }: FooterProps) => {
                         </ul>
                     </div>
                     <div className="w-full md:w-1/3 mb-4 md:mb-0">
-                        <h3 className="text-lg font-bold mb-2">Business Hours</h3>
+                        <div className="text-lg font-bold mb-2">Business Hours</div>
                         <ul>
                             {pageData?.contactInfo?.businessHours.map((hours) => (
                                 <li key={hours.day} className="mb-2">

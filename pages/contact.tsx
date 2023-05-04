@@ -52,7 +52,7 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mx-2 hover:text-dark-accent inline-flex items-center"
+                            className="p-2 hover:text-dark-accent inline-flex items-center"
                         >
                             {DynamicFontAwesomeIcon(link.icon.name)}
                             {link.platform}

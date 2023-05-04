@@ -56,7 +56,7 @@ const Header = ({ pageData }: HeaderProps) => {
                                     <div className="hidden lg:flex">
                                         <NavigationLinks isVertical={false} />
                                     </div>
-                                    <Disclosure.Button className="lg:hidden focus:outline-none">
+                                    <Disclosure.Button className="lg:hidden focus:outline-none" aria-label="Menu Toggle">
                                         {open ? <FiX size={24} /> : <FiMenu size={24} />}
                                     </Disclosure.Button>
                                 </div>
@@ -66,7 +66,7 @@ const Header = ({ pageData }: HeaderProps) => {
                                     } transition-transform duration-300 ease-in-out lg:hidden`}
                                 >
                                     <div className="pt-20 pr-4">
-                                        <Disclosure.Button className="absolute top-4 right-4 text-white focus:outline-none">
+                                        <Disclosure.Button className="absolute top-4 right-4 text-white focus:outline-none" aria-label="Close Menu">
                                             <FiX size={24} />
                                         </Disclosure.Button>
                                         <NavigationLinks isVertical={true} />

@@ -75,3 +75,8 @@ export interface Parent {
 export interface Parents {
     parents: Parent[];
 }
+
+export interface Financing {
+    banner: any;
+    link: string;
+}
