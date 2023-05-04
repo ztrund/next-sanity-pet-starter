@@ -29,7 +29,8 @@
     "react-lite-youtube-embed": "^2.3.52",
     "react-responsive-carousel": "^3.2.23",
     "react-youtube": "^10.1.0",
-    "serve": "^14.0.1"
+    "serve": "^14.0.1",
+    "swiper": "^9.2.4"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
