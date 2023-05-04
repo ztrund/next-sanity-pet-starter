@@ -6,12 +6,14 @@ import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
 
 const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const { parent } = pageData;
+    const {parent} = pageData;
 
-    const { years, weeks, days } = getAge(parent.birthdate);
+    const {years, weeks, days} = getAge(parent.birthdate);
 
     return (
-        <Layout pageTitle={parent.name} pageData={pageData}>
+        <Layout pageTitle={parent.name}
+                metaDesc={`Discover ${parent.name}, a beautiful ${parent.color} ${parent.gender} with a ${parent.weight} lbs weight. Learn more about ${parent.name}'s age, appearance, and unique characteristics.`}
+                pageData={pageData}>
             <div className="flex justify-between items-center p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
                 <h1 className="text-3xl font-bold">{parent.name}</h1>
             </div>

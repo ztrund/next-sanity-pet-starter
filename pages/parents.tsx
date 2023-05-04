@@ -21,7 +21,9 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
     const imageBuilder = imageUrlBuilder(sanityClient);
 
     return (
-        <Layout pageTitle="Parents" pageData={pageData}>
+        <Layout pageTitle="Parents"
+                metaDesc="Discover our adorable and responsible parents of our beautiful puppies. Search and learn about each parent's characteristics and traits on our Parents page."
+                pageData={pageData}>
             <div className="container mx-auto">
                 <div className="flex justify-between items-center mb-4 bg-light-shades drop-shadow-lg rounded-lg p-2">
                     <h1 className="text-3xl font-bold on-secondary-text">Parents</h1>

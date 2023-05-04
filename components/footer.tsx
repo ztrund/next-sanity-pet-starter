@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { SiteInfo } from '../types';
+import {SiteInfo} from '../types';
 import {IconType} from "react-icons";
 import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from "react-icons/fa";
 import React from "react";

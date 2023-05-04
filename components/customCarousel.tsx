@@ -1,12 +1,12 @@
-import React, {useEffect, useState, useRef, ReactElement} from "react";
+import React, {ReactElement, useEffect, useRef, useState} from "react";
 import {Carousel} from "react-responsive-carousel";
 import imageUrlBuilder from "@sanity/image-url";
 import sanityClient from "../lib/sanityClient";
+import {extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
+import {MediaItem} from "../types";
 import Player = YT.Player;
 import PlayerEvent = YT.PlayerEvent;
 import OnStateChangeEvent = YT.OnStateChangeEvent;
-import {extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
-import {MediaItem} from "../types";
 
 interface CustomCarouselProps {
     mediaItems: MediaItem[];
