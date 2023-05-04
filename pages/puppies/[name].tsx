@@ -5,9 +5,12 @@ import CustomCarousel from "../../components/customCarousel";
 import Image from 'next/image';
 import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
+import imageUrlBuilder from "@sanity/image-url";
 
 const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {puppy} = pageData;
+    const {puppy, financing} = pageData;
+
+    const imageBuilder = imageUrlBuilder(sanityClient);
 
     const {years, weeks, days} = getAge(puppy.birthdate);
 
@@ -42,10 +45,10 @@ const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                         </p>
                     </div>
                     <div className="h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
-                        <a href="https://www.example.com/financing-application" target="_blank"
+                        <a href={financing.link} target="_blank"
                            rel="noopener noreferrer">
-                            <Image
-                                src="/TFC-rectangle-web-banner-800x500.png"
+                            <img
+                                src={imageBuilder.image(financing.banner).width(768).auto('format').quality(75).url()}
                                 alt="Terrace Finance - Financing Available"
                                 width='800'
                                 height='500'
@@ -79,6 +82,10 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       mediaItems,
       availability,
       price
+    },
+    "financing": *[_type == "financing"][0]{
+      banner,
+      link,
     },
   `;
 

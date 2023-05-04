@@ -1,5 +1,16 @@
 import sanityClient from './sanityClient';
-import {About, CompanyInfo, ContactInfo, HomePage, Parent, Parents, Puppies, Puppy, YoutubeSettings} from '../types';
+import {
+    About,
+    CompanyInfo,
+    ContactInfo,
+    Financing,
+    HomePage,
+    Parent,
+    Parents,
+    Puppies,
+    Puppy,
+    YoutubeSettings
+} from '../types';
 
 interface PageData {
     contactInfo: ContactInfo | null;
@@ -11,6 +22,7 @@ interface PageData {
     parents: Parents | null;
     parent: Parent | null;
     puppy: Puppy | null;
+    financing: Financing | null;
     additionalQuery?: string;
 }
 

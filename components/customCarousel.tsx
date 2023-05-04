@@ -61,12 +61,11 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
         if (item.type === "image" && item.image) {
             const imgUrl = imageBuilder.image(item.image).width(100).height(56).url() || "";
             return (
-                <div key={index}>
-                    <img
-                        src={imgUrl}
-                        alt=""
-                    />
-                </div>
+                <img
+                    key={index}
+                    src={imgUrl}
+                    alt=""
+                />
             );
         }
 
@@ -74,9 +73,11 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
             const videoId = extractYoutubeVideoId(item.videoUrl);
             const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
             return (
-                <div key={index}>
-                    <img src={thumbnailUrl} alt=""/>
-                </div>
+                <img
+                    key={index}
+                    src={thumbnailUrl}
+                    alt=""
+                />
             );
         }
 
@@ -148,7 +149,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                         });
                                     }
                                 }}
-                            ></iframe>
+                            />
                         </div>
                     )}
                 </div>
