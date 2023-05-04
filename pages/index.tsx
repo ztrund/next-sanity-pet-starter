@@ -36,7 +36,9 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
     }, []);
 
     return (
-        <Layout pageTitle="Home Page" pageData={pageData}>
+        <Layout pageTitle="Home Page"
+                metaDesc="Explore our selection of beautiful puppies and watch live streaming on our home page. Learn about our puppies' details and visit our available puppies page to see more!"
+                pageData={pageData}>
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
                     className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">

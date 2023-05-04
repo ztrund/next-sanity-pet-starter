@@ -18,11 +18,13 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
 
     const DynamicFontAwesomeIcon = (name: string) => {
         const IconComponent = iconComponents[name];
-        return IconComponent ? <IconComponent className="mr-2" /> : null;
+        return IconComponent ? <IconComponent className="mr-2"/> : null;
     };
 
     return (
-        <Layout pageTitle="Contact Us" pageData={pageData}>
+        <Layout pageTitle="Contact Us"
+                metaDesc="Get in touch with us for any inquiries or assistance. Find our email, phone number, location, business hours, and follow us on social media to stay updated with our latest news."
+                pageData={pageData}>
             <div className="container mx-auto p-4 bg-light-shades drop-shadow-lg rounded-lg max-w-3xl">
                 <h1 className="text-3xl font-bold text-center mb-8">Contact Us</h1>
                 <p className="text-center mb-12">Feel free to reach out to us through the following channels:</p>

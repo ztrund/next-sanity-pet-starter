@@ -7,8 +7,8 @@ import imageUrlBuilder from "@sanity/image-url";
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 
-const Puppies = ({ pageData }: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const { puppies } = pageData;
+const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const {puppies} = pageData;
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -21,7 +21,9 @@ const Puppies = ({ pageData }: InferGetStaticPropsType<typeof getStaticProps>) =
     const imageBuilder = imageUrlBuilder(sanityClient);
 
     return (
-        <Layout pageTitle="Puppies" pageData={pageData}>
+        <Layout pageTitle="Puppies"
+                metaDesc="Browse our selection of adorable puppies available for adoption. Search by name and learn about each puppy's traits and characteristics on our Puppies page."
+                pageData={pageData}>
             <div className="container mx-auto">
                 <div className="flex justify-between items-center mb-4 bg-light-shades drop-shadow-lg rounded-lg p-2">
                     <h1 className="text-3xl font-bold on-secondary-text">Puppies</h1>

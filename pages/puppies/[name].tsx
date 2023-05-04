@@ -7,12 +7,14 @@ import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
 
 const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const { puppy } = pageData;
+    const {puppy} = pageData;
 
-    const { years, weeks, days } = getAge(puppy.birthdate);
+    const {years, weeks, days} = getAge(puppy.birthdate);
 
     return (
-        <Layout pageTitle={puppy.name} pageData={pageData}>
+        <Layout pageTitle={puppy.name}
+                metaDesc={`Meet ${puppy.name}, a charming ${puppy.color} ${puppy.gender} puppy. Explore ${puppy.name}'s age, weight, and unique characteristics, and learn about financing options for this $${puppy.price} puppy.`}
+                pageData={pageData}>
             <div className="flex justify-between items-center p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
                 <h1 className="text-3xl font-bold">{puppy.name}</h1>
                 <h1 className="text-2xl font-normal">{puppy.availability} - ${puppy.price}</h1>
@@ -40,7 +42,8 @@ const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                         </p>
                     </div>
                     <div className="h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
-                        <a href="https://www.example.com/financing-application" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.example.com/financing-application" target="_blank"
+                           rel="noopener noreferrer">
                             <Image
                                 src="/TFC-rectangle-web-banner-800x500.png"
                                 alt="Terrace Finance - Financing Available"
