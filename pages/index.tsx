@@ -8,6 +8,8 @@ import {PortableText} from "@portabletext/react";
 import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
+import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
+import {fetchLiveVideoId} from "../lib/fetchLiveVideoId";
 
 function shuffleArray(array: any) {
     const shuffledArray = [...array];
@@ -23,7 +25,7 @@ function getRandomSample(array: any, count: number) {
     return shuffledArray.slice(0, count);
 }
 
-const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const HomePage = ({pageData, liveVideoId}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
     const {puppies, homepage, youtubeSettings, metaDescription} = pageData;
 
@@ -42,7 +44,7 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
                     className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
-                    <YoutubeLiveEmbed youtubeSettings={youtubeSettings}/>
+                    <YoutubeLiveEmbed liveVideoId={liveVideoId} />
                 </div>
                 <div
                     className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
@@ -100,9 +102,15 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const pageData = await fetchPageData(additionalQuery);
 
+    const channelId = extractYoutubeChannelId(pageData.youtubeSettings?.channelUrl || '') || '';
+    const fallbackVideoId = extractYoutubeVideoId(pageData.youtubeSettings?.fallbackVideoUrl || '') || '';
+
+    const liveVideoId = await fetchLiveVideoId(channelId, fallbackVideoId);
+
     return {
         props: {
             pageData,
+            liveVideoId,
         },
         revalidate: 60,
     };
