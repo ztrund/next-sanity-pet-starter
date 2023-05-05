@@ -35,6 +35,7 @@ const YoutubeLiveEmbed: React.FC<YoutubeLiveEmbedProps> = ({
                 }
             } catch (error) {
                 console.error('Error fetching livestream data:', error);
+                setVideoId(fallbackVideoId);
             }
         };
 

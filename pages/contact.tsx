@@ -7,7 +7,7 @@ import {BusinessHour, SocialMediaLink} from "../types";
 import {IconType} from "react-icons";
 
 const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {contactInfo} = pageData;
+    const {contactInfo, metaDescription} = pageData;
 
     const iconComponents: { [key: string]: IconType } = {
         FaInstagram,
@@ -23,7 +23,7 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
 
     return (
         <Layout pageTitle="Contact Us"
-                metaDesc="Get in touch with us for any inquiries or assistance. Find our email, phone number, location, business hours, and follow us on social media to stay updated with our latest news."
+                metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="container mx-auto p-4 bg-light-shades drop-shadow-lg rounded-lg max-w-3xl">
                 <h1 className="text-3xl font-bold text-center mb-8">Contact Us</h1>
@@ -75,7 +75,13 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    const pageData = await fetchPageData();
+    const additionalQuery = `
+    "metaDescription": *[_type == "metaDescriptions"][0]{
+      'description': contact,
+    },
+  `;
+
+    const pageData = await fetchPageData(additionalQuery);
 
     return {
         props: {

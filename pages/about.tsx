@@ -5,10 +5,10 @@ import CustomCarousel from "../components/customCarousel";
 import fetchPageData from "../lib/fetchPageData";
 
 const About = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {about} = pageData;
+    const {about, metaDescription} = pageData;
     return (
         <Layout pageTitle="About Us"
-                metaDesc="Learn about our passion for puppies, our commitment to their well-being, and our dedication to finding them loving homes. Discover what sets us apart in the world of puppy care."
+                metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="w-full md:w-1/2 h-min p-2 bg-light-shades drop-shadow-lg rounded-lg">
@@ -27,6 +27,9 @@ export const getStaticProps: GetStaticProps = async () => {
     "about": *[_type == "about"][0] {
       content,
       mediaItems
+    },
+    "metaDescription": *[_type == "metaDescriptions"][0]{
+      'description': about,
     },
   `;
 

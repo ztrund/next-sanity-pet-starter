@@ -2,21 +2,24 @@ import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
 import sanityClient from '../../lib/sanityClient';
 import Layout from '../../components/layout';
 import CustomCarousel from "../../components/customCarousel";
-import Image from 'next/image';
 import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
 import imageUrlBuilder from "@sanity/image-url";
 
 const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {puppy, financing} = pageData;
+    const {puppy, financing, metaDescription} = pageData;
 
     const imageBuilder = imageUrlBuilder(sanityClient);
 
     const {years, weeks, days} = getAge(puppy.birthdate);
 
+    const replaceTemplateLiterals = (description: string, data: { [x: string]: any; }) => {
+        return description.replace(/\$\{(\w+)}/g, (_, key) => data[key]);
+    };
+
     return (
         <Layout pageTitle={puppy.name}
-                metaDesc={`Meet ${puppy.name}, a charming ${puppy.color} ${puppy.gender} puppy. Explore ${puppy.name}'s age, weight, and unique characteristics, and learn about financing options for this $${puppy.price} puppy.`}
+                metaDesc={replaceTemplateLiterals(metaDescription.description, puppy)}
                 pageData={pageData}>
             <div className="flex justify-between items-center p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
                 <h1 className="text-3xl font-bold">{puppy.name}</h1>
@@ -86,6 +89,9 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     "financing": *[_type == "financing"][0]{
       banner,
       link,
+    },
+    "metaDescription": *[_type == "metaDescriptions"][0]{
+      'description': puppy,
     },
   `;
 

@@ -8,7 +8,7 @@ import {Parent} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 
 const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {parents} = pageData;
+    const {parents, metaDescription} = pageData;
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -22,7 +22,7 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
 
     return (
         <Layout pageTitle="Parents"
-                metaDesc="Discover our adorable and responsible parents of our beautiful puppies. Search and learn about each parent's characteristics and traits on our Parents page."
+                metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="container mx-auto">
                 <div className="flex justify-between items-center mb-4 bg-light-shades drop-shadow-lg rounded-lg p-2">
@@ -65,6 +65,9 @@ export const getStaticProps: GetStaticProps = async () => {
       color,
       weight,
       mediaItems,
+    },
+    "metaDescription": *[_type == "metaDescriptions"][0]{
+      'description': parents,
     },
   `;
 

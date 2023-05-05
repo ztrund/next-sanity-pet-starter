@@ -6,13 +6,17 @@ import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
 
 const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {parent} = pageData;
+    const {parent, metaDescription} = pageData;
 
     const {years, weeks, days} = getAge(parent.birthdate);
 
+    const replaceTemplateLiterals = (description: string, data: { [x: string]: any; }) => {
+        return description.replace(/\$\{(\w+)}/g, (_, key) => data[key]);
+    };
+
     return (
         <Layout pageTitle={parent.name}
-                metaDesc={`Discover ${parent.name}, a beautiful ${parent.color} ${parent.gender} with a ${parent.weight} lbs weight. Learn more about ${parent.name}'s age, appearance, and unique characteristics.`}
+                metaDesc={replaceTemplateLiterals(metaDescription.description, parent)}
                 pageData={pageData}>
             <div className="flex justify-between items-center p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
                 <h1 className="text-3xl font-bold">{parent.name}</h1>
@@ -62,6 +66,9 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       weight,
       description,
       mediaItems,
+    },
+    "metaDescription": *[_type == "metaDescriptions"][0]{
+      'description': parent,
     },
   `;
 

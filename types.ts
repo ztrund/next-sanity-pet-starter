@@ -80,3 +80,7 @@ export interface Financing {
     banner: any;
     link: string;
 }
+
+export interface MetaDescription {
+    description: string;
+}
