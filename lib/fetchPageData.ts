@@ -5,6 +5,7 @@ import {
     ContactInfo,
     Financing,
     HomePage,
+    MetaDescription,
     Parent,
     Parents,
     Puppies,
@@ -23,6 +24,7 @@ interface PageData {
     parent: Parent | null;
     puppy: Puppy | null;
     financing: Financing | null;
+    metaDescription: MetaDescription | null;
     additionalQuery?: string;
 }
 

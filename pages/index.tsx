@@ -25,7 +25,7 @@ function getRandomSample(array: any, count: number) {
 
 const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
-    const {puppies, homepage, youtubeSettings} = pageData;
+    const {puppies, homepage, youtubeSettings, metaDescription} = pageData;
 
     const imageBuilder = imageUrlBuilder(sanityClient);
 
@@ -37,7 +37,7 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
 
     return (
         <Layout pageTitle="Home Page"
-                metaDesc="Explore our selection of beautiful puppies and watch live streaming on our home page. Learn about our puppies' details and visit our available puppies page to see more!"
+                metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
@@ -92,6 +92,9 @@ export const getStaticProps: GetStaticProps = async () => {
     "youtubeSettings": *[_type == "youtubeSettings"][0] {
       channelUrl,
       fallbackVideoUrl
+    },
+    "metaDescription": *[_type == "metaDescriptions"][0]{
+      'description': home,
     },
   `;
 
