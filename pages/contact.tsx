@@ -1,25 +1,10 @@
 import Layout from '../components/layout';
-import React from "react";
-import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from "react-icons/fa";
 import {GetStaticProps, InferGetStaticPropsType} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {BusinessHour, SocialMediaLink} from "../types";
-import {IconType} from "react-icons";
 
 const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {contactInfo, metaDescription} = pageData;
-
-    const iconComponents: { [key: string]: IconType } = {
-        FaInstagram,
-        FaFacebookF,
-        FaYoutube,
-        FaTwitter,
-    };
-
-    const DynamicFontAwesomeIcon = (name: string) => {
-        const IconComponent = iconComponents[name];
-        return IconComponent ? <IconComponent className="mr-2"/> : null;
-    };
 
     return (
         <Layout pageTitle="Contact Us"
@@ -54,7 +39,7 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
                             rel="noopener noreferrer"
                             className="p-2 hover:text-dark-accent inline-flex items-center"
                         >
-                            {DynamicFontAwesomeIcon(link.icon.name)}
+                            <i className={`${link.icon.icon} mr-2`}/>
                             {link.platform}
                         </a>
                     ))}
