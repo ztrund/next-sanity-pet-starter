@@ -1,8 +1,5 @@
-import Link from 'next/link';
 import {SiteInfo} from '../types';
-import {IconType} from "react-icons";
-import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from "react-icons/fa";
-import React from "react";
+import Link from "next/link";
 
 interface FooterProps {
     pageData?: SiteInfo;
@@ -33,18 +30,6 @@ const Footer = ({ pageData }: FooterProps) => {
         },
     ];
 
-    const iconComponents: { [key: string]: IconType } = {
-        FaInstagram,
-        FaFacebookF,
-        FaYoutube,
-        FaTwitter,
-    };
-
-    const DynamicFontAwesomeIcon = (name: string) => {
-        const IconComponent = iconComponents[name];
-        return IconComponent ? <IconComponent className="mr-2" /> : null;
-    };
-
     return (
         <footer className="bg-dark-shades text-white">
             <div className="container mx-auto p-4">
@@ -61,7 +46,7 @@ const Footer = ({ pageData }: FooterProps) => {
                                         rel="noopener noreferrer"
                                         className="hover:text-dark-accent inline-flex items-center"
                                     >
-                                        {DynamicFontAwesomeIcon(link.icon.name)}
+                                        <i className={`${link.icon.icon} mr-2`}/>
                                         {link.platform}
                                     </a>
                                 </li>
