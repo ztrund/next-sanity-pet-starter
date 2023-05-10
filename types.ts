@@ -61,6 +61,14 @@ export interface YoutubeSettings {
 export interface About {
     content: any[];
     mediaItems: MediaItem[];
+    team: TeamMember[];
+    teamDescription: any[];
+}
+
+export interface TeamMember {
+    name: string;
+    position: string;
+    image: any;
 }
 
 export interface Parent {
