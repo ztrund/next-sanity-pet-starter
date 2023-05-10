@@ -13,6 +13,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fullhuman/postcss-purgecss": "^5.0.0",
     "@headlessui/react": "^1.7.14",
     "@next/bundle-analyzer": "^13.3.4",
     "@portabletext/react": "^2.0.2",
@@ -34,7 +35,6 @@
     "wrangler": "^2.19.0"
   },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^5.0.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^18.0.0",
