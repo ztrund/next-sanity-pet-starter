@@ -39,7 +39,7 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
                             rel="noopener noreferrer"
                             className="p-2 hover:text-dark-accent inline-flex items-center"
                         >
-                            <i className={`${link.icon.icon} mr-2`}/>
+                            <i className={`fab mr-2`}>{String.fromCharCode(parseInt(link.icon.icon.split(" & ")[1], 16))}</i>
                             {link.platform}
                         </a>
                     ))}

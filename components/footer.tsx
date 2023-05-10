@@ -46,7 +46,7 @@ const Footer = ({ pageData }: FooterProps) => {
                                         rel="noopener noreferrer"
                                         className="hover:text-dark-accent inline-flex items-center"
                                     >
-                                        <i className={`${link.icon.icon} mr-2`}/>
+                                        <i className={`fab mr-2`}>{String.fromCharCode(parseInt(link.icon.icon.split(" & ")[1], 16))}</i>
                                         {link.platform}
                                     </a>
                                 </li>
