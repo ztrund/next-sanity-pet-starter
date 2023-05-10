@@ -58,7 +58,7 @@ const HomePage = ({pageData, liveVideoId}: InferGetStaticPropsType<typeof getSta
                         <div className="h-48 overflow-hidden">
                             <img
                                 src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).width(512).auto('format').quality(75).url()}
-                                alt={puppy.name} className="w-full h-full object-cover"/>
+                                alt={puppy.name} className="w-full h-full object-cover" loading="lazy"/>
                         </div>
                         <div className="p-2">
                             <h2 className="text-lg font-bold">{puppy.name}</h2>

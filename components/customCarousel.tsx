@@ -77,6 +77,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                     key={index}
                     src={thumbnailUrl}
                     alt=""
+                    loading="lazy"
                 />
             );
         }
@@ -125,6 +126,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                             src={imageBuilder.image(mediaItem.image).width(768).auto('format').quality(75).url()}
                             alt="Puppy"
                             className="w-auto max-h-full"
+                            loading="lazy"
                         />
                     )}
                     {mediaItem.type === "video" && mediaItem.videoUrl && (
@@ -136,6 +138,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                 )}?mute=1&enablejsapi=1`}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
+                                loading="lazy"
                                 ref={(el) => {
                                     // Assign the ref
                                     if (el && !videoRef.current && window.YT) {
