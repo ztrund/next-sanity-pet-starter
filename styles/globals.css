@@ -1,7 +1,7 @@
 @import 'react-responsive-carousel/lib/styles/carousel.min.css';
-@import '../public/css/fontawesome.min.css';
+/*@import '../public/css/fontawesome.min.css';*/
 @import '../public/css/brands.min.css';
-@import '../public/css/solid.min.css';
+/*@import '../public/css/solid.min.css';*/
 
 @tailwind base;
 @tailwind components;
