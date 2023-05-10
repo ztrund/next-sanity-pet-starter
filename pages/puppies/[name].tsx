@@ -52,9 +52,9 @@ const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                            rel="noopener noreferrer">
                             <img
                                 src={imageBuilder.image(financing.banner).width(768).auto('format').quality(75).url()}
-                                alt="Terrace Finance - Financing Available"
-                                width='800'
-                                height='500'
+                                alt="Financing Available"
+                                loading="lazy"
+                                width="768"
                             />
                         </a>
                     </div>

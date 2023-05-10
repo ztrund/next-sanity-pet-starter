@@ -42,7 +42,7 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                             <div className="h-48 overflow-hidden">
                                 <img
                                     src={imageBuilder.image(parent.mediaItems.find(item => item.type === "image")?.image).width(384).auto('format').quality(75).url()}
-                                    alt={parent.name} className="w-full h-full object-cover"/>
+                                    alt={parent.name} className="w-full h-full object-cover" loading="lazy" width="384"/>
                             </div>
                             <div className="p-2">
                                 <h2 className="text-lg font-bold">{parent.name}</h2>
