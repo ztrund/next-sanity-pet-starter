@@ -127,6 +127,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                             alt="Puppy"
                             className="w-auto max-h-full"
                             loading="lazy"
+                            width="768"
                         />
                     )}
                     {mediaItem.type === "video" && mediaItem.videoUrl && (
@@ -139,6 +140,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 loading="lazy"
+                                width="768"
                                 ref={(el) => {
                                     // Assign the ref
                                     if (el && !videoRef.current && window.YT) {

@@ -28,7 +28,7 @@ const About = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                                     <div className="flex flex-col items-center">
                                         <img
                                             src={imageBuilder.image(teamMember.image).width(128).height(128).auto('format').quality(75).url()}
-                                            alt={teamMember.name} className="rounded-full shadow-lg"/>
+                                            alt={teamMember.name} className="rounded-full shadow-lg" loading="lazy" height="128" width="128"/>
                                         <h3 className="text-xl font-bold mt-2 text-center">{teamMember.name}</h3>
                                         <p className="text-sm text-center">{teamMember.position}</p>
                                     </div>

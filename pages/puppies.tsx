@@ -42,7 +42,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                             <div className="h-48 overflow-hidden">
                                 <img
                                     src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).width(384).auto('format').quality(75).url()}
-                                    alt={puppy.name} className="w-full h-full object-cover" loading="lazy"/>
+                                    alt={puppy.name} className="w-full h-full object-cover" loading="lazy" width="384"/>
                             </div>
                             <div className="flex justify-between flex-row items-center">
                                 <div className="p-2">
