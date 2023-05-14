@@ -1,16 +1,9 @@
 @import 'react-responsive-carousel/lib/styles/carousel.min.css';
-/*@import '../public/css/fontawesome.min.css';*/
-/*@import '../public/css/brands.min.css';*/
-/*@import '../public/css/solid.min.css';*/
 @import '../public/css/fa-min.min.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.carousel .slide iframe {
-    @apply w-full m-0 !important;
-}
 
 .video-container {
     @apply relative w-full;

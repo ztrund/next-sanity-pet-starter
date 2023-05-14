@@ -1,12 +1,11 @@
-import React, {ReactElement, useEffect, useRef, useState} from "react";
-import {Carousel} from "react-responsive-carousel";
+import React, {useCallback, useEffect, useState} from "react";
 import imageUrlBuilder from "@sanity/image-url";
 import sanityClient from "../lib/sanityClient";
 import {extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 import {MediaItem} from "../types";
-import Player = YT.Player;
-import PlayerEvent = YT.PlayerEvent;
-import OnStateChangeEvent = YT.OnStateChangeEvent;
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import LiteYouTubeEmbed from "react-lite-youtube-embed";
 
 interface CustomCarouselProps {
     mediaItems: MediaItem[];
@@ -14,155 +13,108 @@ interface CustomCarouselProps {
 
 const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
     const imageBuilder = imageUrlBuilder(sanityClient);
-    const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
-    const [thumbnails, setThumbnails] = useState<ReactElement[]>([]);
-    const [autoPlay, setAutoPlay] = useState(true);
-    const videoRef = useRef<Player | null>(null);
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    const [viewportRef, embla] = useEmblaCarousel(
+        {loop: true},
+        [Autoplay({delay: 5000, stopOnInteraction: true})]
+    );
+    const [thumbViewportRef, emblaThumbs] = useEmblaCarousel(
+        {loop: false, containScroll: 'keepSnaps'}
+    );
+
+    const scrollTo = useCallback((index: number) => {
+        if (embla) {
+            embla.scrollTo(index);
+            embla.plugins().autoplay?.stop();
+        }
+    }, [embla]);
 
     useEffect(() => {
-        loadYouTubeAPI();
-        generateThumbnails();
-    }, [mediaItems]);
-
-    const loadYouTubeAPI = () => {
-        if (!document.getElementById("youtube-api")) {
-            const tag = document.createElement("script");
-            tag.src = "https://www.youtube.com/iframe_api";
-            tag.id = "youtube-api";
-            const firstScriptTag = document.getElementsByTagName("script")[0];
-            if (firstScriptTag && firstScriptTag.parentNode) {
-                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-            }
+        if (embla && emblaThumbs) {
+            embla.on('select', () => {
+                emblaThumbs.scrollTo(embla.selectedScrollSnap());
+            });
+            emblaThumbs.on('select', () => {
+                embla.scrollTo(emblaThumbs.selectedScrollSnap());
+            });
         }
-    };
-
-    const onCarouselChange = (index: number) => {
-        setSelectedPhotoIndex(index);
-        if (videoRef.current) {
-            videoRef.current.pauseVideo();
-        }
-    };
-
-    const onVideoReady = (event: PlayerEvent) => {
-        videoRef.current = event.target;
-    };
-
-    const onVideoStateChange = (event: OnStateChangeEvent) => {
-        if (event.data === 1) {
-            // Video is playing
-            setAutoPlay(false);
-        } else {
-            // Video is paused, buffering, or ended
-            setAutoPlay(true);
-        }
-    };
-
-    const renderThumb = (item: MediaItem, index: number) => {
-        if (item.type === "image" && item.image) {
-            const imgUrl = imageBuilder.image(item.image).width(100).height(56).url() || "";
-            return (
-                <img
-                    key={index}
-                    src={imgUrl}
-                    alt=""
-                />
-            );
-        }
-
-        if (item.type === "video" && item.videoUrl) {
-            const videoId = extractYoutubeVideoId(item.videoUrl);
-            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
-            return (
-                <img
-                    key={index}
-                    src={thumbnailUrl}
-                    alt=""
-                    loading="lazy"
-                />
-            );
-        }
-
-        return null;
-    };
-
-    const renderAllThumbs = (): ReactElement[] => {
-        return mediaItems
-            .map((item, index) => {
-                return renderThumb(item, index);
-            })
-            .filter((thumb) => thumb !== null) as ReactElement[];
-    };
-
-    const generateThumbnails = () => {
-        setThumbnails(renderAllThumbs());
-    };
+    }, [embla, emblaThumbs]);
 
     useEffect(() => {
-        generateThumbnails();
-    }, []);
+        if (embla) {
+            embla.on('select', () => {
+                setSelectedIndex(embla.selectedScrollSnap());
+            });
+        }
+    }, [embla]);
 
     return (
-        <Carousel
-            showThumbs={true}
-            showArrows
-            emulateTouch
-            infiniteLoop
-            autoPlay={autoPlay}
-            dynamicHeight={false}
-            showStatus={false}
-            showIndicators={false}
-            interval={5000}
-            selectedItem={selectedPhotoIndex}
-            onChange={onCarouselChange}
-            renderThumbs={() => thumbnails}
-            preventMovementUntilSwipeScrollTolerance={true}
-            swipeScrollTolerance={50}
-        >
-            {mediaItems.map((mediaItem: MediaItem, index: number) => (
-                <div
-                    key={mediaItem._key}
-                    className="w-full h-full flex items-center justify-center"
-                >
-                    {mediaItem.type === "image" && mediaItem.image && (
-                        <img
-                            src={imageBuilder.image(mediaItem.image).width(768).auto('format').quality(75).url()}
-                            alt="Puppy"
-                            className="w-auto max-h-full"
-                            loading={index < 1 ? "eager" : "lazy"}
-                            width="768"
-                        />
-                    )}
-                    {mediaItem.type === "video" && mediaItem.videoUrl && (
-                        <div className="aspect-w-16 aspect-h-9 w-full">
-                            <iframe
-                                className="w-full h-full absolute inset-0"
-                                title="YouTube video player"
-                                src={`https://www.youtube.com/embed/${extractYoutubeVideoId(
-                                    mediaItem.videoUrl
-                                )}?mute=1&enablejsapi=1`}
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                loading={index < 1 ? "eager" : "lazy"}
-                                width="768"
-                                ref={(el) => {
-                                    // Assign the ref
-                                    if (el && !videoRef.current && window.YT) {
-                                        window.YT.ready(() => {
-                                            new window.YT.Player(el, {
-                                                events: {
-                                                    onReady: onVideoReady,
-                                                    onStateChange: onVideoStateChange,
-                                                },
-                                            });
-                                        });
-                                    }
-                                }}
-                            />
+        <>
+            <div className="embla overflow-hidden" ref={viewportRef}>
+                <div className="embla__container flex items-center">
+                    {mediaItems.map((mediaItem: MediaItem, index: number) => (
+                        <div
+                            key={mediaItem._key}
+                            className="embla__slide flex-grow-0 flex-shrink-0 basis-full min-w-0"
+                        >
+                            {mediaItem.type === "image" && mediaItem.image && (
+                                <img
+                                    src={imageBuilder.image(mediaItem.image).width(768).auto('format').quality(75).url()}
+                                    alt={"Slide " + index}
+                                    className="w-auto max-h-full"
+                                    loading={index < 1 ? "eager" : "lazy"}
+                                    width="768"
+                                />
+                            )}
+                            {mediaItem.type === "video" && mediaItem.videoUrl && (
+                                <LiteYouTubeEmbed
+                                    id={extractYoutubeVideoId(mediaItem.videoUrl) || ""}
+                                    title={"Slide " + index + " Video"}
+                                    poster="hqdefault"
+                                    params="autoplay=1&mute=1"
+                                />
+                            )}
                         </div>
-                    )}
+                    ))}
                 </div>
-            ))}
-        </Carousel>
+            </div>
+            <div className="embla-thumbs overflow-hidden" ref={thumbViewportRef}>
+                <div className="embla-thumbs__container flex flex-row">
+                    {mediaItems.map((mediaItem: MediaItem, index: number) => (
+                        <div
+                            key={mediaItem._key}
+                            className={`embla-thumbs__slide flex ${selectedIndex === index ? 'border-4 border-main-brand-color' : 'border-4'}`}
+                            onClick={() => {scrollTo(index)}}
+                        >
+                            <button className="embla-thumbs__slide__button" type="button"
+                                    title={"Slide " + index + " Button"}>
+                                {mediaItem.type === "image" && mediaItem.image && (
+                                    <img
+                                        key={index}
+                                        src={imageBuilder.image(mediaItem.image).height(128).width(128).url()}
+                                        alt={"Slide " + index + " Thumbnail"}
+                                        className="h-32 object-cover"
+                                        loading="lazy"
+                                    />
+                                )}
+                                {mediaItem.type === "video" && mediaItem.videoUrl && (
+                                    <img
+                                        key={index}
+                                        src={`https://img.youtube.com/vi/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.jpg`}
+                                        height={128}
+                                        width={128}
+                                        className="h-32 object-cover"
+                                        alt={"Slide " + index + " Thumbnail"}
+                                        loading="lazy"
+                                    />
+                                )}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </>
     );
 };
 
