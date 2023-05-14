@@ -101,7 +101,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                 {mediaItem.type === "video" && mediaItem.videoUrl && (
                                     <img
                                         key={index}
-                                        src={`https://img.youtube.com/vi/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.jpg`}
+                                        src={`https://i1.ytimg.com/vi/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.jpg`}
                                         height={128}
                                         width={128}
                                         className="h-32 object-cover"
