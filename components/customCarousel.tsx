@@ -115,6 +115,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
             selectedItem={selectedPhotoIndex}
             onChange={onCarouselChange}
             renderThumbs={() => thumbnails}
+            preventMovementUntilSwipeScrollTolerance={true}
+            swipeScrollTolerance={50}
         >
             {mediaItems.map((mediaItem: MediaItem, index: number) => (
                 <div
@@ -134,6 +136,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         <div className="aspect-w-16 aspect-h-9 w-full">
                             <iframe
                                 className="w-full h-full absolute inset-0"
+                                title="YouTube video player"
                                 src={`https://www.youtube.com/embed/${extractYoutubeVideoId(
                                     mediaItem.videoUrl
                                 )}?mute=1&enablejsapi=1`}
