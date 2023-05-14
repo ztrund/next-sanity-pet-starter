@@ -116,7 +116,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
             onChange={onCarouselChange}
             renderThumbs={() => thumbnails}
         >
-            {mediaItems.map((mediaItem) => (
+            {mediaItems.map((mediaItem: MediaItem, index: number) => (
                 <div
                     key={mediaItem._key}
                     className="w-full h-full flex items-center justify-center"
@@ -126,7 +126,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                             src={imageBuilder.image(mediaItem.image).width(768).auto('format').quality(75).url()}
                             alt="Puppy"
                             className="w-auto max-h-full"
-                            loading="lazy"
+                            loading={index < 1 ? "eager" : "lazy"}
                             width="768"
                         />
                     )}
@@ -139,7 +139,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                 )}?mute=1&enablejsapi=1`}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
-                                loading="lazy"
+                                loading={index < 1 ? "eager" : "lazy"}
                                 width="768"
                                 ref={(el) => {
                                     // Assign the ref
