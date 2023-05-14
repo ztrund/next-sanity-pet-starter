@@ -33,8 +33,11 @@ const HomePage = ({pageData, liveVideoId}: InferGetStaticPropsType<typeof getSta
 
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         setRandomPuppies(getRandomSample(puppies, 4));
+        setIsLoading(false);
     }, []);
 
     return (
@@ -44,7 +47,7 @@ const HomePage = ({pageData, liveVideoId}: InferGetStaticPropsType<typeof getSta
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
                     className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
-                    <YoutubeLiveEmbed liveVideoId={liveVideoId} />
+                    <YoutubeLiveEmbed liveVideoId={liveVideoId}/>
                 </div>
                 <div
                     className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
@@ -52,21 +55,28 @@ const HomePage = ({pageData, liveVideoId}: InferGetStaticPropsType<typeof getSta
                 </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 mb-4">
-                {randomPuppies.map((puppy) => (
-                    <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name}
-                          className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-                        <div className="h-48 overflow-hidden">
-                            <img
-                                src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).width(384).auto('format').quality(75).url()}
-                                alt={puppy.name} className="w-full h-full object-cover" loading="lazy" width="384"/>
+                {isLoading ? (
+                    Array(4).fill(null).map((_, index) => (
+                        <div key={index}
+                             className="h-64 bg-light-shades rounded-lg shadow-lg overflow-hidden">
                         </div>
-                        <div className="p-2">
-                            <h2 className="text-lg font-bold">{puppy.name}</h2>
-                            <p className="">{puppy.gender} - {puppy.color}</p>
-                            <p className="">{puppy.availability}</p>
-                        </div>
-                    </Link>
-                ))}
+                    ))) : (
+                    randomPuppies.map((puppy) => (
+                        <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name}
+                              className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                            <div className="h-48 overflow-hidden">
+                                <img
+                                    src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).width(384).auto('format').quality(75).url()}
+                                    alt={puppy.name} className="w-full h-full object-cover" loading="lazy" width="384"/>
+                            </div>
+                            <div className="p-2">
+                                <h2 className="text-lg font-bold">{puppy.name}</h2>
+                                <p className="">{puppy.gender} - {puppy.color}</p>
+                                <p className="">{puppy.availability}</p>
+                            </div>
+                        </Link>
+                    ))
+                )}
             </div>
             <Link href="/puppies"
                   className="flex items-center justify-center p-2 bg-light-shades rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">

@@ -36,13 +36,14 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                     />
                 </div>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                    {filteredPuppies.map((puppy: Puppy) => (
+                    {filteredPuppies.map((puppy: Puppy, index: number) => (
                         <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name}
                               className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                             <div className="h-48 overflow-hidden">
                                 <img
                                     src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).width(384).auto('format').quality(75).url()}
-                                    alt={puppy.name} className="w-full h-full object-cover" loading="lazy" width="384"/>
+                                    alt={puppy.name} className="w-full h-full object-cover"
+                                    loading={index < 1 ? "eager" : "lazy"} width="384"/>
                             </div>
                             <div className="flex justify-between flex-row items-center">
                                 <div className="p-2">
