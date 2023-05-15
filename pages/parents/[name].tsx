@@ -21,11 +21,11 @@ const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
             <div className="flex justify-between items-center p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
                 <h1 className="text-3xl font-bold">{parent.name}</h1>
             </div>
-            <div className="flex flex-col md:flex-row gap-4">
-                <div className="w-full md:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
+            <div className="flex flex-col lg:flex-row gap-4">
+                <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
                     <CustomCarousel mediaItems={parent.mediaItems}/>
                 </div>
-                <div className="w-full md:w-1/2 h-min p-2 bg-light-shades drop-shadow-lg rounded-lg">
+                <div className="w-full lg:w-1/2 h-min p-2 bg-light-shades drop-shadow-lg rounded-lg">
                     <p>
                         <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
                     </p>
