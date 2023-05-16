@@ -122,7 +122,6 @@ export const getStaticProps: GetStaticProps = async () => {
             pageData,
             liveVideoId,
         },
-        revalidate: 60,
     };
 };
 
