@@ -12,6 +12,7 @@ const YoutubeLiveEmbed: React.FC<YoutubeLiveEmbedProps> = ({liveVideoId}) => {
                 <LiteYouTubeEmbed
                     id={liveVideoId}
                     title="YouTube Live"
+                    webp={true}
                     poster="hqdefault"
                     params="autoplay=1&mute=1"
                 />

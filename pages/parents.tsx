@@ -41,9 +41,9 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                               className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                             <div className="h-48 overflow-hidden">
                                 <img
-                                    src={imageBuilder.image(parent.mediaItems.find(item => item.type === "image")?.image).width(384).auto('format').quality(75).url()}
+                                    src={imageBuilder.image(parent.mediaItems.find(item => item.type === "image")?.image).width(384).height(192).auto('format').quality(75).url()}
                                     alt={parent.name} className="w-full h-full object-cover"
-                                    loading={index < 1 ? "eager" : "lazy"} width="384"/>
+                                    loading={index < 1 ? "eager" : "lazy"} width="384" height="192"/>
                             </div>
                             <div className="p-2">
                                 <h2 className="text-lg font-bold">{parent.name}</h2>

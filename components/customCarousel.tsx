@@ -60,18 +60,18 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         >
                             {mediaItem.type === "image" && mediaItem.image && (
                                 <img
-                                    src={imageBuilder.image(mediaItem.image).width(768).height(768).auto('format').quality(75).url()}
+                                    src={imageBuilder.image(mediaItem.image).width(744).height(744).auto('format').quality(75).url()}
                                     alt={"Slide " + index}
-                                    className="w-auto max-h-full"
                                     loading={index < 1 ? "eager" : "lazy"}
-                                    width="768"
-                                    height="768"
+                                    width="744"
+                                    height="744"
                                 />
                             )}
                             {mediaItem.type === "video" && mediaItem.videoUrl && (
                                 <LiteYouTubeEmbed
                                     id={extractYoutubeVideoId(mediaItem.videoUrl) || ""}
                                     title={"Slide " + index + " Video"}
+                                    webp={true}
                                     poster="hqdefault"
                                     params="autoplay=1&mute=1"
                                 />
@@ -95,11 +95,10 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                 {mediaItem.type === "image" && mediaItem.image && (
                                     <img
                                         key={index}
-                                        src={imageBuilder.image(mediaItem.image).height(128).width(128).url()}
+                                        src={imageBuilder.image(mediaItem.image).height(128).width(128).auto('format').quality(75).url()}
                                         height="128"
                                         width="128"
                                         alt={"Slide " + index + " Thumbnail"}
-                                        className="h-32 object-cover"
                                         loading="lazy"
                                     />
                                 )}
