@@ -86,7 +86,9 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         <div
                             key={mediaItem._key}
                             className={`embla-thumbs__slide flex ${selectedIndex === index ? 'border-4 border-main-brand-color' : 'border-4'}`}
-                            onClick={() => {scrollTo(index)}}
+                            onClick={() => {
+                                scrollTo(index)
+                            }}
                         >
                             <button className="embla-thumbs__slide__button" type="button"
                                     title={"Slide " + index + " Button"}>
@@ -102,15 +104,20 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                     />
                                 )}
                                 {mediaItem.type === "video" && mediaItem.videoUrl && (
-                                    <img
-                                        key={index}
-                                        src={`https://i1.ytimg.com/vi/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.jpg`}
-                                        height="128"
-                                        width="128"
-                                        className="h-32 object-cover"
-                                        alt={"Slide " + index + " Thumbnail"}
-                                        loading="lazy"
-                                    />
+                                    <picture key={index}>
+                                        <source
+                                            type="image/webp"
+                                            srcSet={`https://i.ytimg.com/vi_webp/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.webp`}
+                                        />
+                                        <img
+                                            src={`https://i.ytimg.com/vi/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.jpg`}
+                                            height="128"
+                                            width="128"
+                                            className="h-32 object-cover"
+                                            alt={"Slide " + index + " Thumbnail"}
+                                            loading="lazy"
+                                        />
+                                    </picture>
                                 )}
                             </button>
                         </div>

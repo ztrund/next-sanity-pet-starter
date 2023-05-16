@@ -14,8 +14,8 @@ const About = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
         <Layout pageTitle="About Us"
                 metaDesc={metaDescription.description}
                 pageData={pageData}>
-            <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex flex-col w-full md:w-1/2 h-min gap-4">
+            <div className="flex flex-col lg:flex-row gap-4">
+                <div className="flex flex-col w-full lg:w-1/2 h-min gap-4">
                     <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
                         <h2 className="text-4xl font-extrabold text-center mb-2">About Us</h2>
                         <div className="prose max-w-none"><PortableText value={about.content}/></div>
@@ -24,7 +24,7 @@ const About = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                         <h2 className="text-4xl font-extrabold text-center mb-2">Our Team</h2>
                         <div className="flex flex-wrap justify-center gap-2 mb-2">
                             {about.team.map((teamMember: TeamMember) => (
-                                <div key={teamMember.name} className="flex flex-col md:flex-row items-center">
+                                <div key={teamMember.name} className="flex flex-col lg:flex-row items-center">
                                     <div className="flex flex-col items-center">
                                         <img
                                             src={imageBuilder.image(teamMember.image).width(128).height(128).auto('format').quality(75).url()}
@@ -38,7 +38,7 @@ const About = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                         <div className="prose max-w-none"><PortableText value={about.teamDescription}/></div>
                     </div>
                 </div>
-                <div className="w-full md:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
+                <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
                     <CustomCarousel mediaItems={about.mediaItems}/>
                 </div>
             </div>

@@ -25,11 +25,11 @@ const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <h1 className="text-3xl font-bold">{puppy.name}</h1>
                 <h1 className="text-2xl font-normal">{puppy.availability} - ${puppy.price}</h1>
             </div>
-            <div className="flex flex-col md:flex-row gap-4">
-                <div className="w-full md:w-1/2 h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
+            <div className="flex flex-col lg:flex-row gap-4">
+                <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
                     <CustomCarousel mediaItems={puppy.mediaItems}/>
                 </div>
-                <div className="w-full md:w-1/2">
+                <div className="w-full lg:w-1/2">
                     <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg mb-4">
                         <p>
                             <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
