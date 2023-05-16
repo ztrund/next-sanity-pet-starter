@@ -5,7 +5,7 @@ const headers = `
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Frame-Options: SAMEORIGIN
-  Content-Security-Policy: default-src 'self'; img-src 'self' https://i.ytimg.com https://*.sanity.io data:; media-src 'self' ; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; frame-src 'self' https://www.youtube-nocookie.com/; connect-src 'self' https://*.sanity.io https://*.cloudflareinsights.com;
+  Content-Security-Policy: default-src 'self'; img-src 'self' https://i.ytimg.com https://*.sanity.io data:; media-src 'self' ; script-src 'self' static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; frame-src 'self' https://www.youtube-nocookie.com/; connect-src 'self' cloudflareinsights.com;
 `;
 
 const outputPath = path.join(__dirname, 'out');
