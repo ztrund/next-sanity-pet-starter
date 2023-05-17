@@ -9,7 +9,6 @@ import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
-import {fetchLiveVideoId} from "../lib/fetchLiveVideoId";
 
 function shuffleArray(array: any) {
     const shuffledArray = [...array];
@@ -25,9 +24,9 @@ function getRandomSample(array: any, count: number) {
     return shuffledArray.slice(0, count);
 }
 
-const HomePage = ({pageData, liveVideoId}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
-    const {puppies, homepage, youtubeSettings, metaDescription} = pageData;
+    const {puppies, homepage, metaDescription, youtubeSettings} = pageData;
 
     const imageBuilder = imageUrlBuilder(sanityClient);
 
@@ -35,9 +34,21 @@ const HomePage = ({pageData, liveVideoId}: InferGetStaticPropsType<typeof getSta
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const [liveVideoId, setLiveVideoId] = useState('');
+
+    const channelId = extractYoutubeChannelId(youtubeSettings.channelUrl || '') || '';
+    const fallbackVideoId = extractYoutubeVideoId(youtubeSettings.fallbackVideoUrl || '') || '';
+
     useEffect(() => {
         setRandomPuppies(getRandomSample(puppies, 4));
         setIsLoading(false);
+        const fetchLiveVideoId = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/checkYoutubeStatus?channelId=${channelId}&fallbackVideoId=${fallbackVideoId}`);
+            const liveVideoId = await response.text();
+            setLiveVideoId(liveVideoId);
+        };
+
+        fetchLiveVideoId();
     }, []);
 
     return (
@@ -90,13 +101,10 @@ export const getStaticProps: GetStaticProps = async () => {
     const additionalQuery = `
     "puppies": *[_type == "puppies"] {
       name,
-      birthdate,
       gender,
       color,
-      weight,
       mediaItems,
       availability,
-      price
     },
     "homepage": *[_type == "homepage"][0] {
       content
@@ -112,15 +120,9 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const pageData = await fetchPageData(additionalQuery);
 
-    const channelId = extractYoutubeChannelId(pageData.youtubeSettings?.channelUrl || '') || '';
-    const fallbackVideoId = extractYoutubeVideoId(pageData.youtubeSettings?.fallbackVideoUrl || '') || '';
-
-    const liveVideoId = await fetchLiveVideoId(channelId, fallbackVideoId);
-
     return {
         props: {
             pageData,
-            liveVideoId,
         },
     };
 };
