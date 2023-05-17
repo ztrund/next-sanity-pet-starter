@@ -13,6 +13,11 @@ export async function onRequest(context) {
     const fallbackVideoId = url.searchParams.get('fallbackVideoId');
     const apiKey = context.env.YOUTUBE_API_KEY;
 
+    const origin = context.request.headers.get('Origin') || context.request.headers.get('Referer');
+    if (!origin || !origin.includes(context.env.API_BASE_URL)) {
+        return createResponse('Unauthorized', 403);
+    }
+
     if (!channelId || !fallbackVideoId) {
         return createResponse('Missing channelId or fallbackVideoId', 400);
     }
