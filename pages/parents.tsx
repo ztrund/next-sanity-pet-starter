@@ -32,9 +32,20 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                     />
                 </div>
                 <div className="flex flex-wrap justify-center gap-4">
-                    {filteredParents.map((parent: Parent, index: number) => (
-                        <DogCard dog={parent} showPrice={false} cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"} key={index}/>
-                    ))}
+                    {
+                        filteredParents.length > 0 ? (
+                            filteredParents.map((parent: Parent) => (
+                                <DogCard dog={parent} showPrice={false}
+                                         cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"}
+                                         key={parent._id}/>
+                            ))
+                        ) : (
+                            <div
+                                className="h-auto w-auto bg-light-shades rounded-lg text-xl p-2">
+                                No parents found :(
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </Layout>
@@ -44,6 +55,7 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
 export const getStaticProps: GetStaticProps = async () => {
     const additionalQuery = `
     "parents": *[_type == "parents"]{
+      _id,
       name,
       birthdate,
       gender,

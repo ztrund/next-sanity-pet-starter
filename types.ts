@@ -35,6 +35,7 @@ export interface SiteInfo {
 }
 
 export interface Puppy {
+    _id: string;
     name: string;
     birthdate: string;
     gender: string;
@@ -72,6 +73,7 @@ export interface TeamMember {
 }
 
 export interface Parent {
+    _id: string;
     name: string;
     birthdate: string;
     gender: string;

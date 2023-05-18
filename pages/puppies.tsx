@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Layout from '../components/layout';
 import {Puppy} from "../types";
@@ -10,11 +10,15 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
 
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredPuppies = puppies.filter((puppy: Puppy) => {
-        return (
-            puppy.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    });
+    const availabilityOrder: Record<string, number> = { 'Available': 1, 'Reserved': 2, 'Sold': 3 };
+
+    const sortedAndFilteredPuppies = useMemo(() => {
+        return [...puppies]
+            .sort((a: Puppy, b: Puppy) => {
+                return availabilityOrder[a.availability] - availabilityOrder[b.availability];
+            })
+            .filter((puppy: Puppy) => puppy.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    }, [puppies, searchTerm]);
 
     return (
         <Layout pageTitle="Puppies"
@@ -32,9 +36,20 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                     />
                 </div>
                 <div className="flex flex-wrap justify-center gap-4">
-                    {filteredPuppies.map((puppy: Puppy, index: number) => (
-                        <DogCard dog={puppy} showPrice={true} cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"} key={index}/>
-                    ))}
+                    {
+                        sortedAndFilteredPuppies.length > 0 ? (
+                            sortedAndFilteredPuppies.map((puppy: Puppy) => (
+                                <DogCard dog={puppy} showPrice={true}
+                                         cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"}
+                                         key={puppy._id}/>
+                            ))
+                        ) : (
+                            <div
+                                className="h-auto w-auto bg-light-shades rounded-lg text-xl p-2">
+                                No puppies found :(
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </Layout>
@@ -44,11 +59,10 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
 export const getStaticProps: GetStaticProps = async () => {
     const additionalQuery = `
     "puppies": *[_type == "puppies"] {
+      _id,
       name,
-      birthdate,
       gender,
       color,
-      weight,
       mediaItems,
       availability,
       price
