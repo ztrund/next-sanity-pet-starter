@@ -54,7 +54,7 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
 
 export const getStaticProps: GetStaticProps = async () => {
     const additionalQuery = `
-    "parents": *[_type == "parents"]{
+    "parents": *[_type == "parents"] | order(name) {
       _id,
       name,
       birthdate,

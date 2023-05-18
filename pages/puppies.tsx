@@ -58,7 +58,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
 
 export const getStaticProps: GetStaticProps = async () => {
     const additionalQuery = `
-    "puppies": *[_type == "puppies"] {
+    "puppies": *[_type == "puppies"] | order(name) {
       _id,
       name,
       gender,
