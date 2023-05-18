@@ -1,9 +1,6 @@
 import {useState} from 'react';
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
-import Link from 'next/link';
-import sanityClient from '../lib/sanityClient';
 import Layout from '../components/layout';
-import imageUrlBuilder from "@sanity/image-url";
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
@@ -18,8 +15,6 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
             puppy.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
     });
-
-    const imageBuilder = imageUrlBuilder(sanityClient);
 
     return (
         <Layout pageTitle="Puppies"
