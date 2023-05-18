@@ -1,7 +1,5 @@
 import Layout from "../components/layout";
 import {GetStaticProps, InferGetStaticPropsType} from "next";
-import sanityClient from "../lib/sanityClient";
-import imageUrlBuilder from "@sanity/image-url";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {PortableText} from "@portabletext/react";
@@ -9,6 +7,19 @@ import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
+import DogCard from "../components/dogCard";
+
+function separateAndShufflePuppies(array: Puppy[]) {
+    const availablePuppies = array.filter(puppy => puppy.availability === 'Available');
+    const reservedPuppies = array.filter(puppy => puppy.availability === 'Reserved');
+    const soldPuppies = array.filter(puppy => puppy.availability === 'Sold');
+
+    const shuffledAvailable = shuffleArray(availablePuppies);
+    const shuffledReserved = shuffleArray(reservedPuppies);
+    const shuffledSold = shuffleArray(soldPuppies);
+
+    return [...shuffledAvailable, ...shuffledReserved, ...shuffledSold];
+}
 
 function shuffleArray(array: any) {
     const shuffledArray = [...array];
@@ -19,33 +30,28 @@ function shuffleArray(array: any) {
     return shuffledArray;
 }
 
-function getRandomSample(array: any, count: number) {
-    const shuffledArray = shuffleArray(array);
-    return shuffledArray.slice(0, count);
-}
-
 const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-
     const {puppies, homepage, metaDescription, youtubeSettings} = pageData;
-
-    const imageBuilder = imageUrlBuilder(sanityClient);
-
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
-
     const [isLoading, setIsLoading] = useState(true);
-
     const [liveVideoId, setLiveVideoId] = useState('');
-
     const channelId = extractYoutubeChannelId(youtubeSettings.channelUrl || '') || '';
     const fallbackVideoId = extractYoutubeVideoId(youtubeSettings.fallbackVideoUrl || '') || '';
 
     useEffect(() => {
-        setRandomPuppies(getRandomSample(puppies, 4));
+        const sortedPuppies = separateAndShufflePuppies(puppies);
+        setRandomPuppies(sortedPuppies.slice(0, 4));
         setIsLoading(false);
         const fetchLiveVideoId = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/checkYoutubeStatus?channelId=${channelId}&fallbackVideoId=${fallbackVideoId}`);
-            const liveVideoId = await response.text();
-            setLiveVideoId(liveVideoId);
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/checkYoutubeStatus?channelId=${channelId}&fallbackVideoId=${fallbackVideoId}`);
+                const liveVideoId = await response.text();
+                setLiveVideoId(liveVideoId);
+            } catch (error) {
+                // If there is any error (like network failure), set the liveVideoId to fallbackVideoId
+                console.error('Failed to fetch live video ID:', error);
+                setLiveVideoId(fallbackVideoId);
+            }
         };
 
         fetchLiveVideoId();
@@ -65,33 +71,29 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
                     <div className="prose max-w-none"><PortableText value={homepage.content}/></div>
                 </div>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 mb-4">
+            <div className="flex flex-wrap justify-center gap-4 mb-4">
                 {isLoading ? (
-                    Array(4).fill(null).map((_, index) => (
-                        <div key={index}
-                             className="h-64 bg-light-shades rounded-lg shadow-lg overflow-hidden">
+                    <div
+                        className="h-72 w-full flex items-center justify-center text-xl">
+                        Loading Puppies...
+                    </div>
+                ) : (
+                    randomPuppies.length > 0 ? (
+                        randomPuppies.map((puppy) => (
+                            <DogCard dog={puppy}/>
+                        ))
+                    ) : (
+                        <div
+                            className="h-72 w-full bg-light-shades rounded-lg flex items-center justify-center text-xl p-2">
+                            We're sorry, but we currently have no puppies available. We're constantly adding new
+                            puppies, so please check back soon!
                         </div>
-                    ))) : (
-                    randomPuppies.map((puppy) => (
-                        <Link href={`/puppies/${puppy.name.toLowerCase()}`} key={puppy.name}
-                              className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-                            <div className="h-48 overflow-hidden">
-                                <img
-                                    src={imageBuilder.image(puppy.mediaItems.find(item => item.type === "image")?.image).width(384).height(192).auto('format').quality(75).url()}
-                                    alt={puppy.name} className="w-full h-full object-cover" loading="lazy" width="384" height="192"/>
-                            </div>
-                            <div className="p-2">
-                                <h2 className="text-lg font-bold">{puppy.name}</h2>
-                                <p className="">{puppy.gender} - {puppy.color}</p>
-                                <p className="">{puppy.availability}</p>
-                            </div>
-                        </Link>
-                    ))
+                    )
                 )}
             </div>
             <Link href="/puppies"
                   className="flex items-center justify-center p-2 bg-light-shades rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-                <h1 className="text-2xl font-medium">See the rest of the puppies</h1>
+                <h1 className="text-2xl font-medium">See all of the puppies</h1>
             </Link>
         </Layout>
     );

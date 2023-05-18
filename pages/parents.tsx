@@ -6,6 +6,7 @@ import Layout from '../components/layout';
 import imageUrlBuilder from "@sanity/image-url";
 import {Parent} from "../types";
 import fetchPageData from "../lib/fetchPageData";
+import DogCard from "../components/dogCard";
 
 const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {parents, metaDescription} = pageData;
@@ -35,21 +36,9 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                         value={searchTerm}
                     />
                 </div>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                <div className="flex flex-wrap justify-center gap-4">
                     {filteredParents.map((parent: Parent, index: number) => (
-                        <Link href={`/parents/${parent.name.toLowerCase()}`} key={parent.name}
-                              className="primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-                            <div className="h-48 overflow-hidden">
-                                <img
-                                    src={imageBuilder.image(parent.mediaItems.find(item => item.type === "image")?.image).width(384).height(192).auto('format').quality(75).url()}
-                                    alt={parent.name} className="w-full h-full object-cover"
-                                    loading={index < 1 ? "eager" : "lazy"} width="384" height="192"/>
-                            </div>
-                            <div className="p-2">
-                                <h2 className="text-lg font-bold">{parent.name}</h2>
-                                <p className="">{parent.gender} - {parent.color}</p>
-                            </div>
-                        </Link>
+                        <DogCard dog={parent} showPrice={false} cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"} key={index}/>
                     ))}
                 </div>
             </div>
