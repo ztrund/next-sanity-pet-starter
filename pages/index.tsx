@@ -80,7 +80,7 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
                 ) : (
                     randomPuppies.length > 0 ? (
                         randomPuppies.map((puppy) => (
-                            <DogCard dog={puppy}/>
+                            <DogCard dog={puppy} key={puppy._id}/>
                         ))
                     ) : (
                         <div
@@ -102,6 +102,7 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
 export const getStaticProps: GetStaticProps = async () => {
     const additionalQuery = `
     "puppies": *[_type == "puppies"] {
+      _id,
       name,
       gender,
       color,

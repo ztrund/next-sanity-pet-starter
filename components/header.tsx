@@ -13,7 +13,7 @@ const Header = ({ pageData }: HeaderProps) => {
 
     const getLinkClassName = (href: string) => {
         const isActive = router.pathname === href;
-        const baseClass = "hover:text-dark-accent focus:outline-none";
+        const baseClass = "hover:text-dark-accent focus:outline-none p-2";
         const activeClass = "text-main-brand-color";
         const inactiveClass = "text-gray-100";
 
@@ -23,7 +23,7 @@ const Header = ({ pageData }: HeaderProps) => {
     const NavigationLinks = ({ isVertical }: { isVertical: boolean }) => (
         <div
             className={`flex ${
-                isVertical ? "flex-col items-end space-y-4" : "space-x-4"
+                isVertical ? "flex-col items-end space-y-2 w-full" : ""
             }`}
         >
             <Link href="/" className={getLinkClassName("/")}>
@@ -45,18 +45,18 @@ const Header = ({ pageData }: HeaderProps) => {
     );
 
     return (
-        <div className="fixed w-full h-16 top-0 z-10 bg-dark-shades">
-            <div className="container mx-auto h-full p-4">
-                <header className="text-white w-full h-full">
-                    <Disclosure as="nav" className="w-full h-full">
+        <div className="fixed w-full h-16 top-0 z-10 bg-dark-shades shadow-lg">
+            <div className="container mx-auto h-full">
+                <div className="flex h-full justify-center items-center text-white">
+                    <Disclosure as="nav" className="w-full px-2">
                         {({ open }) => (
                             <>
-                                <div className="flex w-full h-full justify-between items-center">
-                                    <div className="text-xl font-bold">{pageData?.companyInfo?.companyName}</div>
+                                <div className="flex justify-between">
+                                    <Link href="/" className="text-xl font-bold p-2">{pageData?.companyInfo?.companyName}</Link>
                                     <div className="hidden lg:flex">
                                         <NavigationLinks isVertical={false} />
                                     </div>
-                                    <Disclosure.Button className="lg:hidden focus:outline-none" aria-label="Menu Toggle">
+                                    <Disclosure.Button className="lg:hidden focus:outline-none p-2" aria-label="Menu Toggle">
                                         {open ? <FiX size={24} /> : <FiMenu size={24} />}
                                     </Disclosure.Button>
                                 </div>
@@ -64,21 +64,23 @@ const Header = ({ pageData }: HeaderProps) => {
                                     open ? "translate-x-0" : "translate-x-full"
                                 } lg:hidden`}/>
                                 <div
-                                    className={`fixed top-0 right-0 w-64 h-full bg-dark-shades z-30 transform ${
-                                        open ? "translate-x-0" : "translate-x-full"
+                                    className={`fixed top-0 right-0 w-48 h-full bg-dark-shades z-30 transform ${
+                                        open ? "translate-x-0 shadow-lg" : "translate-x-full"
                                     } transition-transform duration-300 ease-in-out lg:hidden`}
                                 >
-                                    <div className="pt-20 pr-4">
-                                        <Disclosure.Button className="absolute top-4 right-4 text-white focus:outline-none" aria-label="Close Menu">
-                                            <FiX size={24} />
-                                        </Disclosure.Button>
+                                    <div className="flex-col px-2">
+                                        <div className="flex flex-col h-16 items-end justify-center mb-2">
+                                            <Disclosure.Button className="text-white focus:outline-none p-2" aria-label="Close Menu">
+                                                <FiX size={24} />
+                                            </Disclosure.Button>
+                                        </div>
                                         <NavigationLinks isVertical={true} />
                                     </div>
                                 </div>
                             </>
                         )}
                     </Disclosure>
-                </header>
+                </div>
             </div>
         </div>
     );

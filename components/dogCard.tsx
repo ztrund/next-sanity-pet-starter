@@ -30,7 +30,7 @@ const DogCard: FunctionComponent<DogCardProps> = ({
         : "w-48 h-48 object-cover";
 
     return (
-        <Link href={`/puppies/${dog.name.toLowerCase()}`} key={dog.name}
+        <Link href={`/puppies/${dog.name.toLowerCase()}`}
               className={`primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 ${cardWidth}`}>
             <div className="h-48 overflow-hidden flex items-center justify-center">
                 <img src={imageUrl} alt={dog.name} className={imageClass} loading="lazy" width="384" height="192"/>
