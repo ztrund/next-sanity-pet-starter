@@ -8,74 +8,82 @@ interface HeaderProps {
     pageData?: SiteInfo;
 }
 
-const Header = ({ pageData }: HeaderProps) => {
+const Header = ({pageData}: HeaderProps) => {
     const router = useRouter();
 
-    const getLinkClassName = (href: string) => {
+    const getLinkClassName = (href: string, isVertical: boolean) => {
         const isActive = router.pathname === href;
-        const baseClass = "hover:text-dark-accent focus:outline-none";
+        const baseClass = `hover:text-dark-accent focus:outline-none p-2 ${isVertical ? "w-full text-end" : ""}`;
         const activeClass = "text-main-brand-color";
         const inactiveClass = "text-gray-100";
 
         return `${baseClass} ${isActive ? activeClass : inactiveClass}`;
     };
 
-    const NavigationLinks = ({ isVertical }: { isVertical: boolean }) => (
+    const NavigationLinks = ({isVertical}: { isVertical: boolean }) => (
         <div
-            className={`flex ${
-                isVertical ? "flex-col items-end space-y-4" : "space-x-4"
+            className={`flex items-center ${
+                isVertical ? "flex-col space-y-2 w-full" : ""
             }`}
         >
-            <Link href="/" className={getLinkClassName("/")}>
+            <Link href="/" className={getLinkClassName("/", isVertical)}>
                 Home
             </Link>
-            <Link href="/about" className={getLinkClassName("/about")}>
+            <Link href="/about" className={getLinkClassName("/about", isVertical)}>
                 About Us
             </Link>
-            <Link href="/puppies" className={getLinkClassName("/puppies")}>
+            <Link href="/puppies" className={getLinkClassName("/puppies", isVertical)}>
                 Puppies
             </Link>
-            <Link href="/parents" className={getLinkClassName("/parents")}>
+            <Link href="/parents" className={getLinkClassName("/parents", isVertical)}>
                 Parents
             </Link>
-            <Link href="/contact" className={getLinkClassName("/contact")}>
+            <Link href="/contact" className={getLinkClassName("/contact", isVertical)}>
                 Contact Us
             </Link>
         </div>
     );
 
     return (
-        <div className="flex justify-center bg-dark-shades">
-            <div className="container mx-auto">
-                <header className="text-white p-4">
-                    <Disclosure as="nav">
-                        {({ open }) => (
+        <div className="fixed w-full h-16 top-0 z-10 bg-dark-shades shadow-lg">
+            <div className="container mx-auto h-full">
+                <div className="flex h-full justify-center items-center text-white">
+                    <Disclosure as="nav" className="w-full px-2">
+                        {({open}) => (
                             <>
-                                <div className="flex justify-between items-center">
-                                    <div className="text-xl font-bold">{pageData?.companyInfo?.companyName}</div>
+                                <div className="flex justify-between">
+                                    <Link href="/"
+                                          className="text-xl font-bold p-2">{pageData?.companyInfo?.companyName}</Link>
                                     <div className="hidden lg:flex">
-                                        <NavigationLinks isVertical={false} />
+                                        <NavigationLinks isVertical={false}/>
                                     </div>
-                                    <Disclosure.Button className="lg:hidden focus:outline-none" aria-label="Menu Toggle">
-                                        {open ? <FiX size={24} /> : <FiMenu size={24} />}
+                                    <Disclosure.Button className="lg:hidden focus:outline-none p-2"
+                                                       aria-label="Menu Toggle">
+                                        {open ? <FiX size={24}/> : <FiMenu size={24}/>}
                                     </Disclosure.Button>
                                 </div>
+                                <Disclosure.Button className={`fixed top-0 right-0 w-full h-full z-20 transform ${
+                                    open ? "translate-x-0" : "translate-x-full"
+                                } lg:hidden`}/>
                                 <div
-                                    className={`fixed top-0 right-0 w-64 h-full bg-dark-shades z-10 transform ${
-                                        open ? "translate-x-0" : "translate-x-full"
+                                    className={`fixed top-0 right-0 w-48 h-full bg-dark-shades z-30 transform ${
+                                        open ? "translate-x-0 shadow-lg" : "translate-x-full"
                                     } transition-transform duration-300 ease-in-out lg:hidden`}
                                 >
-                                    <div className="pt-20 pr-4">
-                                        <Disclosure.Button className="absolute top-4 right-4 text-white focus:outline-none" aria-label="Close Menu">
-                                            <FiX size={24} />
-                                        </Disclosure.Button>
-                                        <NavigationLinks isVertical={true} />
+                                    <div className="flex-col px-2">
+                                        <div className="flex flex-col h-16 items-end justify-center mb-2">
+                                            <Disclosure.Button className="text-white focus:outline-none p-2"
+                                                               aria-label="Close Menu">
+                                                <FiX size={24}/>
+                                            </Disclosure.Button>
+                                        </div>
+                                        <NavigationLinks isVertical={true}/>
                                     </div>
                                 </div>
                             </>
                         )}
                     </Disclosure>
-                </header>
+                </div>
             </div>
         </div>
     );
