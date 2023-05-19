@@ -45,13 +45,13 @@ const Header = ({ pageData }: HeaderProps) => {
     );
 
     return (
-        <div className="flex justify-center bg-dark-shades">
-            <div className="container mx-auto">
-                <header className="text-white p-4">
-                    <Disclosure as="nav">
+        <div className="fixed w-full h-16 top-0 z-10 bg-dark-shades">
+            <div className="container mx-auto h-full p-4">
+                <header className="text-white w-full h-full">
+                    <Disclosure as="nav" className="w-full h-full">
                         {({ open }) => (
                             <>
-                                <div className="flex justify-between items-center">
+                                <div className="flex w-full h-full justify-between items-center">
                                     <div className="text-xl font-bold">{pageData?.companyInfo?.companyName}</div>
                                     <div className="hidden lg:flex">
                                         <NavigationLinks isVertical={false} />
@@ -60,8 +60,11 @@ const Header = ({ pageData }: HeaderProps) => {
                                         {open ? <FiX size={24} /> : <FiMenu size={24} />}
                                     </Disclosure.Button>
                                 </div>
+                                <Disclosure.Button className={`fixed top-0 right-0 w-full h-full z-20 transform ${
+                                    open ? "translate-x-0" : "translate-x-full"
+                                } lg:hidden`}/>
                                 <div
-                                    className={`fixed top-0 right-0 w-64 h-full bg-dark-shades z-10 transform ${
+                                    className={`fixed top-0 right-0 w-64 h-full bg-dark-shades z-30 transform ${
                                         open ? "translate-x-0" : "translate-x-full"
                                     } transition-transform duration-300 ease-in-out lg:hidden`}
                                 >
