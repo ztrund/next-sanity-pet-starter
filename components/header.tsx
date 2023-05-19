@@ -8,37 +8,37 @@ interface HeaderProps {
     pageData?: SiteInfo;
 }
 
-const Header = ({ pageData }: HeaderProps) => {
+const Header = ({pageData}: HeaderProps) => {
     const router = useRouter();
 
-    const getLinkClassName = (href: string) => {
+    const getLinkClassName = (href: string, isVertical: boolean) => {
         const isActive = router.pathname === href;
-        const baseClass = "hover:text-dark-accent focus:outline-none p-2";
+        const baseClass = `hover:text-dark-accent focus:outline-none p-2 ${isVertical ? "w-full text-end" : ""}`;
         const activeClass = "text-main-brand-color";
         const inactiveClass = "text-gray-100";
 
         return `${baseClass} ${isActive ? activeClass : inactiveClass}`;
     };
 
-    const NavigationLinks = ({ isVertical }: { isVertical: boolean }) => (
+    const NavigationLinks = ({isVertical}: { isVertical: boolean }) => (
         <div
-            className={`flex ${
-                isVertical ? "flex-col items-end space-y-2 w-full" : ""
+            className={`flex items-center ${
+                isVertical ? "flex-col space-y-2 w-full" : ""
             }`}
         >
-            <Link href="/" className={getLinkClassName("/")}>
+            <Link href="/" className={getLinkClassName("/", isVertical)}>
                 Home
             </Link>
-            <Link href="/about" className={getLinkClassName("/about")}>
+            <Link href="/about" className={getLinkClassName("/about", isVertical)}>
                 About Us
             </Link>
-            <Link href="/puppies" className={getLinkClassName("/puppies")}>
+            <Link href="/puppies" className={getLinkClassName("/puppies", isVertical)}>
                 Puppies
             </Link>
-            <Link href="/parents" className={getLinkClassName("/parents")}>
+            <Link href="/parents" className={getLinkClassName("/parents", isVertical)}>
                 Parents
             </Link>
-            <Link href="/contact" className={getLinkClassName("/contact")}>
+            <Link href="/contact" className={getLinkClassName("/contact", isVertical)}>
                 Contact Us
             </Link>
         </div>
@@ -49,15 +49,17 @@ const Header = ({ pageData }: HeaderProps) => {
             <div className="container mx-auto h-full">
                 <div className="flex h-full justify-center items-center text-white">
                     <Disclosure as="nav" className="w-full px-2">
-                        {({ open }) => (
+                        {({open}) => (
                             <>
                                 <div className="flex justify-between">
-                                    <Link href="/" className="text-xl font-bold p-2">{pageData?.companyInfo?.companyName}</Link>
+                                    <Link href="/"
+                                          className="text-xl font-bold p-2">{pageData?.companyInfo?.companyName}</Link>
                                     <div className="hidden lg:flex">
-                                        <NavigationLinks isVertical={false} />
+                                        <NavigationLinks isVertical={false}/>
                                     </div>
-                                    <Disclosure.Button className="lg:hidden focus:outline-none p-2" aria-label="Menu Toggle">
-                                        {open ? <FiX size={24} /> : <FiMenu size={24} />}
+                                    <Disclosure.Button className="lg:hidden focus:outline-none p-2"
+                                                       aria-label="Menu Toggle">
+                                        {open ? <FiX size={24}/> : <FiMenu size={24}/>}
                                     </Disclosure.Button>
                                 </div>
                                 <Disclosure.Button className={`fixed top-0 right-0 w-full h-full z-20 transform ${
@@ -70,11 +72,12 @@ const Header = ({ pageData }: HeaderProps) => {
                                 >
                                     <div className="flex-col px-2">
                                         <div className="flex flex-col h-16 items-end justify-center mb-2">
-                                            <Disclosure.Button className="text-white focus:outline-none p-2" aria-label="Close Menu">
-                                                <FiX size={24} />
+                                            <Disclosure.Button className="text-white focus:outline-none p-2"
+                                                               aria-label="Close Menu">
+                                                <FiX size={24}/>
                                             </Disclosure.Button>
                                         </div>
-                                        <NavigationLinks isVertical={true} />
+                                        <NavigationLinks isVertical={true}/>
                                     </div>
                                 </div>
                             </>
