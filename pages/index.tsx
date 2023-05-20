@@ -34,9 +34,9 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
     const {puppies, homepage, metaDescription, youtubeSettings} = pageData;
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [liveVideoId, setLiveVideoId] = useState('');
     const channelId = extractYoutubeChannelId(youtubeSettings.channelUrl || '') || '';
     const fallbackVideoId = extractYoutubeVideoId(youtubeSettings.fallbackVideoUrl || '') || '';
+    const [liveVideoId, setLiveVideoId] = useState(fallbackVideoId);
 
     useEffect(() => {
         const sortedPuppies = separateAndShufflePuppies(puppies);
@@ -50,7 +50,6 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
             } catch (error) {
                 // If there is any error (like network failure), set the liveVideoId to fallbackVideoId
                 console.error('Failed to fetch live video ID:', error);
-                setLiveVideoId(fallbackVideoId);
             }
         };
 
