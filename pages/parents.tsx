@@ -57,10 +57,8 @@ export const getStaticProps: GetStaticProps = async () => {
     "parents": *[_type == "parents"] | order(name) {
       _id,
       name,
-      birthdate,
       gender,
       color,
-      weight,
       mediaItems,
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
