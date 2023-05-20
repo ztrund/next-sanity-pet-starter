@@ -44,6 +44,7 @@ export interface Puppy {
     mediaItems: MediaItem[];
     availability: string;
     price: number;
+    parents: Parent[];
 }
 
 export interface Puppies {
@@ -80,6 +81,7 @@ export interface Parent {
     color: string;
     weight: number;
     mediaItems: MediaItem[];
+    puppies: Puppy[];
 }
 
 export interface Parents {

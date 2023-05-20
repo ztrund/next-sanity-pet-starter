@@ -4,6 +4,8 @@ import Layout from '../../components/layout';
 import CustomCarousel from "../../components/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
+import {Puppy} from "../../types";
+import DogCard from "../../components/dogCard";
 
 const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {parent, metaDescription} = pageData;
@@ -25,22 +27,34 @@ const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
                     <CustomCarousel mediaItems={parent.mediaItems}/>
                 </div>
-                <div className="w-full lg:w-1/2 h-min p-2 bg-light-shades drop-shadow-lg rounded-lg">
-                    <p>
-                        <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
-                    </p>
-                    <p>
-                        <strong>Gender:</strong> {parent.gender}
-                    </p>
-                    <p>
-                        <strong>Color:</strong> {parent.color}
-                    </p>
-                    <p>
-                        <strong>Weight:</strong> {parent.weight} lbs
-                    </p>
-                    <p>
-                        <strong>Description:</strong> {parent.description}
-                    </p>
+                <div className="w-full lg:w-1/2 flex flex-col gap-4">
+                    <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
+                        <p>
+                            <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
+                        </p>
+                        <p>
+                            <strong>Gender:</strong> {parent.gender}
+                        </p>
+                        <p>
+                            <strong>Color:</strong> {parent.color}
+                        </p>
+                        <p>
+                            <strong>Weight:</strong> {parent.weight} lbs
+                        </p>
+                        <p>
+                            <strong>Description:</strong> {parent.description}
+                        </p>
+                    </div>
+                    {parent.puppies.length > 0 && (
+                        <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
+                            <h2 className="text-2xl font-bold text-center">Puppies</h2>
+                        </div>
+                    )}
+                    <div className="flex flex-wrap gap-4">
+                        {parent.puppies.map((puppy: Puppy) => (
+                            <DogCard dog={puppy} key={puppy._id} showPrice/>
+                        ))}
+                    </div>
                 </div>
             </div>
         </Layout>
@@ -66,6 +80,15 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       weight,
       description,
       mediaItems,
+      "puppies": *[_type == "puppies" && references(^._id)] | order(name) {
+        _id,
+        name,
+        gender,
+        color,
+        mediaItems,
+        availability,
+        price,
+      },
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
       'description': parent,
