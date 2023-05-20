@@ -13,7 +13,7 @@ const Header = ({pageData}: HeaderProps) => {
 
     const getLinkClassName = (href: string, isVertical: boolean) => {
         const isActive = router.pathname === href;
-        const baseClass = `hover:text-dark-accent focus:outline-none p-2 ${isVertical ? "w-full text-end" : ""}`;
+        const baseClass = `hover:text-dark-accent focus:outline-none h-16 flex items-center ${isVertical ? "px-4 w-full text-end justify-end" : "px-2"}`;
         const activeClass = "text-main-brand-color";
         const inactiveClass = "text-gray-100";
 
@@ -23,7 +23,7 @@ const Header = ({pageData}: HeaderProps) => {
     const NavigationLinks = ({isVertical}: { isVertical: boolean }) => (
         <div
             className={`flex items-center ${
-                isVertical ? "flex-col space-y-2 w-full" : ""
+                isVertical ? "flex-col" : ""
             }`}
         >
             <Link href="/" className={getLinkClassName("/", isVertical)}>
@@ -48,16 +48,16 @@ const Header = ({pageData}: HeaderProps) => {
         <div className="fixed w-full h-16 top-0 z-10 bg-dark-shades shadow-lg">
             <div className="container mx-auto h-full">
                 <div className="flex h-full justify-center items-center text-white">
-                    <Disclosure as="nav" className="w-full px-2">
+                    <Disclosure as="nav" className="w-full">
                         {({open}) => (
                             <>
                                 <div className="flex justify-between">
                                     <Link href="/"
-                                          className="text-xl font-bold p-2">{pageData?.companyInfo?.companyName}</Link>
+                                          className="text-xl font-bold px-4 h-16 flex items-center">{pageData?.companyInfo?.companyName}</Link>
                                     <div className="hidden lg:flex">
                                         <NavigationLinks isVertical={false}/>
                                     </div>
-                                    <Disclosure.Button className="lg:hidden focus:outline-none p-2"
+                                    <Disclosure.Button className="lg:hidden focus:outline-none px-4 h-16 flex items-center"
                                                        aria-label="Menu Toggle">
                                         {open ? <FiX size={24}/> : <FiMenu size={24}/>}
                                     </Disclosure.Button>
@@ -70,9 +70,9 @@ const Header = ({pageData}: HeaderProps) => {
                                         open ? "translate-x-0 shadow-lg" : "translate-x-full"
                                     } transition-transform duration-300 ease-in-out lg:hidden`}
                                 >
-                                    <div className="flex-col px-2">
-                                        <div className="flex flex-col h-16 items-end justify-center mb-2">
-                                            <Disclosure.Button className="text-white focus:outline-none p-2"
+                                    <div className="flex-col">
+                                        <div className="flex flex-col h-16 items-end justify-center">
+                                            <Disclosure.Button className="text-white focus:outline-none px-4 w-full h-16 flex items-center justify-end"
                                                                aria-label="Close Menu">
                                                 <FiX size={24}/>
                                             </Disclosure.Button>
