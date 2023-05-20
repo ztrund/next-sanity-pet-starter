@@ -62,7 +62,7 @@ const Header = ({pageData}: HeaderProps) => {
                                         {open ? <FiX size={24}/> : <FiMenu size={24}/>}
                                     </Disclosure.Button>
                                 </div>
-                                <Disclosure.Button className={`fixed top-0 right-0 w-full h-full z-20 transform ${
+                                <Disclosure.Button className={`fixed top-0 right-0 w-full h-full z-20 backdrop-blur-sm backdrop-brightness-50 transform ${
                                     open ? "translate-x-0" : "translate-x-full"
                                 } lg:hidden`} aria-label="Close Menu"/>
                                 <div
