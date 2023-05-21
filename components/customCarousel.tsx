@@ -90,7 +90,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                 scrollTo(index)
                             }}
                         >
-                            <button className="embla-thumbs__slide__button" type="button"
+                            <button className="embla-thumbs__slide__button h-32 w-32" type="button"
                                     title={"Slide " + index + " Button"}>
                                 {mediaItem.type === "image" && mediaItem.image && (
                                     <img
