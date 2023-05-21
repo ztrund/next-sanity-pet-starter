@@ -10,7 +10,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
 
     const [searchTerm, setSearchTerm] = useState('');
 
-    const availabilityOrder: Record<string, number> = { 'Available': 1, 'Reserved': 2, 'Sold': 3 };
+    const availabilityOrder: Record<string, number> = {'Available': 1, 'Reserved': 2, 'Sold': 3};
 
     const sortedAndFilteredPuppies = useMemo(() => {
         return [...puppies]
@@ -38,10 +38,10 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                 <div className="flex flex-wrap justify-center gap-4">
                     {
                         sortedAndFilteredPuppies.length > 0 ? (
-                            sortedAndFilteredPuppies.map((puppy: Puppy) => (
+                            sortedAndFilteredPuppies.map((puppy: Puppy, index: number) => (
                                 <DogCard dog={puppy} showPrice={true}
                                          cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"}
-                                         key={puppy._id}/>
+                                         key={puppy._id} lazy={index !== 0}/>
                             ))
                         ) : (
                             <div

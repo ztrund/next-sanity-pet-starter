@@ -8,12 +8,14 @@ interface DogCardProps {
     dog: Puppy | Parent;
     showPrice?: boolean;
     cardWidth?: string;
+    lazy?: boolean;
 }
 
 const DogCard: FunctionComponent<DogCardProps> = ({
                                                       dog,
                                                       showPrice = false,
-                                                      cardWidth = 'w-full md:w-[22.5rem] lg:w-[30.5rem] xl:w-[18.75rem] 2xl:w-[22.75rem]'
+                                                      cardWidth = 'w-full md:w-[22.5rem] lg:w-[30.5rem] xl:w-[18.75rem] 2xl:w-[22.75rem]',
+                                                      lazy = true,
                                                   }) => {
     const imageBuilder = imageUrlBuilder(sanityClient);
     const imageItem = dog.mediaItems?.find(item => item.type === 'image');
@@ -35,7 +37,7 @@ const DogCard: FunctionComponent<DogCardProps> = ({
         <Link href={url}
               className={`primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 ${cardWidth}`}>
             <div className="h-48 overflow-hidden flex items-center justify-center">
-                <img src={imageUrl} alt={dog.name} className={imageClass} loading="lazy" width="384" height="192"/>
+                <img src={imageUrl} alt={dog.name} className={imageClass} loading={lazy ? "lazy" : "eager"} width="384" height="192"/>
             </div>
             <div className="p-2 h-24 flex justify-between items-center">
                 <div>
