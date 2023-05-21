@@ -2,6 +2,7 @@
 import Head from "next/head";
 import Header from "./header";
 import Footer from "./footer";
+import React from "react";
 
 interface LayoutProps {
     children: React.ReactNode;
