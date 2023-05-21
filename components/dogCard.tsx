@@ -21,7 +21,7 @@ const DogCard: FunctionComponent<DogCardProps> = ({
     const imageItem = dog.mediaItems?.find(item => item.type === 'image');
     const imageUrl = imageItem
         ? imageBuilder.image(imageItem.image).width(384).height(192).auto('format').quality(75).url()
-        : '/images/paw-solid.svg'; // Replace with a default image url
+        : '/images/paw-solid.svg';
 
     const isPuppy = (pet: Puppy | Parent): pet is Puppy => {
         return (pet as Puppy).availability !== undefined;

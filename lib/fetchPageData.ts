@@ -47,7 +47,8 @@ const fetchPageData = async (additionalQuery = '', fetchParams = {}): Promise<Pa
     },
     "companyInfo": *[_type == "companyInfo"][0] {
       companyName,
-      companyLogo
+      companyLogo,
+      favicon,
     },
     ${additionalQuery}
   }
