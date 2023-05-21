@@ -26,7 +26,8 @@ export interface ContactInfo {
 
 export interface CompanyInfo {
     companyName: string;
-    companyLogo: any; // Replace 'any' with the appropriate type for image from Sanity
+    companyLogo: any;
+    favicon: any;
 }
 
 export interface SiteInfo {

@@ -42,18 +42,16 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
         const sortedPuppies = separateAndShufflePuppies(puppies);
         setRandomPuppies(sortedPuppies.slice(0, 4));
         setIsLoading(false);
-        const fetchLiveVideoId = async () => {
+
+        (async () => {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/checkYoutubeStatus?channelId=${channelId}&fallbackVideoId=${fallbackVideoId}`);
                 const liveVideoId = await response.text();
                 setLiveVideoId(liveVideoId);
             } catch (error) {
-                // If there is any error (like network failure), set the liveVideoId to fallbackVideoId
                 console.error('Failed to fetch live video ID:', error);
             }
-        };
-
-        fetchLiveVideoId();
+        })();
     }, []);
 
     return (

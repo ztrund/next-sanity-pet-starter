@@ -6,18 +6,12 @@ import fetchPageData from "../../lib/fetchPageData";
 import {Puppy} from "../../types";
 import DogCard from "../../components/dogCard";
 import sanityClient from "../../lib/sanityClient";
-import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 import FinancingBanner from "../../components/financingBanner";
 
 const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {parent, financing, metaDescription} = pageData;
 
     const {years, weeks, days} = getAge(parent.birthdate);
-
-    let imgDimensions = null;
-    if (financing.banner?.asset._ref) {
-        imgDimensions = imageDimensionExtractor(financing.banner.asset._ref);
-    }
 
     const replaceTemplateLiterals = (description: string, data: { [x: string]: any; }) => {
         return description.replace(/\$\{(\w+)}/g, (_, key) => data[key]);
