@@ -1,16 +1,23 @@
 import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
-import sanityClient from '../../lib/sanityClient';
 import Layout from '../../components/layout';
 import CustomCarousel from "../../components/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
 import {Puppy} from "../../types";
 import DogCard from "../../components/dogCard";
+import sanityClient from "../../lib/sanityClient";
+import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
+import FinancingBanner from "../../components/financingBanner";
 
 const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {parent, metaDescription} = pageData;
+    const {parent, financing, metaDescription} = pageData;
 
     const {years, weeks, days} = getAge(parent.birthdate);
+
+    let imgDimensions = null;
+    if (financing.banner?.asset._ref) {
+        imgDimensions = imageDimensionExtractor(financing.banner.asset._ref);
+    }
 
     const replaceTemplateLiterals = (description: string, data: { [x: string]: any; }) => {
         return description.replace(/\$\{(\w+)}/g, (_, key) => data[key]);
@@ -45,18 +52,22 @@ const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                             <strong>Description:</strong> {parent.description}
                         </p>
                     </div>
-                    {parent.puppies.length > 0 && (
-                        <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
-                            <h2 className="text-2xl font-bold text-center">Puppies</h2>
-                        </div>
-                    )}
-                    <div className="flex flex-wrap gap-4">
-                        {parent.puppies.map((puppy: Puppy) => (
-                            <DogCard dog={puppy} key={puppy._id} showPrice/>
+                    <FinancingBanner financing={financing}/>
+                </div>
+            </div>
+            {parent.puppies?.length > 0 && (
+                <div className="flex flex-col gap-4 mt-4">
+                    <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
+                        <h2 className="text-2xl font-bold text-center">Meet Their Puppies</h2>
+                    </div>
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {parent.puppies?.map((puppy: Puppy) => (
+                            <DogCard dog={puppy} key={puppy._id} showPrice={true}
+                                     cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"}/>
                         ))}
                     </div>
                 </div>
-            </div>
+            )}
         </Layout>
     );
 };
@@ -89,6 +100,10 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
         availability,
         price,
       },
+    },
+    "financing": *[_type == "financing"][0]{
+      banner,
+      link,
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
       'description': parent,

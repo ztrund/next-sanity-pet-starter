@@ -4,12 +4,12 @@ import Layout from '../../components/layout';
 import CustomCarousel from "../../components/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
-import imageUrlBuilder from "@sanity/image-url";
+import DogCard from "../../components/dogCard";
+import {Parent} from "../../types";
+import FinancingBanner from "../../components/financingBanner";
 
 const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {puppy, financing, metaDescription} = pageData;
-
-    const imageBuilder = imageUrlBuilder(sanityClient);
 
     const {years, weeks, days} = getAge(puppy.birthdate);
 
@@ -29,8 +29,8 @@ const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
                     <CustomCarousel mediaItems={puppy.mediaItems}/>
                 </div>
-                <div className="w-full lg:w-1/2">
-                    <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg mb-4">
+                <div className="w-full lg:w-1/2 flex flex-col gap-4">
+                    <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg">
                         <p>
                             <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
                         </p>
@@ -47,17 +47,19 @@ const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                             <strong>Description:</strong> {puppy.description}
                         </p>
                     </div>
-                    <div className="h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
-                        <a href={financing.link} target="_blank"
-                           rel="noopener noreferrer">
-                            <img
-                                src={imageBuilder.image(financing.banner).width(744).auto('format').quality(75).url()}
-                                alt="Financing Available"
-                                loading="lazy"
-                                width="744"
-                            />
-                        </a>
-                    </div>
+                    <FinancingBanner financing={financing}/>
+                    {puppy.parents?.filter((parent: Parent) => parent).length > 0 && (
+                        <>
+                            <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
+                                <h2 className="text-2xl font-bold text-center">Meet Their Parents</h2>
+                            </div>
+                            <div className="flex flex-wrap gap-4">
+                                {puppy.parents?.filter((parent: Parent) => parent).map((parent: Parent) => (
+                                    <DogCard dog={parent} key={parent._id}/>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </Layout>
@@ -84,7 +86,23 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       description,
       mediaItems,
       availability,
-      price
+      price,
+      "parents": [
+        parents.mother->{
+          _id,
+          name,
+          gender,
+          color,
+          mediaItems,
+        },
+        parents.father->{
+          _id,
+          name,
+          gender,
+          color,
+          mediaItems,
+        },
+      ],
     },
     "financing": *[_type == "financing"][0]{
       banner,
