@@ -6,6 +6,9 @@ import {MediaItem} from "../types";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
+import Modal from "react-modal";
+
+Modal.setAppElement('#root');
 
 interface CustomCarouselProps {
     mediaItems: MediaItem[];
@@ -14,6 +17,17 @@ interface CustomCarouselProps {
 const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
     const imageBuilder = imageUrlBuilder(sanityClient);
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+    const [currentImage, setCurrentImage] = useState("");
+
+    const handleImageClick = (imageUrl: string) => {
+        setCurrentImage(imageUrl);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
 
     const [viewportRef, embla] = useEmblaCarousel(
         {loop: true},
@@ -51,6 +65,21 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
 
     return (
         <>
+            <Modal
+                isOpen={showModal}
+                onRequestClose={closeModal}
+                contentLabel="Image Modal"
+                bodyOpenClassName="overflow-hidden"
+                overlayClassName="fixed inset-0 z-50 backdrop-blur-sm backdrop-brightness-50"
+                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 outline-0"
+            >
+                <img
+                    src={currentImage}
+                    alt="Popup"
+                    className="rounded-lg overflow-hidden shadow-lg max-w-[95vw] max-h-[95vh]"
+                    onClick={closeModal}
+                />
+            </Modal>
             <div className="embla overflow-hidden" ref={viewportRef}>
                 <div className="embla__container flex items-center">
                     {mediaItems.map((mediaItem: MediaItem, index: number) => (
@@ -65,6 +94,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                     loading={index < 1 ? "eager" : "lazy"}
                                     width="744"
                                     height="744"
+                                    onClick={() => handleImageClick(imageBuilder.image(mediaItem.image).auto('format').quality(75).url())}
                                 />
                             )}
                             {mediaItem.type === "video" && mediaItem.videoUrl && (

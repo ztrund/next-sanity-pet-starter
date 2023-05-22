@@ -23,7 +23,7 @@ const Layout = ({
     const favicon = pageData?.companyInfo?.favicon
 
     return (
-        <div className="flex flex-col min-h-screen bg-light-accent">
+        <div id="root" className="flex flex-col min-h-screen bg-light-accent">
             <Head>
                 <title>{pageTitle}</title>
                 <link rel="icon" href={imageBuilder.image(favicon).width(512).height(512).url()}/>
