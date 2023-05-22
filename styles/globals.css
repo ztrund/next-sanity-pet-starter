@@ -4,10 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.video-container {
-    @apply relative w-full;
-}
-
 .yt-lite {
     @apply absolute top-0 left-0 w-full h-full;
     background-color: #000;
