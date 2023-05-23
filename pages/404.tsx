@@ -10,7 +10,7 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
             <div className="flex flex-col gap-4 mx-auto p-2 bg-light-shades drop-shadow-lg rounded-lg w-fit text-center max-w-3xl">
                 <h1 className="text-5xl font-bold">404</h1>
                 <h2 className="text-2xl font-semibold">Page Not Found</h2>
-                <p className="text-lg font-medium">Whoops! It seems like one of our French Bulldogs buried this page in the backyard. We're on a mission to dig it up!</p>
+                <p className="text-lg font-medium">Whoops! It seems like one of our frenchies buried this page in the backyard. We're on a mission to dig it up!</p>
             </div>
         </Layout>
     );
