@@ -5,7 +5,7 @@ import fetchPageData from "../lib/fetchPageData";
 const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
     return (
-        <Layout pageTitle="404"
+        <Layout pageTitle="404 - Page Not Found"
                 pageData={pageData}>
             <div className="flex flex-col gap-4 mx-auto p-2 bg-light-shades drop-shadow-lg rounded-lg w-fit text-center max-w-3xl">
                 <h1 className="text-5xl font-bold">404</h1>
