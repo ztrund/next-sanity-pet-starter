@@ -92,6 +92,8 @@ export interface Parents {
 export interface Financing {
     banner: any;
     link: string;
+    logo: any;
+    text: any[];
 }
 
 export interface MetaDescription {

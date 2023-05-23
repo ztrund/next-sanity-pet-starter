@@ -4,9 +4,12 @@ import Layout from '../components/layout';
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
+import imageUrlBuilder from "@sanity/image-url";
+import sanityClient from "../lib/sanityClient";
+import FinancingContainer from "../components/financingContainer";
 
 const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {puppies, metaDescription} = pageData;
+    const {puppies, metaDescription, financing} = pageData;
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -20,12 +23,15 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
             .filter((puppy: Puppy) => puppy.name.toLowerCase().includes(searchTerm.toLowerCase()));
     }, [puppies, searchTerm]);
 
+    const imageBuilder = imageUrlBuilder(sanityClient);
+
     return (
         <Layout pageTitle="Puppies"
                 metaDesc={metaDescription.description}
                 pageData={pageData}>
-            <div className="container mx-auto">
-                <div className="flex justify-between items-center mb-4 bg-light-shades drop-shadow-lg rounded-lg p-2">
+            <div className="flex flex-col gap-4">
+                <FinancingContainer financing={financing}/>
+                <div className="flex justify-between items-center bg-light-shades drop-shadow-lg rounded-lg p-2">
                     <h1 className="text-3xl font-bold on-secondary-text">Puppies</h1>
                     <input
                         className="border-2 rounded py-1 px-2 w-48 sm:w-64"
@@ -69,6 +75,11 @@ export const getStaticProps: GetStaticProps = async () => {
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
       'description': puppies,
+    },
+    "financing": *[_type == "financing"][0]{
+      logo,
+      link,
+      text,
     },
   `;
 
