@@ -4,7 +4,7 @@ import Header from "./header";
 import Footer from "./footer";
 import React from "react";
 import imageUrlBuilder from "@sanity/image-url";
-import sanityClient from "../lib/sanityClient";
+import sanityClient from "../../lib/sanityClient";
 
 interface LayoutProps {
     children: React.ReactNode;

@@ -7,7 +7,7 @@ interface NameFilterProps {
 
 const NameFilter: React.FC<NameFilterProps> = ({searchTerm, setSearchTerm}) => {
     return (
-        <div className="flex flex-col md:w-1/2 lg:w-full border-b md:border-b-0 border-black md:pr-1 lg:pr-0 pb-2">
+        <div className="flex flex-col border-b md:border-b-0 border-black pb-2">
             <label className="w-full text-center font-medium" id="searchByNameMobile">Name</label>
             <input
                 type="text"

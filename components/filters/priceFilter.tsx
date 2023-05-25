@@ -7,7 +7,7 @@ interface PriceFilterProps {
 
 const PriceFilter: React.FC<PriceFilterProps> = ({priceFilter, setPriceFilter}) => {
     return (
-        <div className="flex flex-col border-y border-black pb-2">
+        <div className="flex flex-col md:w-1/2 lg:w-full border-y md:border-y-0 lg:border-y border-black pb-2">
             <label className="w-full text-center font-medium">Price Range</label>
             <div className="flex flex-row justify-between">
                 <label className="w-1/2 text-center" id="minPriceMobile">Min</label>

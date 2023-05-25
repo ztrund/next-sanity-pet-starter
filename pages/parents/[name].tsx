@@ -1,12 +1,12 @@
 import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
-import Layout from '../../components/layout';
+import Layout from '../../components/layout/layout';
 import CustomCarousel from "../../components/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData from "../../lib/fetchPageData";
 import {Puppy} from "../../types";
 import DogCard from "../../components/dogCard";
 import sanityClient from "../../lib/sanityClient";
-import FinancingBanner from "../../components/financingBanner";
+import FinancingBanner from "../../components/financing/financingBanner";
 
 const Parent = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {parent, financing, metaDescription} = pageData;

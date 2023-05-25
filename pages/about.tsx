@@ -1,6 +1,6 @@
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
 import {PortableText} from '@portabletext/react';
-import Layout from "../components/layout";
+import Layout from "../components/layout/layout";
 import CustomCarousel from "../components/customCarousel";
 import fetchPageData from "../lib/fetchPageData";
 import {TeamMember} from "../types";

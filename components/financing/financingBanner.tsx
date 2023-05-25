@@ -1,8 +1,8 @@
 import React from 'react';
 import imageUrlBuilder from "@sanity/image-url";
-import sanityClient from "../lib/sanityClient";
-import {imageDimensionExtractor} from "../helpers/imageDimensionExtractor";
-import {Financing} from "../types";
+import sanityClient from "../../lib/sanityClient";
+import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
+import {Financing} from "../../types";
 
 interface FinancingBannerProps {
     financing: Financing

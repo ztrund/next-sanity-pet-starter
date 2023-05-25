@@ -2,9 +2,9 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {Disclosure} from "@headlessui/react";
 import {FiMenu, FiX} from "react-icons/fi";
-import {SiteInfo} from "../types";
+import {SiteInfo} from "../../types";
 import imageUrlBuilder from "@sanity/image-url";
-import sanityClient from "../lib/sanityClient";
+import sanityClient from "../../lib/sanityClient";
 
 interface HeaderProps {
     pageData?: SiteInfo;
@@ -39,16 +39,16 @@ const Header = ({pageData}: HeaderProps) => {
             <Link href="/" className={getLinkClassName("/", isVertical)}>
                 Home
             </Link>
-            <Link href="/about" className={getLinkClassName("/about", isVertical)}>
+            <Link href="/pages/about" className={getLinkClassName("/about", isVertical)}>
                 About Us
             </Link>
-            <Link href="/puppies" className={getLinkClassName("/puppies", isVertical)}>
+            <Link href="/pages/puppies" className={getLinkClassName("/puppies", isVertical)}>
                 Puppies
             </Link>
-            <Link href="/parents" className={getLinkClassName("/parents", isVertical)}>
+            <Link href="/pages/parents" className={getLinkClassName("/parents", isVertical)}>
                 Parents
             </Link>
-            <Link href="/contact" className={getLinkClassName("/contact", isVertical)}>
+            <Link href="/pages/contact" className={getLinkClassName("/contact", isVertical)}>
                 Contact Us
             </Link>
         </div>

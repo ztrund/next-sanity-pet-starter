@@ -1,4 +1,4 @@
-import Layout from '../components/layout';
+import Layout from '../components/layout/layout';
 import {GetStaticProps, InferGetStaticPropsType} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {BusinessHour, SocialMediaLink} from "../types";

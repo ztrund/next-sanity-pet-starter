@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
-import Layout from '../components/layout';
+import Layout from '../components/layout/layout';
 import {Parent} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";

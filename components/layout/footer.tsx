@@ -1,4 +1,4 @@
-import {SiteInfo} from '../types';
+import {SiteInfo} from '../../types';
 import Link from "next/link";
 
 interface FooterProps {

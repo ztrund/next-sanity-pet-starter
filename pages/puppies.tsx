@@ -1,10 +1,10 @@
 import React, {useState, useMemo} from 'react';
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
-import Layout from '../components/layout';
+import Layout from '../components/layout/layout';
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
-import FinancingContainer from "../components/financingContainer";
+import FinancingContainer from "../components/financing/financingContainer";
 import {Disclosure} from '@headlessui/react';
 import {FiFilter, FiX} from "react-icons/fi";
 import GenderFilter from "../components/filters/genderFilter";
@@ -115,19 +115,31 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                     <div
                                         className={`${open ? "flex" : "hidden"} lg:hidden justify-center flex-col w-full h-min bg-light-shades shadow-lg rounded-lg p-2 overflow-clip`}>
                                         <div className="flex flex-col md:flex-row">
-                                            <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-                                            <div className="md:border-r border-black"/>
-                                            <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter}/>
+                                            <div className="flex flex-col md:w-1/2">
+                                                <div className="pr-2">
+                                                    <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+                                                </div>
+                                                <div className="md:border-t border-black"/>
+                                                <div className="pr-2">
+                                                    <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter}/>
+                                                </div>
+                                            </div>
+                                            <div className="md:border-l border-black"/>
+                                            <div className="flex flex-col md:w-1/2 pl-2">
+                                                <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}/>
+                                            </div>
                                         </div>
-                                        <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}/>
+                                        <div className="md:border-t border-black"/>
                                         <div className="flex flex-row justify-center">
-                                            <div className="flex flex-col md:flex-row w-1/2 md:w-1/2">
+                                            <div className="flex flex-col md:flex-row w-1/2">
                                                 <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
                                                               handleCheckboxChange={handleCheckboxChange}/>
+                                                <div className="md:border-l border-black"/>
                                                 <AvailabilityFilter filter={availabilityFilter}
                                                                     setFilter={setAvailabilityFilter}
                                                                     handleCheckboxChange={handleCheckboxChange}/>
                                             </div>
+                                            <div className="md:border-l border-black"/>
                                             <ColorFilter filter={colorFilter} setFilter={setColorFilter}
                                                          handleCheckboxChange={handleCheckboxChange}
                                                          uniqueColors={uniqueColors}/>
