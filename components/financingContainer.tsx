@@ -30,7 +30,7 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing}) => {
                className="w-full gap-4 flex flex-col md:flex-row justify-center bg-light-shades drop-shadow-lg rounded-lg p-2 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                 <div className="flex items-center justify-center overflow-hidden">
                     <img
-                        src={imageBuilder.image(financing.logo).height(48).auto('format').quality(75).url()}
+                        src={imageBuilder.image(financing.logo).auto('format').quality(75).url()}
                         alt="Fiancing Logo"
                         loading="lazy"
                         width={imgDimensions.width / imgDimensions.height * 48}
