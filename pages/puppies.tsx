@@ -84,9 +84,10 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                 <div
                                     className={`hidden lg:flex justify-center flex-col w-48 divide-y h-min gap-2 divide-black bg-light-shades shadow-lg rounded-lg p-2 overflow-clip`}>
                                     <div className="flex flex-col">
-                                        <label className="w-full text-center font-medium">Name</label>
+                                        <label className="w-full text-center font-medium" id="searchByName">Name</label>
                                         <input
                                             type="text"
+                                            aria-labelledby="searchByName"
                                             className="rounded-lg w-full py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
                                             placeholder="Search by name"
                                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -200,13 +201,14 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                     <div className="flex flex-col">
                                         <label className="w-full text-center font-medium">Price Range</label>
                                         <div className="flex flex-row justify-between">
-                                            <label className="w-1/2 text-center">Min</label>
+                                            <label className="w-1/2 text-center" id="minPrice">Min</label>
                                             <label className="w-2 text-center">-</label>
-                                            <label className="w-1/2 text-center">Max</label>
+                                            <label className="w-1/2 text-center" id="maxPrice">Max</label>
                                         </div>
                                         <div className="flex flex-row justify-between">
                                             <input
                                                 type="number"
+                                                aria-labelledby="minPrice"
                                                 className="rounded-lg w-1/2 text-center py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
                                                 onChange={(e) => setPriceFilter([Number(e.target.value), priceFilter[1]])}
                                                 value={priceFilter[0]}
@@ -214,6 +216,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                             <label className="w-2"></label>
                                             <input
                                                 type="number"
+                                                aria-labelledby="maxPrice"
                                                 className="rounded-lg w-1/2 text-center py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
                                                 onChange={(e) => setPriceFilter([priceFilter[0], Number(e.target.value)])}
                                                 value={priceFilter[1]}
@@ -236,9 +239,10 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                         className={`${open ? "flex" : "hidden"} lg:hidden justify-center flex-col w-full h-min bg-light-shades shadow-lg rounded-lg p-2 overflow-clip`}>
                                         <div className="flex flex-col md:flex-row">
                                             <div className="flex flex-col md:w-1/2 border-b md:border-b-0 border-black md:pr-1 pb-2">
-                                                <label className="w-full text-center font-medium">Name</label>
+                                                <label className="w-full text-center font-medium" id="searchByNameMobile">Name</label>
                                                 <input
                                                     type="text"
+                                                    aria-labelledby="searchByNameMobile"
                                                     className="rounded-lg w-full py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
                                                     placeholder="Search by name"
                                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -262,13 +266,14 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                         <div className="flex flex-col border-y border-black pb-2">
                                             <label className="w-full text-center font-medium">Price Range</label>
                                             <div className="flex flex-row justify-between">
-                                                <label className="w-1/2 text-center">Min</label>
+                                                <label className="w-1/2 text-center" id="minPriceMobile">Min</label>
                                                 <label className="w-2 text-center">-</label>
-                                                <label className="w-1/2 text-center">Max</label>
+                                                <label className="w-1/2 text-center" id="maxPriceMobile">Max</label>
                                             </div>
                                             <div className="flex flex-row justify-between">
                                                 <input
                                                     type="number"
+                                                    aria-labelledby="minPriceMobile"
                                                     className="rounded-lg w-1/2 text-center py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
                                                     onChange={(e) => setPriceFilter([Number(e.target.value), priceFilter[1]])}
                                                     value={priceFilter[0]}
@@ -276,6 +281,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                                 <label className="w-2"></label>
                                                 <input
                                                     type="number"
+                                                    aria-labelledby="maxPriceMobile"
                                                     className="rounded-lg w-1/2 text-center py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
                                                     onChange={(e) => setPriceFilter([priceFilter[0], Number(e.target.value)])}
                                                     value={priceFilter[1]}
