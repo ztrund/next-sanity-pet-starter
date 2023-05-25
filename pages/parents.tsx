@@ -35,9 +35,13 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                     {
                         filteredParents.length > 0 ? (
                             filteredParents.map((parent: Parent, index: number) => (
-                                <DogCard dog={parent} showPrice={false}
-                                         cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"}
-                                         key={parent._id} lazy={index !== 0}/>
+                                <DogCard
+                                    dog={parent}
+                                    showPrice={false}
+                                    cardWidth={"w-full md:w-[22.5rem] lg:w-[20rem] xl:w-[18.75rem] 2xl:w-[22.75rem]"}
+                                    key={parent._id}
+                                    lazy={index !== 0}
+                                />
                             ))
                         ) : (
                             <div
