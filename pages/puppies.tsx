@@ -89,17 +89,18 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                             <div className="flex flex-row gap-4">
                                 <div
                                     className={`hidden lg:flex justify-center flex-col w-48 h-min gap-2 divide-black divide-y bg-light-shades shadow-lg rounded-lg p-2 overflow-hidden`}>
-                                    <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-                                    <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter}/>
-                                    <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}/>
+                                    <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} id="Desktop"/>
+                                    <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter} id="Desktop"/>
+                                    <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}
+                                                 maxPrice={maxPrice} minPrice={minPrice} id="Desktop"/>
                                     <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
-                                                  handleCheckboxChange={handleCheckboxChange}/>
+                                                  handleCheckboxChange={handleCheckboxChange} id="Desktop"/>
                                     <AvailabilityFilter filter={availabilityFilter}
                                                         setFilter={setAvailabilityFilter}
-                                                        handleCheckboxChange={handleCheckboxChange}/>
+                                                        handleCheckboxChange={handleCheckboxChange} id="Desktop"/>
                                     <ColorFilter filter={colorFilter} setFilter={setColorFilter}
                                                  handleCheckboxChange={handleCheckboxChange}
-                                                 uniqueColors={uniqueColors}/>
+                                                 uniqueColors={uniqueColors} id="Desktop"/>
                                 </div>
                                 <div className="flex flex-col w-full gap-4">
                                     <div
@@ -117,16 +118,18 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                         <div className="flex flex-col md:flex-row">
                                             <div className="flex flex-col md:w-1/2">
                                                 <div className="pr-2 pb-2">
-                                                    <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+                                                    <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+                                                                id="Mobile"/>
                                                 </div>
                                                 <div className="border-t border-black"/>
                                                 <div className="pr-2 pb-2">
-                                                    <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter}/>
+                                                    <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter} id="Mobile"/>
                                                 </div>
                                             </div>
                                             <div className="border-t md:border-l border-black"/>
                                             <div className="md:w-1/2 md:pl-2 pb-2">
-                                                <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}/>
+                                                <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}
+                                                             maxPrice={maxPrice} minPrice={minPrice} id="Mobile"/>
                                             </div>
                                         </div>
                                         <div className="border-t border-black"/>
@@ -134,20 +137,22 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                             <div className="flex flex-col md:flex-row w-1/2">
                                                 <div className="md:w-1/2 pr-2">
                                                     <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
-                                                                  handleCheckboxChange={handleCheckboxChange}/>
+                                                                  handleCheckboxChange={handleCheckboxChange}
+                                                                  id="Mobile"/>
                                                 </div>
                                                 <div className="border-t md:border-l border-black"/>
                                                 <div className="md:w-1/2 pr-2 md:pl-2">
                                                     <AvailabilityFilter filter={availabilityFilter}
                                                                         setFilter={setAvailabilityFilter}
-                                                                        handleCheckboxChange={handleCheckboxChange}/>
+                                                                        handleCheckboxChange={handleCheckboxChange}
+                                                                        id="Mobile"/>
                                                 </div>
                                             </div>
                                             <div className="border-l border-black"/>
                                             <div className="w-1/2 pl-2">
                                                 <ColorFilter filter={colorFilter} setFilter={setColorFilter}
                                                              handleCheckboxChange={handleCheckboxChange}
-                                                             uniqueColors={uniqueColors}/>
+                                                             uniqueColors={uniqueColors} id="Mobile"/>
                                             </div>
                                         </div>
                                     </div>
@@ -156,7 +161,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                             sortedAndFilteredPuppies.length > 0 ? (
                                                 sortedAndFilteredPuppies.map((puppy: Puppy, index: number) => (
                                                     <DogCard dog={puppy} showPrice={true}
-                                                             cardWidth={"w-full md:w-[22.5rem] lg:w-[24.98rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
+                                                             cardWidth={"w-full md:w-[22.5rem] lg:w-[24.97rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
                                                              key={puppy._id} lazy={index !== 0}/>
                                                 ))
                                             ) : (

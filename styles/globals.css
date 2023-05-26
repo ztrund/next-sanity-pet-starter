@@ -12,6 +12,29 @@
         margin: 0;
         -moz-appearance: textfield !important;
     }
+    input[type='range']::-webkit-slider-thumb{
+        pointer-events: auto;
+        -webkit-appearance: none;
+        appearance: none;
+        width:20px;
+        height:20px;
+        background:hsl(39, 76%, 52%);
+        cursor:pointer;
+        border-radius:50%;
+    }
+    input[type='range']::-moz-range-thumb{
+        pointer-events: auto;
+        width:20px;
+        height:20px;
+        background:hsl(39, 76%, 52%);
+        cursor:pointer;
+        border-radius:50%;
+        border: none;
+    }
+}
+
+.range-input {
+    background: none;
 }
 
 .yt-lite {

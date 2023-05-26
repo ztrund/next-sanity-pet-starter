@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent} from "react";
 
 type HandleCheckboxChangeType = (
     event: ChangeEvent<HTMLInputElement>,
@@ -11,31 +11,27 @@ interface ColorFilterProps {
     setFilter: React.Dispatch<React.SetStateAction<string[]>>;
     handleCheckboxChange: HandleCheckboxChangeType;
     uniqueColors: string[];
+    id: string;
 }
 
-const ColorFilter: React.FC<ColorFilterProps> = ({ filter, setFilter, handleCheckboxChange, uniqueColors }) => {
+const ColorFilter: React.FC<ColorFilterProps> = ({filter, setFilter, handleCheckboxChange, uniqueColors, id}) => {
+    const values = ["", ...uniqueColors];
+    const labels = ["All Colors", ...uniqueColors];
+
     return (
         <div className="flex flex-col">
-            <label className="w-full text-center font-medium">Color</label>
+            <div className="w-full text-center font-medium">Color</div>
             <div className="grid md:grid-cols-2 lg:grid-cols-1">
-                <label>
-                    <input
-                        type="checkbox"
-                        value=""
-                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                        checked={filter.includes('')}
-                        onChange={(e) => handleCheckboxChange(e, filter, setFilter)}
-                    /> All Colors
-                </label>
-                {uniqueColors.map((color, index) => (
+                {values.map((value, index) => (
                     <label key={index}>
                         <input
+                            id={"colorFilter-" + value + "-" + id}
                             type="checkbox"
-                            value={color}
+                            value={value}
                             className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                            checked={filter.includes(color)}
+                            checked={filter.includes(value)}
                             onChange={(e) => handleCheckboxChange(e, filter, setFilter)}
-                        /> {color}
+                        /> {labels[index]}
                     </label>
                 ))}
             </div>
