@@ -17,7 +17,7 @@ const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ filter, setFilt
     const labels = ["All Availability", "Available", "Reserved", "Sold"];
 
     return (
-        <div className="flex flex-col w-full md:w-1/2 lg:w-full px-1 lg:px-0 lg:border-b lg:pb-2">
+        <div className="flex flex-col">
             <label className="w-full text-center font-medium">Availability</label>
             {values.map((value, index) => (
                 <label key={index}>

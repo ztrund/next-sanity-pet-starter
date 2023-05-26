@@ -88,7 +88,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                             <FinancingContainer financing={financing}/>
                             <div className="flex flex-row gap-4">
                                 <div
-                                    className={`hidden lg:flex justify-center flex-col w-48 h-min bg-light-shades shadow-lg rounded-lg p-2 overflow-hidden`}>
+                                    className={`hidden lg:flex justify-center flex-col w-48 h-min gap-2 divide-black divide-y bg-light-shades shadow-lg rounded-lg p-2 overflow-hidden`}>
                                     <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
                                     <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter}/>
                                     <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}/>
@@ -116,33 +116,39 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                         className={`${open ? "flex" : "hidden"} lg:hidden justify-center flex-col w-full h-min bg-light-shades shadow-lg rounded-lg p-2 overflow-clip`}>
                                         <div className="flex flex-col md:flex-row">
                                             <div className="flex flex-col md:w-1/2">
-                                                <div className="pr-2">
+                                                <div className="pr-2 pb-2">
                                                     <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
                                                 </div>
-                                                <div className="md:border-t border-black"/>
-                                                <div className="pr-2">
+                                                <div className="border-t border-black"/>
+                                                <div className="pr-2 pb-2">
                                                     <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter}/>
                                                 </div>
                                             </div>
-                                            <div className="md:border-l border-black"/>
-                                            <div className="flex flex-col md:w-1/2 pl-2">
+                                            <div className="border-t md:border-l border-black"/>
+                                            <div className="md:w-1/2 md:pl-2 pb-2">
                                                 <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}/>
                                             </div>
                                         </div>
-                                        <div className="md:border-t border-black"/>
-                                        <div className="flex flex-row justify-center">
+                                        <div className="border-t border-black"/>
+                                        <div className="flex flex-row">
                                             <div className="flex flex-col md:flex-row w-1/2">
-                                                <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
-                                                              handleCheckboxChange={handleCheckboxChange}/>
-                                                <div className="md:border-l border-black"/>
-                                                <AvailabilityFilter filter={availabilityFilter}
-                                                                    setFilter={setAvailabilityFilter}
-                                                                    handleCheckboxChange={handleCheckboxChange}/>
+                                                <div className="md:w-1/2 pr-2">
+                                                    <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
+                                                                  handleCheckboxChange={handleCheckboxChange}/>
+                                                </div>
+                                                <div className="border-t md:border-l border-black"/>
+                                                <div className="md:w-1/2 pr-2 md:pl-2">
+                                                    <AvailabilityFilter filter={availabilityFilter}
+                                                                        setFilter={setAvailabilityFilter}
+                                                                        handleCheckboxChange={handleCheckboxChange}/>
+                                                </div>
                                             </div>
-                                            <div className="md:border-l border-black"/>
-                                            <ColorFilter filter={colorFilter} setFilter={setColorFilter}
-                                                         handleCheckboxChange={handleCheckboxChange}
-                                                         uniqueColors={uniqueColors}/>
+                                            <div className="border-l border-black"/>
+                                            <div className="w-1/2 pl-2">
+                                                <ColorFilter filter={colorFilter} setFilter={setColorFilter}
+                                                             handleCheckboxChange={handleCheckboxChange}
+                                                             uniqueColors={uniqueColors}/>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap justify-center gap-4">

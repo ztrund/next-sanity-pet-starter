@@ -15,7 +15,7 @@ interface ColorFilterProps {
 
 const ColorFilter: React.FC<ColorFilterProps> = ({ filter, setFilter, handleCheckboxChange, uniqueColors }) => {
     return (
-        <div className="flex flex-col w-1/2 lg:w-full px-1 lg:px-0 border-black border-l md:border-l-0">
+        <div className="flex flex-col">
             <label className="w-full text-center font-medium">Color</label>
             <div className="grid md:grid-cols-2 lg:grid-cols-1">
                 <label>

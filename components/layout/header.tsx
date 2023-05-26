@@ -39,16 +39,16 @@ const Header = ({pageData}: HeaderProps) => {
             <Link href="/" className={getLinkClassName("/", isVertical)}>
                 Home
             </Link>
-            <Link href="/pages/about" className={getLinkClassName("/about", isVertical)}>
+            <Link href="/about" className={getLinkClassName("/about", isVertical)}>
                 About Us
             </Link>
-            <Link href="/pages/puppies" className={getLinkClassName("/puppies", isVertical)}>
+            <Link href="/puppies" className={getLinkClassName("/puppies", isVertical)}>
                 Puppies
             </Link>
-            <Link href="/pages/parents" className={getLinkClassName("/parents", isVertical)}>
+            <Link href="/parents" className={getLinkClassName("/parents", isVertical)}>
                 Parents
             </Link>
-            <Link href="/pages/contact" className={getLinkClassName("/contact", isVertical)}>
+            <Link href="/contact" className={getLinkClassName("/contact", isVertical)}>
                 Contact Us
             </Link>
         </div>
