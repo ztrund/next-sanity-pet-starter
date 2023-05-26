@@ -1,4 +1,4 @@
-import Layout from "../components/layout";
+import Layout from "../components/layout/layout";
 import {GetStaticProps, InferGetStaticPropsType} from "next";
 import Link from "next/link";
 import {useEffect, useState} from "react";

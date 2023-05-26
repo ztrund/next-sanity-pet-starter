@@ -1,12 +1,18 @@
 import React, {useState, useMemo} from 'react';
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
-import Layout from '../components/layout';
+import Layout from '../components/layout/layout';
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
-import FinancingContainer from "../components/financingContainer";
+import FinancingContainer from "../components/financing/financingContainer";
 import {Disclosure} from '@headlessui/react';
 import {FiFilter, FiX} from "react-icons/fi";
+import GenderFilter from "../components/filters/genderFilter";
+import AvailabilityFilter from "../components/filters/availabilityFilter";
+import ColorFilter from "../components/filters/colorFilter";
+import PriceFilter from "../components/filters/priceFilter";
+import SortFilter from "../components/filters/sortFilter";
+import NameFilter from "../components/filters/nameFilter";
 
 const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {puppies, metaDescription, financing} = pageData;
@@ -82,147 +88,19 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                             <FinancingContainer financing={financing}/>
                             <div className="flex flex-row gap-4">
                                 <div
-                                    className={`hidden lg:flex justify-center flex-col w-48 divide-y h-min gap-2 divide-black bg-light-shades shadow-lg rounded-lg p-2 overflow-clip`}>
-                                    <div className="flex flex-col">
-                                        <label className="w-full text-center font-medium" id="searchByName">Name</label>
-                                        <input
-                                            type="text"
-                                            aria-labelledby="searchByName"
-                                            className="rounded-lg w-full py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
-                                            placeholder="Search by name"
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            value={searchTerm}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <label className="w-full text-center font-medium">Sort</label>
-                                        <select
-                                            className="rounded-lg w-full py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
-                                            onChange={(e) => setSortFilter(e.target.value)}
-                                            value={sortFilter}
-                                        >
-                                            <option value="availability">Availability</option>
-                                            <option value="price">Price</option>
-                                            <option value="name">Name</option>
-                                        </select>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <label className="w-full text-center font-medium">Gender</label>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value=""
-                                                className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                checked={genderFilter.includes('')}
-                                                onChange={(e) => handleCheckboxChange(e, genderFilter, setGenderFilter)}
-                                            /> All Genders
-                                        </label>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value="Male"
-                                                className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                checked={genderFilter.includes('Male')}
-                                                onChange={(e) => handleCheckboxChange(e, genderFilter, setGenderFilter)}
-                                            /> Male
-                                        </label>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value="Female"
-                                                className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                checked={genderFilter.includes('Female')}
-                                                onChange={(e) => handleCheckboxChange(e, genderFilter, setGenderFilter)}
-                                            /> Female
-                                        </label>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <label className="w-full text-center font-medium">Color</label>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value=""
-                                                className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                checked={colorFilter.includes('')}
-                                                onChange={(e) => handleCheckboxChange(e, colorFilter, setColorFilter)}
-                                            /> All Colors
-                                        </label>
-                                        {uniqueColors.map((color, index) => (
-                                            <label key={index}>
-                                                <input
-                                                    type="checkbox"
-                                                    value={color}
-                                                    className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                    checked={colorFilter.includes(color)}
-                                                    onChange={(e) => handleCheckboxChange(e, colorFilter, setColorFilter)}
-                                                /> {color}
-                                            </label>
-                                        ))}
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <label className="w-full text-center font-medium">Availability</label>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value=""
-                                                className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                checked={availabilityFilter.includes('')}
-                                                onChange={(e) => handleCheckboxChange(e, availabilityFilter, setAvailabilityFilter)}
-                                            /> All Availability
-                                        </label>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value="Available"
-                                                className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                checked={availabilityFilter.includes('Available')}
-                                                onChange={(e) => handleCheckboxChange(e, availabilityFilter, setAvailabilityFilter)}
-                                            /> Available
-                                        </label>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value="Reserved"
-                                                className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                checked={availabilityFilter.includes('Reserved')}
-                                                onChange={(e) => handleCheckboxChange(e, availabilityFilter, setAvailabilityFilter)}
-                                            /> Reserved
-                                        </label>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value="Sold"
-                                                className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                checked={availabilityFilter.includes('Sold')}
-                                                onChange={(e) => handleCheckboxChange(e, availabilityFilter, setAvailabilityFilter)}
-                                            /> Sold
-                                        </label>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <label className="w-full text-center font-medium">Price Range</label>
-                                        <div className="flex flex-row justify-between">
-                                            <label className="w-1/2 text-center" id="minPrice">Min</label>
-                                            <label className="w-2 text-center">-</label>
-                                            <label className="w-1/2 text-center" id="maxPrice">Max</label>
-                                        </div>
-                                        <div className="flex flex-row justify-between">
-                                            <input
-                                                type="number"
-                                                aria-labelledby="minPrice"
-                                                className="rounded-lg w-1/2 text-center py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
-                                                onChange={(e) => setPriceFilter([Number(e.target.value), priceFilter[1]])}
-                                                value={priceFilter[0]}
-                                            />
-                                            <label className="w-2"></label>
-                                            <input
-                                                type="number"
-                                                aria-labelledby="maxPrice"
-                                                className="rounded-lg w-1/2 text-center py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
-                                                onChange={(e) => setPriceFilter([priceFilter[0], Number(e.target.value)])}
-                                                value={priceFilter[1]}
-                                            />
-                                        </div>
-                                    </div>
+                                    className={`hidden lg:flex justify-center flex-col w-48 h-min gap-2 divide-black divide-y bg-light-shades shadow-lg rounded-lg p-2 overflow-hidden`}>
+                                    <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} id="Desktop"/>
+                                    <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter} id="Desktop"/>
+                                    <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}
+                                                 maxPrice={maxPrice} minPrice={minPrice} id="Desktop"/>
+                                    <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
+                                                  handleCheckboxChange={handleCheckboxChange} id="Desktop"/>
+                                    <AvailabilityFilter filter={availabilityFilter}
+                                                        setFilter={setAvailabilityFilter}
+                                                        handleCheckboxChange={handleCheckboxChange} id="Desktop"/>
+                                    <ColorFilter filter={colorFilter} setFilter={setColorFilter}
+                                                 handleCheckboxChange={handleCheckboxChange}
+                                                 uniqueColors={uniqueColors} id="Desktop"/>
                                 </div>
                                 <div className="flex flex-col w-full gap-4">
                                     <div
@@ -238,148 +116,43 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                     <div
                                         className={`${open ? "flex" : "hidden"} lg:hidden justify-center flex-col w-full h-min bg-light-shades shadow-lg rounded-lg p-2 overflow-clip`}>
                                         <div className="flex flex-col md:flex-row">
-                                            <div className="flex flex-col md:w-1/2 border-b md:border-b-0 border-black md:pr-1 pb-2">
-                                                <label className="w-full text-center font-medium" id="searchByNameMobile">Name</label>
-                                                <input
-                                                    type="text"
-                                                    aria-labelledby="searchByNameMobile"
-                                                    className="rounded-lg w-full py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
-                                                    placeholder="Search by name"
-                                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                                    value={searchTerm}
-                                                />
+                                            <div className="flex flex-col md:w-1/2">
+                                                <div className="pr-2 pb-2">
+                                                    <NameFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+                                                                id="Mobile"/>
+                                                </div>
+                                                <div className="border-t border-black"/>
+                                                <div className="pr-2 pb-2">
+                                                    <SortFilter sortFilter={sortFilter} setSortFilter={setSortFilter} id="Mobile"/>
+                                                </div>
                                             </div>
-                                            <div className="md:border-r border-black"/>
-                                            <div className="flex flex-col md:w-1/2 md:pl-1 pb-2">
-                                                <label className="w-full text-center font-medium">Sort</label>
-                                                <select
-                                                    className="rounded-lg w-full py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
-                                                    onChange={(e) => setSortFilter(e.target.value)}
-                                                    value={sortFilter}
-                                                >
-                                                    <option value="availability">Availability</option>
-                                                    <option value="price">Price</option>
-                                                    <option value="name">Name</option>
-                                                </select>
+                                            <div className="border-t md:border-l border-black"/>
+                                            <div className="md:w-1/2 md:pl-2 pb-2">
+                                                <PriceFilter priceFilter={priceFilter} setPriceFilter={setPriceFilter}
+                                                             maxPrice={maxPrice} minPrice={minPrice} id="Mobile"/>
                                             </div>
                                         </div>
-                                        <div className="flex flex-col border-y border-black pb-2">
-                                            <label className="w-full text-center font-medium">Price Range</label>
-                                            <div className="flex flex-row justify-between">
-                                                <label className="w-1/2 text-center" id="minPriceMobile">Min</label>
-                                                <label className="w-2 text-center">-</label>
-                                                <label className="w-1/2 text-center" id="maxPriceMobile">Max</label>
+                                        <div className="border-t border-black"/>
+                                        <div className="flex flex-row">
+                                            <div className="flex flex-col md:flex-row w-1/2">
+                                                <div className="md:w-1/2 pr-2">
+                                                    <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
+                                                                  handleCheckboxChange={handleCheckboxChange}
+                                                                  id="Mobile"/>
+                                                </div>
+                                                <div className="border-t md:border-l border-black"/>
+                                                <div className="md:w-1/2 pr-2 md:pl-2">
+                                                    <AvailabilityFilter filter={availabilityFilter}
+                                                                        setFilter={setAvailabilityFilter}
+                                                                        handleCheckboxChange={handleCheckboxChange}
+                                                                        id="Mobile"/>
+                                                </div>
                                             </div>
-                                            <div className="flex flex-row justify-between">
-                                                <input
-                                                    type="number"
-                                                    aria-labelledby="minPriceMobile"
-                                                    className="rounded-lg w-1/2 text-center py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
-                                                    onChange={(e) => setPriceFilter([Number(e.target.value), priceFilter[1]])}
-                                                    value={priceFilter[0]}
-                                                />
-                                                <label className="w-2"></label>
-                                                <input
-                                                    type="number"
-                                                    aria-labelledby="maxPriceMobile"
-                                                    className="rounded-lg w-1/2 text-center py-0 px-2 border-black focus:ring-dark-accent focus:border-dark-accent"
-                                                    onChange={(e) => setPriceFilter([priceFilter[0], Number(e.target.value)])}
-                                                    value={priceFilter[1]}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-row justify-center">
-                                            <div className="flex flex-col w-1/3 px-1">
-                                                <label className="w-full text-center font-medium">Gender</label>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value=""
-                                                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                        checked={genderFilter.includes('')}
-                                                        onChange={(e) => handleCheckboxChange(e, genderFilter, setGenderFilter)}
-                                                    /> All Genders
-                                                </label>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="Male"
-                                                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                        checked={genderFilter.includes('Male')}
-                                                        onChange={(e) => handleCheckboxChange(e, genderFilter, setGenderFilter)}
-                                                    /> Male
-                                                </label>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="Female"
-                                                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                        checked={genderFilter.includes('Female')}
-                                                        onChange={(e) => handleCheckboxChange(e, genderFilter, setGenderFilter)}
-                                                    /> Female
-                                                </label>
-                                            </div>
-                                            <div className="flex flex-col w-1/3 border-x border-black px-1">
-                                                <label className="w-full text-center font-medium">Color</label>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value=""
-                                                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                        checked={colorFilter.includes('')}
-                                                        onChange={(e) => handleCheckboxChange(e, colorFilter, setColorFilter)}
-                                                    /> All Colors
-                                                </label>
-                                                {uniqueColors.map((color, index) => (
-                                                    <label key={index}>
-                                                        <input
-                                                            type="checkbox"
-                                                            value={color}
-                                                            className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                            checked={colorFilter.includes(color)}
-                                                            onChange={(e) => handleCheckboxChange(e, colorFilter, setColorFilter)}
-                                                        /> {color}
-                                                    </label>
-                                                ))}
-                                            </div>
-                                            <div className="flex flex-col w-1/3 px-1">
-                                                <label className="w-full text-center font-medium">Availability</label>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value=""
-                                                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                        checked={availabilityFilter.includes('')}
-                                                        onChange={(e) => handleCheckboxChange(e, availabilityFilter, setAvailabilityFilter)}
-                                                    /> All Availability
-                                                </label>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="Available"
-                                                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                        checked={availabilityFilter.includes('Available')}
-                                                        onChange={(e) => handleCheckboxChange(e, availabilityFilter, setAvailabilityFilter)}
-                                                    /> Available
-                                                </label>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="Reserved"
-                                                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                        checked={availabilityFilter.includes('Reserved')}
-                                                        onChange={(e) => handleCheckboxChange(e, availabilityFilter, setAvailabilityFilter)}
-                                                    /> Reserved
-                                                </label>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="Sold"
-                                                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                                                        checked={availabilityFilter.includes('Sold')}
-                                                        onChange={(e) => handleCheckboxChange(e, availabilityFilter, setAvailabilityFilter)}
-                                                    /> Sold
-                                                </label>
+                                            <div className="border-l border-black"/>
+                                            <div className="w-1/2 pl-2">
+                                                <ColorFilter filter={colorFilter} setFilter={setColorFilter}
+                                                             handleCheckboxChange={handleCheckboxChange}
+                                                             uniqueColors={uniqueColors} id="Mobile"/>
                                             </div>
                                         </div>
                                     </div>
@@ -388,7 +161,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                             sortedAndFilteredPuppies.length > 0 ? (
                                                 sortedAndFilteredPuppies.map((puppy: Puppy, index: number) => (
                                                     <DogCard dog={puppy} showPrice={true}
-                                                             cardWidth={"w-full md:w-[22.5rem] lg:w-[24.98rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
+                                                             cardWidth={"w-full md:w-[22.5rem] lg:w-[24.97rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
                                                              key={puppy._id} lazy={index !== 0}/>
                                                 ))
                                             ) : (

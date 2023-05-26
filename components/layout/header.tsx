@@ -2,9 +2,9 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {Disclosure} from "@headlessui/react";
 import {FiMenu, FiX} from "react-icons/fi";
-import {SiteInfo} from "../types";
+import {SiteInfo} from "../../types";
 import imageUrlBuilder from "@sanity/image-url";
-import sanityClient from "../lib/sanityClient";
+import sanityClient from "../../lib/sanityClient";
 
 interface HeaderProps {
     pageData?: SiteInfo;

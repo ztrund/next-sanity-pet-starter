@@ -1,9 +1,9 @@
 import React from 'react';
 import imageUrlBuilder from "@sanity/image-url";
-import sanityClient from "../lib/sanityClient";
-import {imageDimensionExtractor} from "../helpers/imageDimensionExtractor";
+import sanityClient from "../../lib/sanityClient";
+import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 import {PortableText} from "@portabletext/react";
-import {Financing} from "../types";
+import {Financing} from "../../types";
 
 interface FinancingContainerProps {
     financing: Financing
