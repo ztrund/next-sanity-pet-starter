@@ -30,9 +30,9 @@ const PriceFilter: React.FC<PriceFilterProps> = ({minPrice, maxPrice, priceFilte
         <div className="flex flex-col">
             <div className="w-full text-center font-medium">Price Range</div>
             <div className="flex flex-row justify-between">
-                <label htmlFor={"priceFilter-Min-" + id} className="w-1/2 text-center">Min</label>
+                <label id={"labelMin-" + id} htmlFor={"priceFilter-Min-" + id} className="w-1/2 text-center">Min</label>
                 <div className="w-2 text-center">-</div>
-                <label htmlFor={"priceFilter-Max-" + id} className="w-1/2 text-center">Max</label>
+                <label id={"labelMax-" + id} htmlFor={"priceFilter-Max-" + id} className="w-1/2 text-center">Max</label>
             </div>
             <div className="flex flex-row justify-between pb-2">
                 <input
@@ -97,6 +97,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({minPrice, maxPrice, priceFilte
                 </div>
                 <div className="relative">
                     <input
+                        aria-labelledby={"labelMin-" + id}
                         type="range"
                         min={minPrice}
                         max={maxPrice}
@@ -112,6 +113,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({minPrice, maxPrice, priceFilte
                         }}
                     />
                     <input
+                        aria-labelledby={"labelMax-" + id}
                         type="range"
                         min={minPrice}
                         max={maxPrice}
