@@ -87,7 +87,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         >
                             {mediaItem.type === "image" && mediaItem.image && (
                                 <img
-                                    src={sanityImageUrl(mediaItem.image, {w: 744, h: 744, auto: "format", q: 75})}
+                                    src={sanityImageUrl(mediaItem.image, {w: 744, h: 744, auto: "format", q: 75, fit: "crop"})}
                                     alt={"Slide " + index}
                                     loading={index < 1 ? "eager" : "lazy"}
                                     width="744"
@@ -123,7 +123,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                 {mediaItem.type === "image" && mediaItem.image && (
                                     <img
                                         key={index}
-                                        src={sanityImageUrl(mediaItem.image, {h: 128, w: 128, auto: "format", q: 75})}
+                                        src={sanityImageUrl(mediaItem.image, {h: 128, w: 128, auto: "format", q: 75, fit: "crop"})}
                                         height="128"
                                         width="128"
                                         alt={"Slide " + index + " Thumbnail"}
