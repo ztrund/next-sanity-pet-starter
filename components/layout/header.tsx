@@ -3,19 +3,17 @@ import {useRouter} from "next/router";
 import {Disclosure} from "@headlessui/react";
 import {FiMenu, FiX} from "react-icons/fi";
 import {SiteInfo} from "../../types";
-import imageUrlBuilder from "@sanity/image-url";
-import sanityClient from "../../lib/sanityClient";
+import {sanityImageUrl} from "../../lib/sanityImageUrl";
 
 interface HeaderProps {
     pageData?: SiteInfo;
 }
 
 const Header = ({pageData}: HeaderProps) => {
-    const imageBuilder = imageUrlBuilder(sanityClient);
     const router = useRouter();
 
     const companyLogo = pageData?.companyInfo?.companyLogo
-        ? <img src={imageBuilder.image(pageData?.companyInfo?.companyLogo).height(64).auto('format').url()}
+        ? <img src={sanityImageUrl(pageData?.companyInfo?.companyLogo, {h: 64, auto: 'format'})}
                alt={`${pageData?.companyInfo?.companyName} Logo`}
                className="h-16"
         />
