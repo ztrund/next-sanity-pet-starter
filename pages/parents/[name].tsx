@@ -2,7 +2,7 @@ import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
 import Layout from '../../components/layout/layout';
 import CustomCarousel from "../../components/customCarousel";
 import {getAge} from "../../helpers/getAge";
-import fetchPageData from "../../lib/fetchPageData";
+import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {Puppy} from "../../types";
 import DogCard from "../../components/dogCard";
 import sanityClient from "../../lib/sanityClient";
@@ -104,7 +104,9 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     },
   `;
 
-    const fetchParams = {name: params?.name};
+    const fetchParams: FetchParams = {
+        name: Array.isArray(params?.name) ? params?.name[0] : params?.name,
+    };
 
     const pageData = await fetchPageData(additionalQuery, fetchParams);
 

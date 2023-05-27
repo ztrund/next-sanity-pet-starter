@@ -1,12 +1,11 @@
 import React, {useCallback, useEffect, useState} from "react";
-import imageUrlBuilder from "@sanity/image-url";
-import sanityClient from "../lib/sanityClient";
 import {extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 import {MediaItem} from "../types";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import Modal from "react-modal";
+import {sanityImageUrl} from "../lib/sanityImageUrl";
 
 Modal.setAppElement('#root');
 
@@ -15,7 +14,6 @@ interface CustomCarouselProps {
 }
 
 const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
-    const imageBuilder = imageUrlBuilder(sanityClient);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [currentImage, setCurrentImage] = useState("");
@@ -89,12 +87,12 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         >
                             {mediaItem.type === "image" && mediaItem.image && (
                                 <img
-                                    src={imageBuilder.image(mediaItem.image).width(744).height(744).auto('format').quality(75).url()}
+                                    src={sanityImageUrl(mediaItem.image, {w: 744, h: 744, auto: "format", q: 75})}
                                     alt={"Slide " + index}
                                     loading={index < 1 ? "eager" : "lazy"}
                                     width="744"
                                     height="744"
-                                    onClick={() => handleImageClick(imageBuilder.image(mediaItem.image).auto('format').quality(75).url())}
+                                    onClick={() => handleImageClick(sanityImageUrl(mediaItem.image, {auto: "format", q: 75}))}
                                 />
                             )}
                             {mediaItem.type === "video" && mediaItem.videoUrl && (
@@ -125,7 +123,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                                 {mediaItem.type === "image" && mediaItem.image && (
                                     <img
                                         key={index}
-                                        src={imageBuilder.image(mediaItem.image).height(128).width(128).auto('format').quality(75).url()}
+                                        src={sanityImageUrl(mediaItem.image, {h: 128, w: 128, auto: "format", q: 75})}
                                         height="128"
                                         width="128"
                                         alt={"Slide " + index + " Thumbnail"}

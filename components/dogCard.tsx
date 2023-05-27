@@ -1,8 +1,7 @@
 import {FunctionComponent} from 'react';
 import Link from 'next/link';
 import {Parent, Puppy} from '../types';
-import imageUrlBuilder from '@sanity/image-url';
-import sanityClient from '../lib/sanityClient';
+import {sanityImageUrl} from "../lib/sanityImageUrl";
 
 interface DogCardProps {
     dog: Puppy | Parent;
@@ -17,10 +16,9 @@ const DogCard: FunctionComponent<DogCardProps> = ({
                                                       cardWidth = 'w-full md:w-[22.5rem] lg:w-[30.5rem] xl:w-[18.75rem] 2xl:w-[22.75rem]',
                                                       lazy = true,
                                                   }) => {
-    const imageBuilder = imageUrlBuilder(sanityClient);
     const imageItem = dog.mediaItems?.find(item => item.type === 'image');
     const imageUrl = imageItem
-        ? imageBuilder.image(imageItem.image).width(384).height(192).auto('format').quality(75).url()
+        ? sanityImageUrl(imageItem.image, {w: 384, h: 192, auto: "format", q: 75, fit: "crop"})
         : '/images/paw-solid.svg';
 
     const isPuppy = (pet: Puppy | Parent): pet is Puppy => {
