@@ -29,14 +29,17 @@ export const sanityImageUrl = (image: any, options?: SanityImageUrlOptions): str
         return '';
     }
 
-    const imageId = image.asset._ref.split('-');
+    const imageId = image.asset._ref.split('-'); // [image, id, width x height, format]
     const imageDimensions = imageId[2].split('x'); // [width, height]
     let imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${imageId[1]}-${imageId[2]}.${imageId[3]}`;
 
     let params = [];
     if (image.hotspot && options && options.w && options.h) {
+        const croppedWidth = imageDimensions[0] * (1 - image.crop.left - image.crop.right);
+        const croppedHeight = imageDimensions[1] * (1 - image.crop.bottom - image.crop.top);
+
         // calculate the scale ratio between original image and target size
-        const scaleRatio = Math.min(imageDimensions[0] / options.w, imageDimensions[1] / options.h);
+        const scaleRatio = Math.min(croppedWidth / options.w, croppedHeight / options.h);
 
         // scale up hotspot dimensions
         const hsWidth = Math.round(options.w * scaleRatio);
