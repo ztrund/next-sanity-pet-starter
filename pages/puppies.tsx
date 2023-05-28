@@ -12,6 +12,7 @@ import ColorFilter from "../components/filters/colorFilter";
 import PriceFilter from "../components/filters/priceFilter";
 import SortFilter from "../components/filters/sortFilter";
 import NameFilter from "../components/filters/nameFilter";
+import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 
 const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
@@ -28,27 +29,6 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
     const [colorFilter, setColorFilter] = useState<string[]>(['']);
     const [availabilityFilter, setAvailabilityFilter] = useState<string[]>(['']);
     const [priceFilter, setPriceFilter] = useState<number[]>([minPrice, maxPrice]);
-
-    const handleCheckboxChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-        filter: string[],
-        setFilter: React.Dispatch<React.SetStateAction<string[]>>
-    ) => {
-        const value = event.target.value;
-
-        if (event.target.checked) {
-            if (value === '') {
-                // If 'All' is checked, clear the other checkboxes
-                setFilter(['']);
-            } else {
-                // If any other checkbox is checked, uncheck 'All'
-                setFilter((prev) => [...prev.filter((item) => item !== ''), value]);
-            }
-        } else {
-            // If a checkbox is unchecked, remove its value from the filter array
-            setFilter((prev) => prev.filter((item) => item !== value));
-        }
-    };
 
     const sortedAndFilteredPuppies = useMemo(() => {
         return [...puppies]
@@ -133,7 +113,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                             <div className="border-t border-black"/>
                             <div className="flex flex-row">
                                 <div className="flex flex-col md:flex-row w-1/2">
-                                    <div className="md:w-1/2 pr-2">
+                                    <div className="md:w-1/2 pr-2 pb-2 md:pb-0">
                                         <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
                                                       handleCheckboxChange={handleCheckboxChange}
                                                       id="Mobile"/>
@@ -150,7 +130,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                 <div className="w-1/2 pl-2">
                                     <ColorFilter filter={colorFilter} setFilter={setColorFilter}
                                                  handleCheckboxChange={handleCheckboxChange}
-                                                 uniqueColors={uniqueColors} id="Mobile"/>
+                                                 uniqueColors={uniqueColors} id="Mobile" gridStyle="md:grid-cols-2"/>
                                 </div>
                             </div>
                         </div>

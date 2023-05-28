@@ -4,13 +4,10 @@ import Layout from "../components/layout/layout";
 import CustomCarousel from "../components/customCarousel";
 import fetchPageData from "../lib/fetchPageData";
 import {TeamMember} from "../types";
-// import imageUrlBuilder from "@sanity/image-url";
-// import sanityClient from "../lib/sanityClient";
 import {sanityImageUrl} from "../lib/sanityImageUrl";
 
 const About = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {about, metaDescription} = pageData;
-    // const imageBuilder = imageUrlBuilder(sanityClient); // Add crop support to sanityImageUrl
     return (
         <Layout pageTitle="About Us"
                 metaDesc={metaDescription.description}
@@ -27,9 +24,6 @@ const About = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
                             {about.team.map((teamMember: TeamMember) => (
                                 <div key={teamMember.name} className="flex flex-col lg:flex-row items-center">
                                     <div className="flex flex-col items-center">
-                                        {/*<img*/}
-                                        {/*    src={imageBuilder.image(teamMember.image).width(128).height(128).auto('format').quality(75).url()}*/}
-                                        {/*    alt={teamMember.name} className="rounded-full shadow-lg" loading="lazy" height="128" width="128"/>*/}
                                         <img
                                             src={sanityImageUrl(teamMember.image, {w: 128, h:128, auto: "format", q:75, fit: "crop"})}
                                             alt={teamMember.name} className="rounded-full shadow-lg" loading="lazy" height="128" width="128"/>
