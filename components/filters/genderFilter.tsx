@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent} from "react";
 
 type HandleCheckboxChangeType = (
     event: ChangeEvent<HTMLInputElement>,
@@ -11,16 +11,23 @@ interface GenderFilterProps {
     setFilter: React.Dispatch<React.SetStateAction<string[]>>;
     handleCheckboxChange: HandleCheckboxChangeType;
     id: string;
+    gridStyle?: string;
 }
 
-const GenderFilter: React.FC<GenderFilterProps> = ({ filter, setFilter, handleCheckboxChange, id}) => {
+const GenderFilter: React.FC<GenderFilterProps> = ({
+                                                       filter,
+                                                       setFilter,
+                                                       handleCheckboxChange,
+                                                       id,
+                                                       gridStyle = "grid-cols-1"
+                                                   }) => {
     const values = ["", "Male", "Female"];
     const labels = ["All Genders", "Male", "Female"];
 
     return (
         <div className="flex flex-col">
             <div className="w-full text-center font-medium">Gender</div>
-            <div className="flex flex-col gap-1">
+            <div className={`grid ${gridStyle} gap-1`}>
                 {values.map((value, index) => (
                     <label key={index}>
                         <input

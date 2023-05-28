@@ -12,16 +12,24 @@ interface ColorFilterProps {
     handleCheckboxChange: HandleCheckboxChangeType;
     uniqueColors: string[];
     id: string;
+    gridStyle?: string;
 }
 
-const ColorFilter: React.FC<ColorFilterProps> = ({filter, setFilter, handleCheckboxChange, uniqueColors, id}) => {
+const ColorFilter: React.FC<ColorFilterProps> = ({
+                                                     filter,
+                                                     setFilter,
+                                                     handleCheckboxChange,
+                                                     uniqueColors,
+                                                     id,
+                                                     gridStyle = "grid-cols-1"
+                                                 }) => {
     const values = ["", ...uniqueColors];
     const labels = ["All Colors", ...uniqueColors];
 
     return (
         <div className="flex flex-col">
             <div className="w-full text-center font-medium">Color</div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-1">
+            <div className={`grid ${gridStyle} gap-1`}>
                 {values.map((value, index) => (
                     <label key={index}>
                         <input
