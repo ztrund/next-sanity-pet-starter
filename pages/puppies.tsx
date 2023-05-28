@@ -133,7 +133,7 @@ const Puppies = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                             <div className="border-t border-black"/>
                             <div className="flex flex-row">
                                 <div className="flex flex-col md:flex-row w-1/2">
-                                    <div className="md:w-1/2 pr-2">
+                                    <div className="md:w-1/2 pr-2 pb-2 md:pb-0">
                                         <GenderFilter filter={genderFilter} setFilter={setGenderFilter}
                                                       handleCheckboxChange={handleCheckboxChange}
                                                       id="Mobile"/>

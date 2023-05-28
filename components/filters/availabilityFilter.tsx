@@ -20,18 +20,20 @@ const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ filter, setFilt
     return (
         <div className="flex flex-col">
             <div className="w-full text-center font-medium">Availability</div>
-            {values.map((value, index) => (
-                <label key={index}>
-                    <input
-                        id={"availabilityFilter-" + value + "-" + id}
-                        type="checkbox"
-                        value={value}
-                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                        checked={filter.includes(value)}
-                        onChange={(e) => handleCheckboxChange(e, filter, setFilter)}
-                    /> {labels[index]}
-                </label>
-            ))}
+            <div className="flex flex-col gap-1">
+                {values.map((value, index) => (
+                    <label key={index}>
+                        <input
+                            id={"availabilityFilter-" + value + "-" + id}
+                            type="checkbox"
+                            value={value}
+                            className="text-main-brand-color rounded-lg focus:ring-dark-accent"
+                            checked={filter.includes(value)}
+                            onChange={(e) => handleCheckboxChange(e, filter, setFilter)}
+                        /> {labels[index]}
+                    </label>
+                ))}
+            </div>
         </div>
     );
 };

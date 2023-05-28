@@ -21,7 +21,7 @@ const ColorFilter: React.FC<ColorFilterProps> = ({filter, setFilter, handleCheck
     return (
         <div className="flex flex-col">
             <div className="w-full text-center font-medium">Color</div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-1">
+            <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-1">
                 {values.map((value, index) => (
                     <label key={index}>
                         <input

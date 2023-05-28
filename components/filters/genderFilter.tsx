@@ -20,18 +20,20 @@ const GenderFilter: React.FC<GenderFilterProps> = ({ filter, setFilter, handleCh
     return (
         <div className="flex flex-col">
             <div className="w-full text-center font-medium">Gender</div>
-            {values.map((value, index) => (
-                <label key={index}>
-                    <input
-                        id={"genderFilter-" + value + "-" + id}
-                        type="checkbox"
-                        value={value}
-                        className="text-main-brand-color rounded-lg focus:ring-dark-accent"
-                        checked={filter.includes(value)}
-                        onChange={(e) => handleCheckboxChange(e, filter, setFilter)}
-                    /> {labels[index]}
-                </label>
-            ))}
+            <div className="flex flex-col gap-1">
+                {values.map((value, index) => (
+                    <label key={index}>
+                        <input
+                            id={"genderFilter-" + value + "-" + id}
+                            type="checkbox"
+                            value={value}
+                            className="text-main-brand-color rounded-lg focus:ring-dark-accent"
+                            checked={filter.includes(value)}
+                            onChange={(e) => handleCheckboxChange(e, filter, setFilter)}
+                        /> {labels[index]}
+                    </label>
+                ))}
+            </div>
         </div>
     );
 };
