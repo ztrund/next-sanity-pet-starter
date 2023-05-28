@@ -33,8 +33,8 @@ const Footer = ({ pageData }: FooterProps) => {
     return (
         <footer className="bg-dark-shades text-white">
             <div className="container mx-auto p-4">
-                <div className="flex flex-wrap mb-8">
-                    <div className="w-full md:w-1/3 mb-4 md:mb-0">
+                <div className="flex flex-wrap">
+                    <div className="w-full md:w-1/3 mb-4 text-center">
                         <div className="text-lg font-bold mb-2">Social Media</div>
                         <ul>
                             {pageData?.contactInfo?.socialMediaLinks.map((link) => (
@@ -53,7 +53,7 @@ const Footer = ({ pageData }: FooterProps) => {
                             ))}
                         </ul>
                     </div>
-                    <div className="w-full md:w-1/3 mb-4 md:mb-0">
+                    <div className="w-full md:w-1/3 mb-4 text-center">
                         <div className="text-lg font-bold mb-2">Pages</div>
                         <ul>
                             {pages.map((page) => (
@@ -63,7 +63,7 @@ const Footer = ({ pageData }: FooterProps) => {
                             ))}
                         </ul>
                     </div>
-                    <div className="w-full md:w-1/3 mb-4 md:mb-0">
+                    <div className="w-full md:w-1/3 mb-4 text-center">
                         <div className="text-lg font-bold mb-2">Business Hours</div>
                         <ul>
                             {pageData?.contactInfo?.businessHours.map((hours) => (
@@ -74,7 +74,7 @@ const Footer = ({ pageData }: FooterProps) => {
                         </ul>
                     </div>
                 </div>
-                <div className="text-sm">
+                <div className="text-sm text-center">
                     <p>&copy; {new Date().getFullYear()} {pageData?.companyInfo?.companyName}</p>
                     <p>Email: {pageData?.contactInfo?.email}</p>
                     <p>Phone: {pageData?.contactInfo?.phone}</p>
