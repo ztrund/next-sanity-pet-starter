@@ -39,6 +39,7 @@ const Layout = ({
                     name="description"
                     content={metaDesc}
                 />
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
             <Header pageData={pageData}/>
             <main className="container mx-auto p-4 flex-grow flex-shrink-0 mt-16">{children}</main>
