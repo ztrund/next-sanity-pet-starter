@@ -94,6 +94,7 @@ export interface Financing {
     link: string;
     logo: any;
     text: any[];
+    displayOption: string;
 }
 
 export interface MetaDescription {

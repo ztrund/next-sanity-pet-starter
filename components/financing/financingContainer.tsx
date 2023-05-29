@@ -30,7 +30,7 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing}) => {
                     <img
                         src={sanityImageUrl(financing.logo, {h:72, auto: "format", q: 75})}
                         alt="Fiancing Logo"
-                        loading="lazy"
+                        loading="eager"
                         width={imgDimensions.width / imgDimensions.height * 48}
                         height="48"
                     />
