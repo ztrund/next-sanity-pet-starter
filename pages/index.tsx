@@ -2,12 +2,12 @@ import Layout from "../components/layout/layout";
 import {GetStaticProps, InferGetStaticPropsType} from "next";
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import {PortableText} from "@portabletext/react";
 import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
 import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 import DogCard from "../components/dogCard";
+import {sanitizeHTML} from "../helpers/sanitizeHTML";
 
 function separateAndShufflePuppies(array: Puppy[]) {
     const availablePuppies = array.filter(puppy => puppy.availability === 'Available');
@@ -30,8 +30,8 @@ function shuffleArray(array: any) {
     return shuffledArray;
 }
 
-const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const {puppies, homepage, metaDescription, youtubeSettings} = pageData;
+const HomePage = ({pageData, homepageContent}: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const {puppies, metaDescription, youtubeSettings} = pageData;
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const channelId = extractYoutubeChannelId(youtubeSettings.channelUrl || '') || '';
@@ -65,7 +65,7 @@ const HomePage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) =>
                 </div>
                 <div
                     className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
-                    <div className="prose max-w-none"><PortableText value={homepage.content}/></div>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: homepageContent}} />
                 </div>
             </div>
             <div className="flex flex-wrap justify-center gap-4 mb-4">
@@ -120,9 +120,12 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const pageData = await fetchPageData(additionalQuery);
 
+    const homepageContent = sanitizeHTML(pageData.homepage?.content);
+
     return {
         props: {
             pageData,
+            homepageContent
         },
     };
 };
