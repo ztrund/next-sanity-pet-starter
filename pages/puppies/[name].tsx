@@ -7,8 +7,11 @@ import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import DogCard from "../../components/dogCard";
 import {Parent} from "../../types";
 import FinancingBanner from "../../components/financing/financingBanner";
+import FinancingContainer from "../../components/financing/financingContainer";
+import React from "react";
+import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 
-const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Puppy = ({pageData, financingText}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {puppy, financing, metaDescription} = pageData;
 
     const {years, weeks, days} = getAge(puppy.birthdate);
@@ -21,45 +24,48 @@ const Puppy = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
         <Layout pageTitle={puppy.name}
                 metaDesc={replaceTemplateLiterals(metaDescription.description, puppy)}
                 pageData={pageData}>
-            <div className="flex justify-between items-center p-2 mb-4 bg-light-shades shadow-lg rounded-lg">
-                <h1 className="text-3xl font-bold">{puppy.name}</h1>
-                <h1 className="text-2xl font-normal">{puppy.availability} - ${puppy.price}</h1>
-            </div>
-            <div className="flex flex-col lg:flex-row gap-4">
-                <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
-                    <CustomCarousel mediaItems={puppy.mediaItems}/>
+            <div className="flex flex-col gap-4">
+                {financing.displayOption == "container" ? <FinancingContainer financing={financing} financingText={financingText}/> : null}
+                <div className="flex justify-between items-center p-2 bg-light-shades shadow-lg rounded-lg">
+                    <h1 className="text-3xl font-bold">{puppy.name}</h1>
+                    <h1 className="text-2xl font-normal">{puppy.availability} - ${puppy.price}</h1>
                 </div>
-                <div className="w-full lg:w-1/2 flex flex-col gap-4">
-                    <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg">
-                        <p>
-                            <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
-                        </p>
-                        <p>
-                            <strong>Gender:</strong> {puppy.gender}
-                        </p>
-                        <p>
-                            <strong>Color:</strong> {puppy.color}
-                        </p>
-                        <p>
-                            <strong>Weight:</strong> {puppy.weight} lbs
-                        </p>
-                        <p>
-                            <strong>Description:</strong> {puppy.description}
-                        </p>
+                <div className="flex flex-col lg:flex-row gap-4">
+                    <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
+                        <CustomCarousel mediaItems={puppy.mediaItems}/>
                     </div>
-                    <FinancingBanner financing={financing}/>
-                    {puppy.parents?.filter((parent: Parent) => parent).length > 0 && (
-                        <>
-                            <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
-                                <h2 className="text-2xl font-bold text-center">Meet Their Parents</h2>
-                            </div>
-                            <div className="flex flex-wrap gap-4">
-                                {puppy.parents?.filter((parent: Parent) => parent).map((parent: Parent) => (
-                                    <DogCard dog={parent} key={parent._id}/>
-                                ))}
-                            </div>
-                        </>
-                    )}
+                    <div className="w-full lg:w-1/2 flex flex-col gap-4">
+                        <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg">
+                            <p>
+                                <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
+                            </p>
+                            <p>
+                                <strong>Gender:</strong> {puppy.gender}
+                            </p>
+                            <p>
+                                <strong>Color:</strong> {puppy.color}
+                            </p>
+                            <p>
+                                <strong>Weight:</strong> {puppy.weight} lbs
+                            </p>
+                            <p>
+                                <strong>Description:</strong> {puppy.description}
+                            </p>
+                        </div>
+                        {financing.displayOption == "banner" ? <FinancingBanner financing={financing}/> : null}
+                        {puppy.parents?.filter((parent: Parent) => parent).length > 0 && (
+                            <>
+                                <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
+                                    <h2 className="text-2xl font-bold text-center">Meet Their Parents</h2>
+                                </div>
+                                <div className="flex flex-wrap gap-4">
+                                    {puppy.parents?.filter((parent: Parent) => parent).map((parent: Parent) => (
+                                        <DogCard dog={parent} key={parent._id}/>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
         </Layout>
@@ -106,7 +112,10 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     },
     "financing": *[_type == "financing"][0]{
       banner,
+      logo,
       link,
+      text,
+      displayOption,
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
       'description': puppy,
@@ -119,9 +128,12 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
     const pageData = await fetchPageData(additionalQuery, fetchParams);
 
+    const financingText = sanitizeHTML(pageData.financing?.text);
+
     return {
         props: {
             pageData,
+            financingText,
         },
     };
 };

@@ -1,14 +1,14 @@
 import React from 'react';
 import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
-import {PortableText} from "@portabletext/react";
 import {Financing} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
 
 interface FinancingContainerProps {
     financing: Financing
+    financingText: string
 }
 
-const FinancingContainer: React.FC<FinancingContainerProps> = ({financing}) => {
+const FinancingContainer: React.FC<FinancingContainerProps> = ({financing, financingText}) => {
 
     // Render nothing if there's no logo
     if (!financing.logo) {
@@ -28,18 +28,17 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing}) => {
                className="w-full gap-4 flex flex-col md:flex-row justify-center bg-light-shades drop-shadow-lg rounded-lg p-2 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                 <div className="flex items-center justify-center overflow-hidden">
                     <img
-                        src={sanityImageUrl(financing.logo, {h:72, auto: "format", q: 75})}
+                        src={sanityImageUrl(financing.logo, {h: 72, auto: "format", q: 75})}
                         alt="Fiancing Logo"
-                        loading="lazy"
+                        loading="eager"
                         width={imgDimensions.width / imgDimensions.height * 48}
                         height="48"
                     />
                 </div>
                 {financing.text && (
                     <div className="flex items-center justify-center">
-                        <div className="text-center text-md font-semibold overflow-clip">
-                            <PortableText value={financing.text}/>
-                        </div>
+                        <div className="text-center text-md font-semibold overflow-clip"
+                             dangerouslySetInnerHTML={{__html: financingText}}/>
                     </div>
                 )}
             </a>
