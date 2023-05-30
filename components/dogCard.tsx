@@ -13,7 +13,7 @@ interface DogCardProps {
 const DogCard: FunctionComponent<DogCardProps> = ({
                                                       dog,
                                                       showPrice = false,
-                                                      cardWidth = 'w-full md:w-[22.5rem] lg:w-[30.5rem] xl:w-[18.75rem] 2xl:w-[22.75rem]',
+                                                      cardWidth = 'w-full sm:w-[18.50rem] md:w-[22.5rem] lg:w-[30.5rem] xl:w-[18.75rem] 2xl:w-[22.75rem]',
                                                       lazy = true,
                                                   }) => {
     const imageItem = dog.mediaItems?.find(item => item.type === 'image');

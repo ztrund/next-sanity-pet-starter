@@ -141,7 +141,7 @@ const Puppies = ({pageData, financingText}: InferGetStaticPropsType<typeof getSt
                                         <DogCard
                                             dog={puppy}
                                             showPrice={true}
-                                            cardWidth={"w-full md:w-[22.5rem] lg:w-[24.97rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
+                                            cardWidth={"w-full sm:w-[18.50rem] md:w-[22.5rem] lg:w-[24.97rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
                                             key={puppy._id}
                                             lazy={index !== 0}
                                         />

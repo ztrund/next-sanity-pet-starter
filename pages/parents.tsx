@@ -86,7 +86,7 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                                     <DogCard
                                         dog={parent}
                                         showPrice={false}
-                                        cardWidth={"w-full md:w-[22.5rem] lg:w-[24.97rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
+                                        cardWidth={"w-full sm:w-[18.50rem] md:w-[22.5rem] lg:w-[24.97rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
                                         key={parent._id}
                                         lazy={index !== 0}
                                     />
