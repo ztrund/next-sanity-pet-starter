@@ -5,7 +5,6 @@ import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
 import FinancingContainer from "../components/financing/financingContainer";
-import {FiFilter, FiX} from "react-icons/fi";
 import GenderFilter from "../components/filters/genderFilter";
 import AvailabilityFilter from "../components/filters/availabilityFilter";
 import ColorFilter from "../components/filters/colorFilter";
@@ -63,7 +62,7 @@ const Puppies = ({pageData, financingText}: InferGetStaticPropsType<typeof getSt
                 metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
-                <FinancingContainer financing={financing} financingText={financingText}/>
+                {financing.displayOption == "container" ? <FinancingContainer financing={financing} financingText={financingText}/> : null}
                 <div className="flex flex-row gap-4">
                     <div
                         className={`hidden lg:flex justify-center flex-col w-48 h-min gap-2 divide-black divide-y bg-light-shades shadow-lg rounded-lg p-2 overflow-hidden`}>
@@ -89,7 +88,7 @@ const Puppies = ({pageData, financingText}: InferGetStaticPropsType<typeof getSt
                                 className="lg:hidden flex flex-row justify-center items-center h-full px-4 border-l rounded-r-lg bg-main-brand-color text-light-shades focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dark-accent"
                                 aria-label={isFiltersOpen ? "Close filters" : "Open filters"}
                             >
-                                {isFiltersOpen ? <FiX size={24}/> : <FiFilter size={24}/>}
+                                {isFiltersOpen ? <img src="/images/x.svg" alt="Close" /> : <img src="/images/filter.svg" alt="Filter" />}
                             </button>
                         </div>
                         <div
@@ -142,7 +141,7 @@ const Puppies = ({pageData, financingText}: InferGetStaticPropsType<typeof getSt
                                         <DogCard
                                             dog={puppy}
                                             showPrice={true}
-                                            cardWidth={"w-full md:w-[22.5rem] lg:w-[24.97rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
+                                            cardWidth={"w-full sm:w-[18.50rem] md:w-[22.5rem] lg:w-[24.97rem] xl:w-[21.53rem] 2xl:w-[19.84rem]"}
                                             key={puppy._id}
                                             lazy={index !== 0}
                                         />
@@ -180,6 +179,7 @@ export const getStaticProps: GetStaticProps = async () => {
       logo,
       link,
       text,
+      'displayOption': displayOptionPuppies,
     },
   `;
 

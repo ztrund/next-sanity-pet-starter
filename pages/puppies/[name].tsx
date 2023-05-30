@@ -115,7 +115,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       logo,
       link,
       text,
-      displayOption,
+      'displayOption': displayOptionPuppy,
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
       'description': puppy,
