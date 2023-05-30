@@ -7,7 +7,6 @@ import NameFilter from "../components/filters/nameFilter";
 import GenderFilter from "../components/filters/genderFilter";
 import ColorFilter from "../components/filters/colorFilter";
 import {Parent} from "../types";
-import {FiFilter, FiX} from "react-icons/fi";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 
 const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -55,7 +54,7 @@ const Parents = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => 
                             className="lg:hidden flex flex-row justify-center items-center h-full px-4 border-l rounded-r-lg bg-main-brand-color text-light-shades focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dark-accent"
                             aria-label={isFiltersOpen ? "Close filters" : "Open filters"}
                         >
-                            {isFiltersOpen ? <FiX size={24}/> : <FiFilter size={24}/>}
+                            {isFiltersOpen ? <img src="/images/x.svg" alt="Close" /> : <img src="/images/filter.svg" alt="Filter" />}
                         </button>
                     </div>
                     <div

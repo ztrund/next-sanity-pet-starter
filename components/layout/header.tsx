@@ -1,9 +1,8 @@
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {FiMenu, FiX} from "react-icons/fi";
 import {SiteInfo} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
-import {useState} from "react";
+import React, {useState} from "react";
 
 interface HeaderProps {
     pageData?: SiteInfo;
@@ -70,7 +69,7 @@ const Header = ({pageData}: HeaderProps) => {
                                 onClick={() => setIsOpen(!isOpen)}
                                 className="lg:hidden focus:outline-none px-4 h-16 flex items-center"
                                 aria-label="Menu Toggle">
-                                {isOpen ? <FiX size={24}/> : <FiMenu size={24}/>}
+                                {isOpen ? <img src="/images/x.svg" alt="Close" /> : <img src="/images/menu.svg" alt="Menu" />}
                             </button>
                         </div>
                         <button
@@ -89,7 +88,7 @@ const Header = ({pageData}: HeaderProps) => {
                                         onClick={() => setIsOpen(false)}
                                         className="text-white focus:outline-none px-4 w-full h-16 flex items-center justify-end"
                                         aria-label="Close Menu">
-                                        <FiX size={24}/>
+                                        <img src="/images/x.svg" alt="Close" />
                                     </button>
                                 </div>
                                 <NavigationLinks isVertical={true}/>

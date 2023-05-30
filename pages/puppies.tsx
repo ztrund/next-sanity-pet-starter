@@ -5,7 +5,6 @@ import {Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
 import FinancingContainer from "../components/financing/financingContainer";
-import {FiFilter, FiX} from "react-icons/fi";
 import GenderFilter from "../components/filters/genderFilter";
 import AvailabilityFilter from "../components/filters/availabilityFilter";
 import ColorFilter from "../components/filters/colorFilter";
@@ -89,7 +88,7 @@ const Puppies = ({pageData, financingText}: InferGetStaticPropsType<typeof getSt
                                 className="lg:hidden flex flex-row justify-center items-center h-full px-4 border-l rounded-r-lg bg-main-brand-color text-light-shades focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dark-accent"
                                 aria-label={isFiltersOpen ? "Close filters" : "Open filters"}
                             >
-                                {isFiltersOpen ? <FiX size={24}/> : <FiFilter size={24}/>}
+                                {isFiltersOpen ? <img src="/images/x.svg" alt="Close" /> : <img src="/images/filter.svg" alt="Filter" />}
                             </button>
                         </div>
                         <div
