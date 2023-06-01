@@ -24,7 +24,7 @@ const Layout = ({
         <div id="root" className="flex flex-col min-h-screen bg-light-accent">
             <Head>
                 <title>{pageTitle}</title>
-                <link rel="manifest" href="/manifest.json"/>
+                <link rel="manifest" href="/manifest.webmanifest"/>
                 <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
                         data-cf-beacon='{"token": "c0a77da1d35f499a91237e73dacc5b1f"}'></script>
                 <link rel="icon" href={sanityImageUrl(favicon, {w: 512, h: 512})}/>
