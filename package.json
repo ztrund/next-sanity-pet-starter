@@ -3,7 +3,6 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "prebuild": "node scripts/generateManifest.mjs",
     "preexport": "npm run build",
     "export": "next export",
     "prestart": "npm run export",
