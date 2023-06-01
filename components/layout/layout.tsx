@@ -25,6 +25,8 @@ const Layout = ({
             <Head>
                 <title>{pageTitle}</title>
                 <link rel="manifest" href="/manifest.json"/>
+                <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+                        data-cf-beacon='{"token": "c0a77da1d35f499a91237e73dacc5b1f"}'></script>
                 <link rel="icon" href={sanityImageUrl(favicon, {w: 512, h: 512})}/>
                 <link rel="icon" type="image/png" sizes="512x512"
                       href={sanityImageUrl(favicon, {w: 512, h: 512, fit: "fill", fm: "png", bg: "0000"})}/>
