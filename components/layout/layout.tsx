@@ -24,25 +24,21 @@ const Layout = ({
         <div id="root" className="flex flex-col min-h-screen bg-light-accent">
             <Head>
                 <title>{pageTitle}</title>
-                <link rel="manifest" href="/manifest.webmanifest"/>
-                <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-                        data-cf-beacon='{"token": "c0a77da1d35f499a91237e73dacc5b1f"}'></script>
-                <link rel="icon" href={sanityImageUrl(favicon, {w: 512, h: 512})}/>
+                <link rel="icon" href={sanityImageUrl(favicon, {w: 512, h: 512, fit: "crop"})}/>
                 <link rel="icon" type="image/png" sizes="512x512"
-                      href={sanityImageUrl(favicon, {w: 512, h: 512, fit: "fill", fm: "png", bg: "0000"})}/>
+                      href={sanityImageUrl(favicon, {w: 512, h: 512, fit: "crop", fm: "png"})}/>
                 <link rel="icon" type="image/png" sizes="192x192"
-                      href={sanityImageUrl(favicon, {w: 192, h: 192, fit: "fill", fm: "png", bg: "0000"})}/>
+                      href={sanityImageUrl(favicon, {w: 192, h: 192, fit: "crop", fm: "png"})}/>
                 <link rel="icon" type="image/png" sizes="32x32"
-                      href={sanityImageUrl(favicon, {w: 32, h: 32, fit: "fill", fm: "png", bg: "0000"})}/>
+                      href={sanityImageUrl(favicon, {w: 32, h: 32, fit: "crop", fm: "png"})}/>
                 <link rel="icon" type="image/png" sizes="16x16"
-                      href={sanityImageUrl(favicon, {w: 16, h: 16, fit: "fill", fm: "png", bg: "0000"})}/>
+                      href={sanityImageUrl(favicon, {w: 16, h: 16, fit: "crop", fm: "png"})}/>
                 <link rel="apple-touch-icon" sizes="180x180"
-                      href={sanityImageUrl(favicon, {w: 180, h: 180, fit: "fill", fm: "png", bg: "0000"})}/>
+                      href={sanityImageUrl(favicon, {w: 180, h: 180, fit: "crop", fm: "png"})}/>
                 <meta
                     name="description"
                     content={metaDesc}
                 />
-                <meta name="theme-color" content="hsl(39, 76%, 52%)"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
             <Header pageData={pageData}/>

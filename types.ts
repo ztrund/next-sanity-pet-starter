@@ -26,11 +26,8 @@ export interface ContactInfo {
 
 export interface CompanyInfo {
     companyName: string;
-    companyNameShort: string;
-    companyDescription: string;
     companyLogo: any;
     favicon: any;
-    pwaIcon: any;
 }
 
 export interface SiteInfo {
