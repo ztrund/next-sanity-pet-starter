@@ -56,7 +56,7 @@ async function generateManifest() {
         categories: ['pets'],
         scope: '/',
     };
-    fs.writeFileSync('./public/manifest.webmanifest', JSON.stringify(manifest));
+    fs.writeFileSync('./public/manifest.json', JSON.stringify(manifest));
 }
 
 generateManifest();
