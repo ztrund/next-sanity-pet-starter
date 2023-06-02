@@ -50,7 +50,7 @@ async function generateManifest() {
         ],
         start_url: '/',
         display: 'standalone',
-        orientation: 'portrait',
+        orientation: 'natural',
         theme_color: 'hsl(39, 76%, 52%)',
         background_color: 'hsl(5, 11%, 22%)',
         categories: ['pets'],
