@@ -69,7 +69,7 @@ const Header = ({pageData}: HeaderProps) => {
                                 onClick={() => setIsOpen(!isOpen)}
                                 className="lg:hidden focus:outline-none px-4 h-16 flex items-center"
                                 aria-label="Menu Toggle">
-                                {isOpen ? <img src="/images/x.svg" alt="Close" /> : <img src="/images/menu.svg" alt="Menu" />}
+                                {isOpen ? <img src="/images/x.svg" width="24" height="24" alt="Close Menu" /> : <img src="/images/menu.svg" width="24" height="24" alt="Open Menu" />}
                             </button>
                         </div>
                         <button
@@ -88,7 +88,7 @@ const Header = ({pageData}: HeaderProps) => {
                                         onClick={() => setIsOpen(false)}
                                         className="text-white focus:outline-none px-4 w-full h-16 flex items-center justify-end"
                                         aria-label="Close Menu">
-                                        <img src="/images/x.svg" alt="Close" />
+                                        <img src="/images/x.svg" width="24" height="24" alt="Close Menu" />
                                     </button>
                                 </div>
                                 <NavigationLinks isVertical={true}/>

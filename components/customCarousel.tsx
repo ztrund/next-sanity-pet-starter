@@ -29,13 +29,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
         }
     }, [showModal]);
 
-    const [viewportRef, embla] = useEmblaCarousel(
-        {loop: true},
-        [Autoplay({delay: 5000, stopOnInteraction: true})]
-    );
-    const [thumbViewportRef, emblaThumbs] = useEmblaCarousel(
-        {loop: false, containScroll: 'keepSnaps'}
-    );
+    const [viewportRef, embla] = useEmblaCarousel({loop: true}, [Autoplay({delay: 5000, stopOnInteraction: true})]);
+    const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({loop: false, containScroll: 'keepSnaps'});
 
     const scrollTo = useCallback((index: number) => {
         if (embla) {
@@ -71,102 +66,88 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                 <img src={currentImage} className="rounded-lg overflow-hidden shadow-lg max-w-[95vw] max-h-[95vh]"
                      onClick={() => setShowModal(false)} alt={"Modal Image"}/>
             </div>
-        </div>
-    );
+        </div>);
 
-    return (
-        <>
-            {modalNode && createPortal(modal, modalNode)}
-            <div className="embla overflow-hidden" ref={viewportRef}>
-                <div className="embla__container flex items-center">
-                    {mediaItems.map((mediaItem: MediaItem, index: number) => (
-                        <div
-                            key={mediaItem._key}
-                            className="embla__slide flex-grow-0 flex-shrink-0 basis-full min-w-0"
-                        >
-                            {mediaItem.type === "image" && mediaItem.image && (
-                                <img
-                                    src={sanityImageUrl(mediaItem.image, {
-                                        w: 744,
-                                        h: 744,
-                                        auto: "format",
-                                        q: 75,
-                                        fit: "crop"
-                                    })}
-                                    alt={"Slide " + index}
-                                    loading={index < 1 ? "eager" : "lazy"}
-                                    width="744"
-                                    height="744"
-                                    onClick={() => {
-                                        setCurrentImage(sanityImageUrl(mediaItem.image, {auto: "format", q: 75}));
-                                        setShowModal(true);
-                                    }}
-                                />
-                            )}
-                            {mediaItem.type === "video" && mediaItem.videoUrl && (
-                                <LiteYouTubeEmbed
-                                    id={extractYoutubeVideoId(mediaItem.videoUrl) || ""}
-                                    title={"Slide " + index + " Video"}
-                                    webp={true}
-                                    poster="hqdefault"
-                                    params="autoplay=1&mute=1"
-                                />
-                            )}
-                        </div>
-                    ))}
-                </div>
+    return (<>
+        {modalNode && createPortal(modal, modalNode)}
+        <div className="embla overflow-hidden" ref={viewportRef}>
+            <div className="embla__container flex items-center">
+                {mediaItems.map((mediaItem: MediaItem, index: number) => (<div
+                    key={mediaItem._key}
+                    className="embla__slide flex-grow-0 flex-shrink-0 basis-full min-w-0"
+                >
+                    {mediaItem.type === "image" && mediaItem.image && (<img
+                        src={sanityImageUrl(mediaItem.image, {
+                            w: 744, h: 744, auto: "format", q: 75, fit: "crop", ignoreImageParams: true,
+                        })}
+                        alt={"Slide " + index}
+                        loading={index < 1 ? "eager" : "lazy"}
+                        width="744"
+                        height="744"
+                        onClick={() => {
+                            setCurrentImage(sanityImageUrl(mediaItem.image, {auto: "format", q: 75}));
+                            setShowModal(true);
+                        }}
+                    />)}
+                    {mediaItem.type === "video" && mediaItem.videoUrl && (<LiteYouTubeEmbed
+                        id={extractYoutubeVideoId(mediaItem.videoUrl) || ""}
+                        title={"Slide " + index + " Video"}
+                        webp={true}
+                        poster="hqdefault"
+                        params="autoplay=1&mute=1"
+                        rel={index < 1 ? "preload" : ""}
+                    />)}
+                </div>))}
             </div>
-            <div className="embla-thumbs overflow-hidden" ref={thumbViewportRef}>
-                <div className="embla-thumbs__container flex flex-row">
-                    {mediaItems.map((mediaItem: MediaItem, index: number) => (
-                        <div
-                            key={mediaItem._key}
-                            className={`embla-thumbs__slide flex ${selectedIndex === index ? 'border-4 border-main-brand-color' : 'border-4'}`}
-                            onClick={() => {
-                                scrollTo(index)
-                            }}
-                        >
-                            <button className="embla-thumbs__slide__button h-32 w-32" type="button"
-                                    title={"Slide " + index + " Button"}>
-                                {mediaItem.type === "image" && mediaItem.image && (
-                                    <img
-                                        key={index}
-                                        src={sanityImageUrl(mediaItem.image, {
-                                            h: 128,
-                                            w: 128,
-                                            auto: "format",
-                                            q: 75,
-                                            fit: "crop"
-                                        })}
-                                        height="128"
-                                        width="128"
-                                        alt={"Slide " + index + " Thumbnail"}
-                                        loading="lazy"
-                                    />
-                                )}
-                                {mediaItem.type === "video" && mediaItem.videoUrl && (
-                                    <picture key={index}>
-                                        <source
-                                            type="image/webp"
-                                            srcSet={`https://i.ytimg.com/vi_webp/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.webp`}
-                                        />
-                                        <img
-                                            src={`https://i.ytimg.com/vi/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.jpg`}
-                                            height="128"
-                                            width="128"
-                                            className="h-32 object-cover"
-                                            alt={"Slide " + index + " Thumbnail"}
-                                            loading="lazy"
-                                        />
-                                    </picture>
-                                )}
-                            </button>
-                        </div>
-                    ))}
-                </div>
+        </div>
+        <div className="embla-thumbs overflow-hidden" ref={thumbViewportRef}>
+            <div className="embla-thumbs__container flex flex-row">
+                {mediaItems.map((mediaItem: MediaItem, index: number) => (<div
+                    key={mediaItem._key}
+                    className={`embla-thumbs__slide flex ${selectedIndex === index ? 'border-4 border-main-brand-color' : 'border-4'}`}
+                    onClick={() => {
+                        scrollTo(index)
+                    }}
+                >
+                    <button className="embla-thumbs__slide__button h-32 w-32" type="button"
+                            title={"Slide " + index + " Button"}>
+                        {mediaItem.type === "image" && mediaItem.image && (<img
+                            key={index}
+                            src={sanityImageUrl(mediaItem.image, {
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "crop"
+                            })}
+                            srcSet={`
+        ${sanityImageUrl(mediaItem.image, {
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "crop"
+                            })} 1x,
+        ${sanityImageUrl(mediaItem.image, {
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1.5, fit: "crop"
+                            })} 1.5x,
+        ${sanityImageUrl(mediaItem.image, {
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 2, fit: "crop"
+                            })} 2x
+    `}
+                            className="h-32 w-32 object-cover"
+                            alt={"Slide " + index + " Thumbnail"}
+                            loading="lazy"
+                        />)}
+                        {mediaItem.type === "video" && mediaItem.videoUrl && (<picture key={index}>
+                            <source
+                                type="image/webp"
+                                srcSet={`https://i.ytimg.com/vi_webp/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.webp`}
+                            />
+                            <img
+                                src={`https://i.ytimg.com/vi/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.jpg`}
+                                className="h-32 w-32 object-cover"
+                                alt={"Slide " + index + " Thumbnail"}
+                                loading="lazy"
+                            />
+                        </picture>)}
+                    </button>
+                </div>))}
             </div>
-        </>
-    );
+        </div>
+    </>);
 };
 
 export default CustomCarousel;
