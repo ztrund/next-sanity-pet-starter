@@ -1,6 +1,12 @@
-const CACHE_NAME = 'v1'; //Test
+const CACHE_NAME = 'v1';
 const urlsToCache = [
     '/',
+    '/404',
+    '/offline',
+    '/contact',
+    '/about',
+    '/parents',
+    '/puppies',
 ];
 
 self.addEventListener('install', (event) => {
@@ -29,7 +35,7 @@ self.addEventListener('fetch', (event) => {
                 return response;
             })
             .catch(() => {
-                return caches.match(event.request) || caches.match('/offline');
+                return caches.match('/offline');
             })
     );
 });
