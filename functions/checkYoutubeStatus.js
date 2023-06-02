@@ -35,8 +35,6 @@ export async function onRequest(context) {
         )
         const data = await response.json()
 
-        console.log('data:', data)
-
         let responseBody;
         if (data.items.length > 0) {
             responseBody = data.items[0].id.videoId;
