@@ -161,7 +161,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                             />
                             <img
                                 src={`https://i.ytimg.com/vi/${extractYoutubeVideoId(mediaItem.videoUrl)}/default.jpg`}
-                                className="h-32 w-32 object-cover"
+                                className="h-32 w-32 object-contain bg-black"
                                 alt={"Slide " + index + " Thumbnail"}
                                 loading="lazy"
                             />
