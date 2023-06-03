@@ -78,12 +78,34 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                 >
                     {mediaItem.type === "image" && mediaItem.image && (<img
                         src={sanityImageUrl(mediaItem.image, {
-                            w: 744, h: 744, auto: "format", q: 75, fit: "crop", ignoreImageParams: true,
+                            w: 488, h: 488, auto: "format", q: 75, fit: "max",
                         })}
+                        srcSet={`
+        ${sanityImageUrl(mediaItem.image, {
+                            w: 488, h: 488, auto: "format", q: 75, fit: "max",
+                        })} 488w,
+        ${sanityImageUrl(mediaItem.image, {
+                            w: 616, h: 616, auto: "format", q: 75, fit: "max",
+                        })} 616w,
+        ${sanityImageUrl(mediaItem.image, {
+                            w: 744, h: 744, auto: "format", q: 75, fit: "max",
+                        })} 744w,
+        ${sanityImageUrl(mediaItem.image, {
+                            w: 976, h: 976, auto: "format", q: 75, fit: "max",
+                        })} 976w,
+        ${sanityImageUrl(mediaItem.image, {
+                            w: 1232, h: 1232, auto: "format", q: 75, fit: "max",
+                        })} 1232w,
+        ${sanityImageUrl(mediaItem.image, {
+                            w: 1488, h: 1488, auto: "format", q: 75, fit: "max",
+                        })} 1488w,
+    `}
+                        sizes="(max-width: 1023px) calc(100vw - 32px),
+                        (max-width: 1536px) calc(50vw - 24px),
+                        744px"
                         alt={"Slide " + index}
-                        loading={index < 1 ? "eager" : "lazy"}
-                        width="744"
-                        height="744"
+                        loading={index == 0 ? "eager" : "lazy"}
+                        className="w-full aspect-1 object-cover"
                         onClick={() => {
                             setCurrentImage(sanityImageUrl(mediaItem.image, {auto: "format", q: 75}));
                             setShowModal(true);
@@ -95,7 +117,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         webp={true}
                         poster="hqdefault"
                         params="autoplay=1&mute=1"
-                        rel={index < 1 ? "preload" : ""}
+                        rel={index == 0 ? "preload" : ""}
+
                     />)}
                 </div>))}
             </div>
@@ -114,17 +137,17 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         {mediaItem.type === "image" && mediaItem.image && (<img
                             key={index}
                             src={sanityImageUrl(mediaItem.image, {
-                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "crop"
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "max"
                             })}
                             srcSet={`
         ${sanityImageUrl(mediaItem.image, {
-                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "crop"
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "max"
                             })} 1x,
         ${sanityImageUrl(mediaItem.image, {
-                                h: 128, w: 128, auto: "format", q: 75, dpr: 1.5, fit: "crop"
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1.5, fit: "max"
                             })} 1.5x,
         ${sanityImageUrl(mediaItem.image, {
-                                h: 128, w: 128, auto: "format", q: 75, dpr: 2, fit: "crop"
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 2, fit: "max"
                             })} 2x
     `}
                             className="h-32 w-32 object-cover"
