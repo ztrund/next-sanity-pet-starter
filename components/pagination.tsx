@@ -40,7 +40,7 @@ export const Pagination: React.FC<PaginationProps> = ({currentPage, setCurrentPa
             <button onClick={handleClickPrev} disabled={currentPage === 1}
                     className={"h-12 w-12 flex justify-center items-center bg-light-shades shadow-lg rounded-lg"}>
                 <span className="sr-only">Previous</span>
-                <img src="/images/chevron-left.svg" className="w-6 h-6" alt="" />
+                <img src="/images/chevron-left.svg" width="24" height="24" alt="Previous Page" />
             </button>
             <div className={`flex flex-row justify-center bg-light-shades shadow-lg rounded-lg w-fit overflow-hidden`}>
                 {start > 1 && <button
@@ -72,7 +72,7 @@ export const Pagination: React.FC<PaginationProps> = ({currentPage, setCurrentPa
             <button onClick={handleClickNext} disabled={currentPage === totalPages}
                     className={"h-12 w-12 flex justify-center items-center bg-light-shades shadow-lg rounded-lg"}>
                 <span className="sr-only">Next</span>
-                <img src="/images/chevron-left.svg" className="w-6 h-6 rotate-180" alt="" />
+                <img src="/images/chevron-left.svg" width="24" height="24" className="rotate-180" alt="Next Page" />
             </button>
         </div>
     )

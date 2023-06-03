@@ -19,6 +19,7 @@ interface SanityImageUrlOptions {
     rect?: string;
     sat?: number;
     sharp?: number;
+    ignoreImageParams?: boolean;
 }
 
 export const sanityImageUrl = (image: any, options?: SanityImageUrlOptions): string => {
@@ -34,7 +35,7 @@ export const sanityImageUrl = (image: any, options?: SanityImageUrlOptions): str
     let imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${imageId[1]}-${imageId[2]}.${imageId[3]}`;
 
     let params = [];
-    if (image.hotspot && options && options.w && options.h && options.fit != 'fill') {
+    if (image.hotspot && options && options.w && options.h && !options.ignoreImageParams) {
         const croppedWidth = imageDimensions[0] * (1 - image.crop.left - image.crop.right);
         const croppedHeight = imageDimensions[1] * (1 - image.crop.bottom - image.crop.top);
 

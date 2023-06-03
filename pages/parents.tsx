@@ -59,8 +59,8 @@ const Parents = ({pageData, financingText}: InferGetStaticPropsType<typeof getSt
                                 className="lg:hidden flex flex-row justify-center items-center h-full px-4 border-l rounded-r-lg bg-main-brand-color text-light-shades focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dark-accent"
                                 aria-label={isFiltersOpen ? "Close filters" : "Open filters"}
                             >
-                                {isFiltersOpen ? <img src="/images/x.svg" alt="Close"/> :
-                                    <img src="/images/filter.svg" alt="Filter"/>}
+                                {isFiltersOpen ? <img src="/images/x.svg" width="24" height="24" alt="Close Filters"/> :
+                                    <img src="/images/filter.svg" width="24" height="24" alt="Open Filters"/>}
                             </button>
                         </div>
                         <div
