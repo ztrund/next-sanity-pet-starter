@@ -78,26 +78,26 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                 >
                     {mediaItem.type === "image" && mediaItem.image && (<img
                         src={sanityImageUrl(mediaItem.image, {
-                            w: 488, h: 488, auto: "format", q: 75, fit: "max",
+                            w: 488, h: 488, auto: "format", q: 75, fit: "min",
                         })}
                         srcSet={`
         ${sanityImageUrl(mediaItem.image, {
-                            w: 488, h: 488, auto: "format", q: 75, fit: "max",
+                            w: 488, h: 488, auto: "format", q: 75, fit: "min",
                         })} 488w,
         ${sanityImageUrl(mediaItem.image, {
-                            w: 616, h: 616, auto: "format", q: 75, fit: "max",
+                            w: 616, h: 616, auto: "format", q: 75, fit: "min",
                         })} 616w,
         ${sanityImageUrl(mediaItem.image, {
-                            w: 744, h: 744, auto: "format", q: 75, fit: "max",
+                            w: 744, h: 744, auto: "format", q: 75, fit: "min",
                         })} 744w,
         ${sanityImageUrl(mediaItem.image, {
-                            w: 976, h: 976, auto: "format", q: 75, fit: "max",
+                            w: 976, h: 976, auto: "format", q: 75, fit: "min",
                         })} 976w,
         ${sanityImageUrl(mediaItem.image, {
-                            w: 1232, h: 1232, auto: "format", q: 75, fit: "max",
+                            w: 1232, h: 1232, auto: "format", q: 75, fit: "min",
                         })} 1232w,
         ${sanityImageUrl(mediaItem.image, {
-                            w: 1488, h: 1488, auto: "format", q: 75, fit: "max",
+                            w: 1488, h: 1488, auto: "format", q: 75, fit: "min",
                         })} 1488w,
     `}
                         sizes="(max-width: 1023px) calc(100vw - 32px),
@@ -137,17 +137,17 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         {mediaItem.type === "image" && mediaItem.image && (<img
                             key={index}
                             src={sanityImageUrl(mediaItem.image, {
-                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "max"
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "min"
                             })}
                             srcSet={`
         ${sanityImageUrl(mediaItem.image, {
-                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "max"
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "min"
                             })} 1x,
         ${sanityImageUrl(mediaItem.image, {
-                                h: 128, w: 128, auto: "format", q: 75, dpr: 1.5, fit: "max"
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 1.5, fit: "min"
                             })} 1.5x,
         ${sanityImageUrl(mediaItem.image, {
-                                h: 128, w: 128, auto: "format", q: 75, dpr: 2, fit: "max"
+                                h: 128, w: 128, auto: "format", q: 75, dpr: 2, fit: "min"
                             })} 2x
     `}
                             className="h-32 w-32 object-cover"
