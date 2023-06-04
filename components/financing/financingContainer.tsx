@@ -28,7 +28,10 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing, finan
                className="w-full gap-4 flex flex-col md:flex-row justify-center bg-light-shades drop-shadow-lg rounded-lg p-2 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                 <div className="flex items-center justify-center overflow-hidden">
                     <img
-                        src={sanityImageUrl(financing.logo, {h: 72, auto: "format", q: 75})}
+                        src={sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, fit: "min"})}
+                        srcSet={`${sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1, fit: "min"})} 1x,
+                        ${sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1.5, fit: "min"})} 1.5x,
+                        ${sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 2, fit: "min"})} 2x`}
                         alt="Fiancing Logo"
                         loading="eager"
                         width={imgDimensions.width / imgDimensions.height * 48}

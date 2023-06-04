@@ -43,8 +43,13 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
             </div>
             <div className="flex flex-wrap justify-center gap-4">
                 {parent.puppies?.slice((currentPage - 1) * puppiesPerPage, currentPage * puppiesPerPage).map((puppy: Puppy) => (
-                    <DogCard dog={puppy} key={puppy._id} showPrice={true}
-                             cardWidth={`w-full sm:w-[18.50rem] md:w-[22.5rem] ${financing.displayOption == "banner" ? "lg:w-[20rem]" : "lg:w-[17.29rem]"} xl:w-[18.75rem] 2xl:w-[22.75rem]`}/>
+                    <DogCard
+                        dog={puppy}
+                        key={puppy._id}
+                        showPrice={true}
+                        cardWidth={`w-full sm:w-[296px] md:w-[360px] ${financing.displayOption == "banner" ? "lg:w-[320px]" : "lg:w-[276px]"} xl:w-[300px] 2xl:w-[364px]`}
+                        imageSizes={`(max-width: 639px) calc(100vw-32px), (max-width: 767px) 296px, (max-width: 1023px) 360px, (max-width: 1279px) ${financing.displayOption == "banner" ? "320px" : "276px"}, (max-width: 1535px) 300px, 364px`}
+                    />
                 ))}
             </div>
             {pages > 1

@@ -7,13 +7,15 @@ interface DogCardProps {
     dog: Puppy | Parent;
     showPrice?: boolean;
     cardWidth?: string;
+    imageSizes?: string;
     lazy?: boolean;
 }
 
 const DogCard: FunctionComponent<DogCardProps> = ({
                                                       dog,
                                                       showPrice = false,
-                                                      cardWidth = 'w-full sm:w-[18.50rem] md:w-[22.5rem] lg:w-[30.5rem] xl:w-[18.75rem] 2xl:w-[22.75rem]',
+                                                      cardWidth = 'w-full sm:w-[296px] md:w-[360px] lg:w-[488px] xl:w-[300px] 2xl:w-[364px]',
+                                                      imageSizes = '(max-width: 639px) calc(100vw-32px), (max-width: 767px) 296px, (max-width: 1023px) 360px, (max-width: 1279px) 488px, (max-width: 1535px) 300px, 364px',
                                                       lazy = true,
                                                   }) => {
     const imageItem = dog.mediaItems?.find(item => item.type === 'image');
@@ -42,7 +44,7 @@ const DogCard: FunctionComponent<DogCardProps> = ({
             {imageItem ?
                 <img src={sanityImageUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
                      srcSet={srcSet}
-                     sizes="(max-width: 639px) calc(100vw-32px), (max-width: 767px) 18.50rem, (max-width: 1023px) 22.5rem, (max-width: 1279px) 30.5rem, (max-width: 1535px) 18.75rem, 22.75rem"
+                     sizes={imageSizes}
                      alt={dog.name} className="w-full h-full object-cover" loading={lazy ? "lazy" : "eager"}/> :
                 <img src="/images/paw-solid.svg" alt={dog.name} className="w-full h-full object-contain"/>}
         </div>
