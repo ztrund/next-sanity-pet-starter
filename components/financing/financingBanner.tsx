@@ -26,11 +26,33 @@ const FinancingBanner: React.FC<FinancingBannerProps> = ({financing}) => {
             className="h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
             <a href={financing.link} target="_blank" rel="noopener noreferrer">
                 <img
-                    src={sanityImageUrl(financing.banner, {w: 744, auto: "format", q: 75})}
+                    src={sanityImageUrl(financing.banner, {w: 488, auto: "format", q: 75, fit: "min"})}
+                    srcSet={`
+        ${sanityImageUrl(financing.banner, {
+                        w: 488, auto: "format", q: 75, fit: "min",
+                    })} 488w,
+        ${sanityImageUrl(financing.banner, {
+                        w: 616, auto: "format", q: 75, fit: "min",
+                    })} 616w,
+        ${sanityImageUrl(financing.banner, {
+                        w: 744, auto: "format", q: 75, fit: "min",
+                    })} 744w,
+        ${sanityImageUrl(financing.banner, {
+                        w: 976, auto: "format", q: 75, fit: "min",
+                    })} 976w,
+        ${sanityImageUrl(financing.banner, {
+                        w: 1232, auto: "format", q: 75, fit: "min",
+                    })} 1232w,
+        ${sanityImageUrl(financing.banner, {
+                        w: 1488, auto: "format", q: 75, fit: "min",
+                    })} 1488w,
+    `}
+                    sizes="(max-width: 1023px) calc(100vw - 32px),
+                    (max-width: 1536px) calc(50vw - 24px),
+                    744px"
                     alt="Financing Available"
                     loading="lazy"
-                    width="744"
-                    height={imgDimensions.width / 744 * imgDimensions.height}
+                    style={{aspectRatio: `${imgDimensions.width} / ${imgDimensions.height}`}}
                 />
             </a>
         </div>
