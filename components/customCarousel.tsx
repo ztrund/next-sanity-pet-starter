@@ -105,7 +105,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         744px"
                         alt={"Slide " + index}
                         loading={index == 0 ? "eager" : "lazy"}
-                        className="w-full aspect-1 object-cover"
+                        className="w-full aspect-[1] object-cover"
                         onClick={() => {
                             setCurrentImage(sanityImageUrl(mediaItem.image, {auto: "format", q: 75}));
                             setShowModal(true);
@@ -117,8 +117,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                         webp={true}
                         poster="hqdefault"
                         params="autoplay=1&mute=1"
-                        rel={index == 0 ? "preload" : ""}
-
+                        rel={index == 0 ? "preload" : "prefetch"}
                     />)}
                 </div>))}
             </div>

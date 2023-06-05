@@ -17,7 +17,7 @@ const YoutubeLiveEmbed: React.FC<YoutubeLiveEmbedProps> = ({liveVideoId}) => {
                     params="autoplay=1&mute=1"
                 />
             ) : (
-                <div className="aspect-w-16 aspect-h-9"/>
+                <div className="aspect-video"/>
             )}
         </div>
     );
