@@ -60,7 +60,7 @@ const Puppy = ({pageData, financingText}: InferGetStaticPropsType<typeof getStat
                                 </div>
                                 <div className="flex flex-wrap gap-4">
                                     {puppy.parents?.filter((parent: Parent) => parent).map((parent: Parent) => (
-                                        <DogCard dog={parent} key={parent._id}/>
+                                        <DogCard dog={parent} cardWidth='w-full sm:w-[calc(50%-8px)]' key={parent._id}/>
                                     ))}
                                 </div>
                             </>
