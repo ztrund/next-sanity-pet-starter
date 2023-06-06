@@ -1,6 +1,6 @@
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Layout from "../components/layout/layout";
-import CustomCarousel from "../components/customCarousel";
+import CustomCarousel from "../components/carousel/customCarousel";
 import fetchPageData from "../lib/fetchPageData";
 import {TeamMember} from "../types";
 import {sanityImageUrl} from "../lib/sanityImageUrl";

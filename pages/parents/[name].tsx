@@ -1,6 +1,6 @@
 import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
 import Layout from '../../components/layout/layout';
-import CustomCarousel from "../../components/customCarousel";
+import CustomCarousel from "../../components/carousel/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {Puppy} from "../../types";

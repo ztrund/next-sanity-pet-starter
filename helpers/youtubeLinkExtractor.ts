@@ -1,4 +1,8 @@
-export const extractYoutubeVideoId = (url: string): string | null => {
+export const extractYoutubeVideoId = (url: string | undefined): string => {
+    if (!url) {
+        return "";
+    }
+
     const videoRegex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const videoMatch = url.match(videoRegex);
 
@@ -6,10 +10,14 @@ export const extractYoutubeVideoId = (url: string): string | null => {
         return videoMatch[2];
     }
 
-    return null;
+    return "";
 };
 
-export const extractYoutubeChannelId = (url: string): string | null => {
+export const extractYoutubeChannelId = (url: string | undefined): string => {
+    if (!url) {
+        return "";
+    }
+
     const channelRegex = /^.*(youtube.com\/channel\/|youtube.com\/c\/|youtube.com\/user\/)([^#&?]*).*/;
     const channelMatch = url.match(channelRegex);
 
@@ -17,5 +25,5 @@ export const extractYoutubeChannelId = (url: string): string | null => {
         return channelMatch[2];
     }
 
-    return null;
+    return "";
 };
