@@ -2,7 +2,7 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {SiteInfo} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 interface HeaderProps {
     pageData?: SiteInfo;
@@ -27,6 +27,14 @@ const Header = ({pageData}: HeaderProps) => {
 
         return `${baseClass} ${isActive ? activeClass : inactiveClass}`;
     };
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.classList.add("overflow-hidden", "lg:overflow-auto");
+        } else {
+            document.body.classList.remove("overflow-hidden", "lg:overflow-auto");
+        }
+    }, [isOpen]);
 
     const NavigationLinks = ({isVertical}: { isVertical: boolean }) => (
         <div

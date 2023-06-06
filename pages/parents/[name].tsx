@@ -47,7 +47,7 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
                         dog={puppy}
                         key={puppy._id}
                         showPrice={true}
-                        cardWidth={`w-full sm:w-[296px] md:w-[360px] ${financing.displayOption == "banner" ? "lg:w-[320px]" : "lg:w-[276px]"} xl:w-[300px] 2xl:w-[364px]`}
+                        cardWidth={`w-full sm:w-[calc(50%-8px)] ${financing.displayOption == "banner" ? "lg:w-[calc(100%/3-10.66px)] xl:w-[calc(25%-12px)]" : ""}`}
                         imageSizes={`(max-width: 639px) calc(100vw-32px), (max-width: 767px) 296px, (max-width: 1023px) 360px, (max-width: 1279px) ${financing.displayOption == "banner" ? "320px" : "276px"}, (max-width: 1535px) 300px, 364px`}
                     />
                 ))}

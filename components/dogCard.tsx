@@ -14,7 +14,7 @@ interface DogCardProps {
 const DogCard: FunctionComponent<DogCardProps> = ({
                                                       dog,
                                                       showPrice = false,
-                                                      cardWidth = 'w-full sm:w-[296px] md:w-[360px] lg:w-[488px] xl:w-[300px] 2xl:w-[364px]',
+                                                      cardWidth = 'w-full sm:w-[calc(50%-8px)] xl:w-[calc(25%-12px)]',
                                                       imageSizes = '(max-width: 639px) calc(100vw-32px), (max-width: 767px) 296px, (max-width: 1023px) 360px, (max-width: 1279px) 488px, (max-width: 1535px) 300px, 364px',
                                                       lazy = true,
                                                   }) => {
