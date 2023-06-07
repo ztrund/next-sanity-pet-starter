@@ -41,12 +41,25 @@ const DogCard: FunctionComponent<DogCardProps> = ({
     return (<Link href={url}
                   className={`primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 ${cardWidth}`}>
         <div className="aspect-video overflow-hidden flex items-center justify-center">
-            {imageItem ?
-                <img src={sanityImageUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
-                     srcSet={srcSet}
-                     sizes={imageSizes}
-                     alt={dog.name} className="w-full h-full object-cover" loading={lazy ? "lazy" : "eager"}/> :
-                <img src="/images/paw-solid.svg" alt={dog.name} className="w-full h-full object-contain"/>}
+            {imageItem
+                ? <>
+                    {!lazy && <link
+                        rel="preload"
+                        as="image"
+                        href={sanityImageUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
+                        imageSrcSet={srcSet}
+                        imageSizes={imageSizes}
+                    />}
+                    <img
+                        src={sanityImageUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
+                        srcSet={srcSet}
+                        sizes={imageSizes}
+                        alt={dog.name}
+                        className="w-full h-full object-cover"
+                        loading={lazy ? "lazy" : "eager"}
+                    />
+                </>
+                : <img src="/images/paw-solid.svg" alt={dog.name} className="w-full h-full object-contain"/>}
         </div>
         <div className="p-2 h-24 flex justify-between items-center">
             <div>

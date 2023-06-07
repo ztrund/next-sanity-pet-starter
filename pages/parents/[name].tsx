@@ -1,6 +1,6 @@
 import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
 import Layout from '../../components/layout/layout';
-import CustomCarousel from "../../components/customCarousel";
+import CustomCarousel from "../../components/carousel/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {Puppy} from "../../types";
@@ -52,12 +52,10 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
                     />
                 ))}
             </div>
-            {pages > 1
-                ? <Pagination
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    totalPages={pages}/>
-                : null}
+            {pages > 1 && <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPages={pages}/>}
         </div>
     );
 

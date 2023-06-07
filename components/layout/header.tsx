@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import {SiteInfo} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
 import React, {useEffect, useState} from "react";
+import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 
 interface HeaderProps {
     pageData?: SiteInfo;
@@ -11,13 +12,42 @@ interface HeaderProps {
 const Header = ({pageData}: HeaderProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
+    const {companyInfo} = pageData || {};
+    const {companyName, companyLogo} = companyInfo || {};
+    let companyLogoElement = <span>{companyName}</span>;
 
-    const companyLogo = pageData?.companyInfo?.companyLogo
-        ? <img src={sanityImageUrl(pageData?.companyInfo?.companyLogo, {h: 64, auto: 'format'})}
-               alt={`${pageData?.companyInfo?.companyName} Logo`}
-               className="h-16"
-        />
-        : pageData?.companyInfo?.companyName;
+    if (companyLogo) {
+        const DPR_VALUES = [1, 1.5, 2];
+        const imageUrlParams = {
+            h: 64,
+            auto: 'format',
+            q: 75,
+            fit: 'min'
+        };
+        const imageUrl = sanityImageUrl(companyLogo, {...imageUrlParams, dpr: 1});
+        const srcSet = DPR_VALUES.map(dpr => `${sanityImageUrl(companyLogo, {
+            ...imageUrlParams,
+            dpr
+        })} ${dpr}x`).join(', ');
+
+        const altText = `${companyName} Logo`;
+        const imgDimensions = imageDimensionExtractor(companyLogo.asset._ref);
+        const adjustedWidth = imgDimensions.width / imgDimensions.height * 64;
+
+        companyLogoElement = (
+            <>
+                <link rel="preload" as="image" href={imageUrl} imageSrcSet={srcSet}/>
+                <img
+                    src={imageUrl}
+                    srcSet={srcSet}
+                    alt={altText}
+                    loading="eager"
+                    width={adjustedWidth}
+                    height="64"
+                />
+            </>
+        );
+    }
 
     const getLinkClassName = (href: string, isVertical: boolean) => {
         const isActive = router.pathname === href;
@@ -68,7 +98,7 @@ const Header = ({pageData}: HeaderProps) => {
                         <div className="flex justify-between">
                             <Link href="/"
                                   className="text-xl font-bold px-4 h-16 flex items-center">
-                                {companyLogo}
+                                {companyLogoElement}
                             </Link>
                             <div className="hidden lg:flex">
                                 <NavigationLinks isVertical={false}/>
@@ -77,7 +107,8 @@ const Header = ({pageData}: HeaderProps) => {
                                 onClick={() => setIsOpen(!isOpen)}
                                 className="lg:hidden focus:outline-none px-4 h-16 flex items-center"
                                 aria-label="Menu Toggle">
-                                {isOpen ? <img src="/images/x.svg" width="24" height="24" alt="Close Menu" /> : <img src="/images/menu.svg" width="24" height="24" alt="Open Menu" />}
+                                {isOpen ? <img src="/images/x.svg" width="24" height="24" alt="Close Menu"/> :
+                                    <img src="/images/menu.svg" width="24" height="24" alt="Open Menu"/>}
                             </button>
                         </div>
                         <button
@@ -96,7 +127,7 @@ const Header = ({pageData}: HeaderProps) => {
                                         onClick={() => setIsOpen(false)}
                                         className="text-white focus:outline-none px-4 w-full h-16 flex items-center justify-end"
                                         aria-label="Close Menu">
-                                        <img src="/images/x.svg" width="24" height="24" alt="Close Menu" />
+                                        <img src="/images/x.svg" width="24" height="24" alt="Close Menu"/>
                                     </button>
                                 </div>
                                 <NavigationLinks isVertical={true}/>

@@ -22,16 +22,23 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing, finan
         return null;
     }
 
+    const DPR_VALUES = [1, 1.5, 2];
+    const srcSet = DPR_VALUES.map(dpr => `${sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr, fit: "min"})} ${dpr}x`).join(', ');
+
     return (
         <div className="flex justify-center">
             <a href={financing.link} target="_blank" rel="noopener noreferrer"
                className="w-full gap-4 flex flex-col md:flex-row justify-center bg-light-shades drop-shadow-lg rounded-lg p-2 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                 <div className="flex items-center justify-center overflow-hidden">
+                    <link
+                        rel="preload"
+                        as="image"
+                        href={sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1, fit: "min"})}
+                        imageSrcSet={srcSet}
+                    />
                     <img
-                        src={sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, fit: "min"})}
-                        srcSet={`${sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1, fit: "min"})} 1x,
-                        ${sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1.5, fit: "min"})} 1.5x,
-                        ${sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 2, fit: "min"})} 2x`}
+                        src={sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1, fit: "min"})}
+                        srcSet={srcSet}
                         alt="Fiancing Logo"
                         loading="eager"
                         width={imgDimensions.width / imgDimensions.height * 48}

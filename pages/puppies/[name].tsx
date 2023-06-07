@@ -1,7 +1,7 @@
 import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
 import sanityClient from '../../lib/sanityClient';
 import Layout from '../../components/layout/layout';
-import CustomCarousel from "../../components/customCarousel";
+import CustomCarousel from "../../components/carousel/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import DogCard from "../../components/dogCard";
