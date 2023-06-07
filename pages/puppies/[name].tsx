@@ -8,7 +8,6 @@ import DogCard from "../../components/dogCard";
 import {Parent} from "../../types";
 import FinancingBanner from "../../components/financing/financingBanner";
 import FinancingContainer from "../../components/financing/financingContainer";
-import React from "react";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 
 const Puppy = ({pageData, financingText}: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -25,7 +24,8 @@ const Puppy = ({pageData, financingText}: InferGetStaticPropsType<typeof getStat
                 metaDesc={replaceTemplateLiterals(metaDescription.description, puppy)}
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
-                {financing.displayOption == "container" ? <FinancingContainer financing={financing} financingText={financingText}/> : null}
+                {financing.displayOption == "container" &&
+                    <FinancingContainer financing={financing} financingText={financingText}/>}
                 <div className="flex justify-between items-center p-2 bg-light-shades shadow-lg rounded-lg">
                     <h1 className="text-3xl font-bold">{puppy.name}</h1>
                     <h1 className="text-2xl font-normal">{puppy.availability} - ${puppy.price}</h1>
@@ -37,7 +37,7 @@ const Puppy = ({pageData, financingText}: InferGetStaticPropsType<typeof getStat
                     <div className="w-full lg:w-1/2 flex flex-col gap-4">
                         <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg">
                             <p>
-                                <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
+                                <strong>Age:</strong> {years > 0 && `${years} ${years === 1 ? 'year' : 'years'},`} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
                             </p>
                             <p>
                                 <strong>Gender:</strong> {puppy.gender}
@@ -52,7 +52,7 @@ const Puppy = ({pageData, financingText}: InferGetStaticPropsType<typeof getStat
                                 <strong>Description:</strong> {puppy.description}
                             </p>
                         </div>
-                        {financing.displayOption == "banner" ? <FinancingBanner financing={financing}/> : null}
+                        {financing.displayOption == "banner" && <FinancingBanner financing={financing}/>}
                         {puppy.parents?.filter((parent: Parent) => parent).length > 0 && (
                             <>
                                 <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">

@@ -7,7 +7,7 @@ import {Puppy} from "../../types";
 import DogCard from "../../components/dogCard";
 import sanityClient from "../../lib/sanityClient";
 import FinancingBanner from "../../components/financing/financingBanner";
-import React, {useState} from "react";
+import {useState} from "react";
 import FinancingContainer from "../../components/financing/financingContainer";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import useWindowSize from "../../helpers/useWindowSize";
@@ -47,7 +47,7 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
                         dog={puppy}
                         key={puppy._id}
                         showPrice={true}
-                        cardWidth={`w-full sm:w-[calc(50%-8px)] ${financing.displayOption == "banner" ? "lg:w-[calc(100%/3-10.66px)] xl:w-[calc(25%-12px)]" : ""}`}
+                        cardWidth={`w-full sm:w-[calc(50%-8px)] ${financing.displayOption == "banner" && "lg:w-[calc(100%/3-10.66px)] xl:w-[calc(25%-12px)]"}`}
                         imageSizes={`(max-width: 639px) calc(100vw-32px), (max-width: 767px) 296px, (max-width: 1023px) 360px, (max-width: 1279px) ${financing.displayOption == "banner" ? "320px" : "276px"}, (max-width: 1535px) 300px, 364px`}
                     />
                 ))}
@@ -64,8 +64,8 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
                 metaDesc={replaceTemplateLiterals(metaDescription.description, parent)}
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
-                {financing.displayOption == "container" ?
-                    <FinancingContainer financing={financing} financingText={financingText}/> : null}
+                {financing.displayOption == "container" &&
+                    <FinancingContainer financing={financing} financingText={financingText}/>}
                 <div className="flex justify-between items-center p-2 bg-light-shades shadow-lg rounded-lg">
                     <h1 className="text-3xl font-bold">{parent.name}</h1>
                 </div>
@@ -77,7 +77,7 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
                     <div className="w-full lg:w-7/12 xl:w-1/2 flex flex-col gap-4">
                         <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
                             <p>
-                                <strong>Age:</strong> {years > 0 ? `${years} ${years === 1 ? 'year' : 'years'},` : ''} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
+                                <strong>Age:</strong> {years > 0 && `${years} ${years === 1 ? 'year' : 'years'},`} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
                             </p>
                             <p>
                                 <strong>Gender:</strong> {parent.gender}
@@ -92,7 +92,7 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
                                 <strong>Description:</strong> {parent.description}
                             </p>
                         </div>
-                        {financing.displayOption == "banner" ? <FinancingBanner financing={financing}/> : null}
+                        {financing.displayOption == "banner" && <FinancingBanner financing={financing}/>}
                         {parent.puppies?.length > 0 && financing.displayOption != "banner" && (meetTheirPuppies)}
                     </div>
                 </div>

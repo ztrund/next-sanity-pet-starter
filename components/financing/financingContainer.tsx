@@ -1,7 +1,7 @@
-import React from 'react';
 import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 import {Financing} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import React from "react";
 
 interface FinancingContainerProps {
     financing: Financing
@@ -23,7 +23,13 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing, finan
     }
 
     const DPR_VALUES = [1, 1.5, 2];
-    const srcSet = DPR_VALUES.map(dpr => `${sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr, fit: "min"})} ${dpr}x`).join(', ');
+    const srcSet = DPR_VALUES.map(dpr => `${sanityImageUrl(financing.logo, {
+        h: 48,
+        auto: "format",
+        q: 75,
+        dpr,
+        fit: "min"
+    })} ${dpr}x`).join(', ');
 
     return (
         <div className="flex justify-center">

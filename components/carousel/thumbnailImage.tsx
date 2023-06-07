@@ -1,6 +1,6 @@
 import {MediaItem} from "../../types";
-import React from "react";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import React from "react";
 
 interface ThumbnailImageProps {
     mediaItem: MediaItem;

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Layout from '../components/layout/layout';
 import fetchPageData from "../lib/fetchPageData";
@@ -38,8 +38,8 @@ const Parents = ({pageData, financingText}: InferGetStaticPropsType<typeof getSt
                 metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
-                {financing.displayOption == "container" ?
-                    <FinancingContainer financing={financing} financingText={financingText}/> : null}
+                {financing.displayOption == "container" &&
+                    <FinancingContainer financing={financing} financingText={financingText}/>}
                 <div className="flex flex-row gap-4">
                     <div
                         className={`hidden lg:flex justify-center flex-col w-48 h-min gap-2 divide-black divide-y bg-light-shades shadow-lg rounded-lg p-2 overflow-hidden`}>
