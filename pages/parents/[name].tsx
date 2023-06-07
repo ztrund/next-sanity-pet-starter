@@ -52,12 +52,10 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
                     />
                 ))}
             </div>
-            {pages > 1
-                ? <Pagination
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    totalPages={pages}/>
-                : null}
+            {pages > 1 && <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPages={pages}/>}
         </div>
     );
 

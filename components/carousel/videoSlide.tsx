@@ -15,7 +15,7 @@ const VideoSlide: React.FC<VideoSlideProps> = ({mediaItem, index}) => {
         webp={true}
         poster="hqdefault"
         params="autoplay=1&mute=1"
-        rel={index == 0 ? "preload" : "prefetch"}
+        rel={index === 0 ? "preload" : "prefetch"}
     />;
 }
 

@@ -9,15 +9,17 @@ interface ThumbnailImageProps {
 
 const ThumbnailImage: React.FC<ThumbnailImageProps> = ({mediaItem, index}) => {
     const baseProps = {
+        h: 128,
+        w: 128,
         auto: "format",
         q: 75,
         fit: "min",
     };
 
     const sizes = [
-        { h: 128, w: 128, dpr: 1 },
-        { h: 128, w: 128, dpr: 1.5 },
-        { h: 128, w: 128, dpr: 2 },
+        {dpr: 1},
+        {dpr: 1.5},
+        {dpr: 2},
     ];
 
     const src = sanityImageUrl(mediaItem.image, {...baseProps, ...sizes[0]});

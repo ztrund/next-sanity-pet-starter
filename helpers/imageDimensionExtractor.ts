@@ -4,7 +4,7 @@ export const imageDimensionExtractor = (id: string) => {
 
     if (!match) {
         console.warn(`Cannot decode asset id: ${id}`);
-        return null;
+        return {width: 0, height: 0};
     }
 
     const [width, height] = match[2].split("x").map(v => parseInt(v, 10));

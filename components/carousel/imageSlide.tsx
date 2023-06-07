@@ -29,13 +29,13 @@ const ImageSlide: React.FC<ImageSlideProps> = ({mediaItem, index, onClick}) => {
     const sizes = "(max-width: 1023px) calc(100vw - 32px), (max-width: 1536px) calc(50vw - 24px), 744px";
 
     return (<>
-        <link
-            rel={index == 0 ? "preload" : "prefetch"}
+        {index === 0 && <link
+            rel="preload"
             as="image"
             href={src}
             imageSrcSet={srcSet}
             imageSizes={sizes}
-        />
+        />}
         <img
             src={src}
             srcSet={srcSet}
