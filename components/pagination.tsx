@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type PaginationProps = {
     currentPage: number,
@@ -40,13 +40,13 @@ export const Pagination: React.FC<PaginationProps> = ({currentPage, setCurrentPa
             <button onClick={handleClickPrev} disabled={currentPage === 1}
                     className={"h-12 w-12 flex justify-center items-center bg-light-shades shadow-lg rounded-lg"}>
                 <span className="sr-only">Previous</span>
-                <img src="/images/chevron-left.svg" width="24" height="24" alt="Previous Page" />
+                <img src="/images/chevron-left.svg" width="24" height="24" alt="Previous Page"/>
             </button>
             <div className={`flex flex-row justify-center bg-light-shades shadow-lg rounded-lg w-fit overflow-hidden`}>
                 {start > 1 && <button
                     key={1}
                     onClick={() => setCurrentPage(1)}
-                    className={`h-12 w-12 ${1 === currentPage ? 'bg-main-brand-color text-white' : ''} font-bold text-lg`}
+                    className={`h-12 w-12 ${1 === currentPage && 'bg-main-brand-color text-white'} font-bold text-lg`}
                 >
                     {1}
                 </button>}
@@ -55,7 +55,7 @@ export const Pagination: React.FC<PaginationProps> = ({currentPage, setCurrentPa
                     <button
                         key={num}
                         onClick={() => setCurrentPage(num)}
-                        className={`h-12 w-12 ${num === currentPage ? 'bg-main-brand-color text-white' : ''} font-bold text-lg`}
+                        className={`h-12 w-12 ${num === currentPage && 'bg-main-brand-color text-white'} font-bold text-lg`}
                     >
                         {num}
                     </button>
@@ -64,7 +64,7 @@ export const Pagination: React.FC<PaginationProps> = ({currentPage, setCurrentPa
                 {end < totalPages && <button
                     key={totalPages}
                     onClick={() => setCurrentPage(totalPages)}
-                    className={`h-12 w-12 ${totalPages === currentPage ? 'bg-main-brand-color text-white' : ''} font-bold text-lg`}
+                    className={`h-12 w-12 ${totalPages === currentPage && 'bg-main-brand-color text-white'} font-bold text-lg`}
                 >
                     {totalPages}
                 </button>}
@@ -72,7 +72,7 @@ export const Pagination: React.FC<PaginationProps> = ({currentPage, setCurrentPa
             <button onClick={handleClickNext} disabled={currentPage === totalPages}
                     className={"h-12 w-12 flex justify-center items-center bg-light-shades shadow-lg rounded-lg"}>
                 <span className="sr-only">Next</span>
-                <img src="/images/chevron-left.svg" width="24" height="24" className="rotate-180" alt="Next Page" />
+                <img src="/images/chevron-left.svg" width="24" height="24" className="rotate-180" alt="Next Page"/>
             </button>
         </div>
     )

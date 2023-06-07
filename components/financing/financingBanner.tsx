@@ -1,7 +1,7 @@
-import React from 'react';
 import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 import {Financing} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import React from "react";
 
 interface FinancingBannerProps {
     financing: Financing

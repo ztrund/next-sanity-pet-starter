@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent} from "react";
 
 type HandleCheckboxChangeType = (
     event: ChangeEvent<HTMLInputElement>,
@@ -13,7 +13,7 @@ interface AvailabilityFilterProps {
     id: string;
 }
 
-const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ filter, setFilter, handleCheckboxChange, id}) => {
+const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({filter, setFilter, handleCheckboxChange, id}) => {
     const values = ["", "Available", "Reserved", "Sold"];
     const labels = ["All Availability", "Available", "Reserved", "Sold"];
 

@@ -1,6 +1,6 @@
-import React from "react";
 import {MediaItem} from "../../types";
 import {extractYoutubeVideoId} from "../../helpers/youtubeLinkExtractor";
+import React from "react";
 
 interface ThumbnailVideoProps {
     mediaItem: MediaItem;

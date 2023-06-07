@@ -2,7 +2,7 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {SiteInfo} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 
 interface HeaderProps {
@@ -67,11 +67,7 @@ const Header = ({pageData}: HeaderProps) => {
     }, [isOpen]);
 
     const NavigationLinks = ({isVertical}: { isVertical: boolean }) => (
-        <div
-            className={`flex items-center ${
-                isVertical ? "flex-col" : ""
-            }`}
-        >
+        <div className={`flex items-center ${isVertical && "flex-col"}`}>
             <Link href="/" className={getLinkClassName("/", isVertical)}>
                 Home
             </Link>

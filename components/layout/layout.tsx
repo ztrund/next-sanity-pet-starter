@@ -2,8 +2,8 @@
 import Head from "next/head";
 import Header from "./header";
 import Footer from "./footer";
-import React from "react";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import React from "react";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -25,17 +25,58 @@ const Layout = ({
             <Head>
                 <title>{pageTitle}</title>
                 {/*<link rel="manifest" href="/manifest.json"/>*/}
-                <link rel="icon" href={sanityImageUrl(favicon, {w: 512, h: 512, fit: "fill", bg: "0000", ignoreImageParams: true})}/>
+                <link rel="icon" href={sanityImageUrl(favicon, {
+                    w: 512,
+                    h: 512,
+                    fit: "fill",
+                    bg: "0000",
+                    ignoreImageParams: true
+                })}/>
                 <link rel="icon" type="image/png" sizes="512x512"
-                      href={sanityImageUrl(favicon, {w: 512, h: 512, fit: "fill", fm: "png", bg: "0000", ignoreImageParams: true})}/>
+                      href={sanityImageUrl(favicon, {
+                          w: 512,
+                          h: 512,
+                          fit: "fill",
+                          fm: "png",
+                          bg: "0000",
+                          ignoreImageParams: true
+                      })}/>
                 <link rel="icon" type="image/png" sizes="192x192"
-                      href={sanityImageUrl(favicon, {w: 192, h: 192, fit: "fill", fm: "png", bg: "0000", ignoreImageParams: true})}/>
+                      href={sanityImageUrl(favicon, {
+                          w: 192,
+                          h: 192,
+                          fit: "fill",
+                          fm: "png",
+                          bg: "0000",
+                          ignoreImageParams: true
+                      })}/>
                 <link rel="icon" type="image/png" sizes="32x32"
-                      href={sanityImageUrl(favicon, {w: 32, h: 32, fit: "fill", fm: "png", bg: "0000", ignoreImageParams: true})}/>
+                      href={sanityImageUrl(favicon, {
+                          w: 32,
+                          h: 32,
+                          fit: "fill",
+                          fm: "png",
+                          bg: "0000",
+                          ignoreImageParams: true
+                      })}/>
                 <link rel="icon" type="image/png" sizes="16x16"
-                      href={sanityImageUrl(favicon, {w: 16, h: 16, fit: "fill", fm: "png", bg: "0000", ignoreImageParams: true})}/>
+                      href={sanityImageUrl(favicon, {
+                          w: 16,
+                          h: 16,
+                          fit: "fill",
+                          fm: "png",
+                          bg: "0000",
+                          ignoreImageParams: true
+                      })}/>
                 <link rel="apple-touch-icon" sizes="180x180"
-                      href={sanityImageUrl(favicon, {w: 180, h: 180, fit: "fill", fm: "png", bg: "0000", ignoreImageParams: true})}/>
+                      href={sanityImageUrl(favicon, {
+                          w: 180,
+                          h: 180,
+                          fit: "fill",
+                          fm: "png",
+                          bg: "0000",
+                          ignoreImageParams: true
+                      })}/>
                 <meta
                     name="description"
                     content={metaDesc}
