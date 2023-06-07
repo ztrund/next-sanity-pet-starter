@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Layout from '../components/layout/layout';
 import {Puppy} from "../types";

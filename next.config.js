@@ -2,16 +2,16 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 })
 module.exports = withBundleAnalyzer({
-    webpack: (config, { dev, isServer }) => {
-        if (!dev && !isServer) {
-            Object.assign(config.resolve.alias, {
-                react: 'preact/compat',
-                'react-dom/test-utils': 'preact/test-utils',
-                'react-dom': 'preact/compat',
-            })
-        }
-        return config
-    },
+    // webpack: (config, { dev, isServer }) => {
+    //     if (!dev && !isServer) {
+    //         Object.assign(config.resolve.alias, {
+    //             react: 'preact/compat',
+    //             'react-dom/test-utils': 'preact/test-utils',
+    //             'react-dom': 'preact/compat',
+    //         })
+    //     }
+    //     return config
+    // },
     output: 'export',
     env: {
         NEXT_PUBLIC_YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
