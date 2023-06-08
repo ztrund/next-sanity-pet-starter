@@ -31,18 +31,24 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
                 {/* Social Media Links */}
                 <div className="mb-12 text-center">
                     <h2 className="text-2xl font-bold mb-4">Follow us on social media:</h2>
-                    {contactInfo.socialMediaLinks.map((link: SocialMediaLink) => (
-                        <a
-                            key={link.platform}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 hover:text-dark-accent inline-flex items-center"
-                        >
-                            <i className={`fab mr-2`}>{String.fromCharCode(parseInt(link.icon.icon.split(" & ")[1], 16))}</i>
-                            {link.platform}
-                        </a>
-                    ))}
+                    {contactInfo.socialMediaLinks.map((link: SocialMediaLink) => {
+                        const [, viewBox, path] = link.icon.icon.split(" ~~ ");
+
+                        return (
+                            <a
+                                key={link.platform}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 hover:fill-dark-accent hover:text-dark-accent inline-flex items-center"
+                            >
+                                <svg viewBox={viewBox} className="h-4 mr-2">
+                                    <path d={path} />
+                                </svg>
+                                {link.platform}
+                            </a>
+                        );
+                    })}
                 </div>
 
                 {/* Business Hours */}
