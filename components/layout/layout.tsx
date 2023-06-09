@@ -4,11 +4,12 @@ import Header from "./header";
 import Footer from "./footer";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
 import React from "react";
+import {PageData} from "../../types";
 
 interface LayoutProps {
     children: React.ReactNode;
     pageTitle?: string;
-    pageData?: any;
+    pageData: PageData;
     metaDesc?: string;
 }
 
@@ -18,7 +19,7 @@ const Layout = ({
                     metaDesc = "All In One Frenchie Enterprise is a small family-owned business that specializes in breeding and selling French Bulldogs.",
                     pageData,
                 }: LayoutProps) => {
-    const favicon = pageData?.companyInfo?.favicon
+    const favicon = pageData.companyInfo.favicon
 
     return (
         <div id="root" className="flex flex-col min-h-screen bg-light-accent">

@@ -1,14 +1,36 @@
+import {PortableTextBlock} from "@portabletext/types";
+
 export interface MediaItem {
     _key: string;
     type: "image" | "video";
-    image?: any; // Replace 'any' with the appropriate type for image from Sanity
-    videoUrl?: string;
+    image: SanityImage;
+    videoUrl: string;
+}
+
+export interface SanityImage {
+    asset: {
+        _ref: string;
+    };
+    crop: {
+        bottom: number;
+        left: number;
+        right: number;
+        top: number;
+    };
+    hotspot: {
+        height: number;
+        width: number;
+        x: number;
+        y: number;
+    }
 }
 
 export interface SocialMediaLink {
     platform: string;
     url: string;
-    icon: any; // Add the icon property
+    icon: {
+        icon: string;
+    };
 }
 
 export interface BusinessHour {
@@ -28,14 +50,9 @@ export interface CompanyInfo {
     companyName: string;
     companyNameShort: string;
     companyDescription: string;
-    companyLogo: any;
-    favicon: any;
-    pwaIcon: any;
-}
-
-export interface SiteInfo {
-    contactInfo: ContactInfo | null;
-    companyInfo: CompanyInfo | null;
+    companyLogo: SanityImage;
+    favicon: SanityImage;
+    pwaIcon: SanityImage;
 }
 
 export interface Puppy {
@@ -45,18 +62,15 @@ export interface Puppy {
     gender: string;
     color: string;
     weight: number;
-    mediaItems: MediaItem[];
+    description: string;
     availability: string;
     price: number;
+    mediaItems: MediaItem[];
     parents: Parent[];
 }
 
-export interface Puppies {
-    puppies: Puppy[];
-}
-
-export interface HomePage {
-    content: any[];
+export interface Homepage {
+    content: PortableTextBlock[];
 }
 
 export interface YoutubeSettings {
@@ -65,16 +79,16 @@ export interface YoutubeSettings {
 }
 
 export interface About {
-    content: any[];
+    content: PortableTextBlock[];
     mediaItems: MediaItem[];
     team: TeamMember[];
-    teamDescription: any[];
+    teamDescription: PortableTextBlock[];
 }
 
 export interface TeamMember {
     name: string;
     position: string;
-    image: any;
+    image: SanityImage;
 }
 
 export interface Parent {
@@ -84,22 +98,33 @@ export interface Parent {
     gender: string;
     color: string;
     weight: number;
+    description: string;
     mediaItems: MediaItem[];
     puppies: Puppy[];
 }
 
-export interface Parents {
-    parents: Parent[];
-}
-
 export interface Financing {
-    banner: any;
+    banner: SanityImage;
     link: string;
-    logo: any;
-    text: any[];
+    logo: SanityImage;
+    text: PortableTextBlock[];
     displayOption: string;
 }
 
 export interface MetaDescription {
     description: string;
+}
+
+export interface PageData {
+    companyInfo: CompanyInfo;
+    homepage: Homepage;
+    youtubeSettings: YoutubeSettings;
+    about: About;
+    contactInfo: ContactInfo;
+    financing: Financing;
+    metaDescription: MetaDescription;
+    puppies: Puppy[];
+    puppy: Puppy;
+    parents: Parent[];
+    parent: Parent;
 }
