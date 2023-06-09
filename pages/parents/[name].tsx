@@ -1,9 +1,9 @@
-import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
+import {GetStaticPaths, GetStaticProps} from 'next';
 import Layout from '../../components/layout/layout';
 import CustomCarousel from "../../components/carousel/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
-import {Puppy} from "../../types";
+import {PageData, Puppy} from "../../types";
 import DogCard from "../../components/dogCard";
 import sanityClient from "../../lib/sanityClient";
 import FinancingBanner from "../../components/financing/financingBanner";
@@ -12,8 +12,9 @@ import FinancingContainer from "../../components/financing/financingContainer";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
+import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
 
-const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Parent = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parent, financing, metaDescription} = pageData;
     const windowSize = useWindowSize();
 
@@ -31,10 +32,6 @@ const Parent = ({pageData, financingText}: InferGetStaticPropsType<typeof getSta
     const [currentPage, setCurrentPage] = useState(1);
 
     const {years, weeks, days} = getAge(parent.birthdate);
-
-    const replaceTemplateLiterals = (description: string, data: { [x: string]: any; }) => {
-        return description.replace(/\$\{(\w+)}/g, (_, key) => data[key]);
-    };
 
     const meetTheirPuppies = (
         <div className="flex flex-col gap-4">

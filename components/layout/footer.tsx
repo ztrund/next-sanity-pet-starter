@@ -1,11 +1,7 @@
-import {SiteInfo} from '../../types';
+import {PageData} from '../../types';
 import Link from "next/link";
 
-interface FooterProps {
-    pageData?: SiteInfo;
-}
-
-const Footer = ({pageData}: FooterProps) => {
+const Footer = ({pageData}: { pageData: PageData }) => {
 
     const pages = [
         {
@@ -50,7 +46,7 @@ const Footer = ({pageData}: FooterProps) => {
                                             className="fill-white hover:fill-dark-accent hover:text-dark-accent flex justify-center items-center"
                                         >
                                             <svg viewBox={viewBox} className="h-4 mr-2">
-                                                <path d={path} />
+                                                <path d={path}/>
                                             </svg>
                                             {link.platform}
                                         </a>

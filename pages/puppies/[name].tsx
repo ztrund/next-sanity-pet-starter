@@ -1,23 +1,20 @@
-import {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
+import {GetStaticPaths, GetStaticProps} from 'next';
 import sanityClient from '../../lib/sanityClient';
 import Layout from '../../components/layout/layout';
 import CustomCarousel from "../../components/carousel/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import DogCard from "../../components/dogCard";
-import {Parent} from "../../types";
+import {PageData, Parent} from "../../types";
 import FinancingBanner from "../../components/financing/financingBanner";
 import FinancingContainer from "../../components/financing/financingContainer";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
+import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
 
-const Puppy = ({pageData, financingText}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Puppy = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {puppy, financing, metaDescription} = pageData;
 
     const {years, weeks, days} = getAge(puppy.birthdate);
-
-    const replaceTemplateLiterals = (description: string, data: { [x: string]: any; }) => {
-        return description.replace(/\$\{(\w+)}/g, (_, key) => data[key]);
-    };
 
     return (
         <Layout pageTitle={puppy.name}
