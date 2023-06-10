@@ -1,7 +1,6 @@
 // components/Layout.tsx
 import Head from "next/head";
-import Header from "./header";
-import Footer from "./footer";
+import dynamic from "next/dynamic";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
 import React from "react";
 import {PageData} from "../../types";
@@ -12,6 +11,9 @@ interface LayoutProps {
     pageData: PageData;
     metaDesc?: string;
 }
+
+const Header = dynamic(() => import("./header"), {ssr: false});
+const Footer = dynamic(() => import("./footer"), {ssr: false});
 
 const Layout = ({
                     children,

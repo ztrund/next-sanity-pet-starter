@@ -33,10 +33,6 @@
     }
 }
 
-.range-input {
-    background: none;
-}
-
 .yt-lite {
     @apply absolute top-0 left-0 w-full h-full;
     background-color: #000;
