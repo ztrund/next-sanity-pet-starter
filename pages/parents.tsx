@@ -1,18 +1,18 @@
 import {useMemo, useState} from 'react';
-import {GetStaticProps, InferGetStaticPropsType} from 'next';
+import {GetStaticProps} from 'next';
 import Layout from '../components/layout/layout';
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
 import NameFilter from "../components/filters/nameFilter";
 import GenderFilter from "../components/filters/genderFilter";
 import ColorFilter from "../components/filters/colorFilter";
-import {Parent} from "../types";
+import {PageData, Parent} from "../types";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import FinancingContainer from "../components/financing/financingContainer";
 import {FilterOrCloseIcon} from "../components/svgs";
 
-const Parents = ({pageData, financingText}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Parents = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parents, metaDescription, financing} = pageData;
     const uniqueColors = Array.from(new Set<string>(parents.map((parent: Parent) => parent.color)));
 

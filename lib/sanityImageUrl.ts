@@ -1,3 +1,5 @@
+import {SanityImage} from "../types";
+
 interface SanityImageUrlOptions {
     w?: number;
     h?: number;
@@ -22,7 +24,7 @@ interface SanityImageUrlOptions {
     ignoreImageParams?: boolean;
 }
 
-export const sanityImageUrl = (image: any, options?: SanityImageUrlOptions): string => {
+export const sanityImageUrl = (image: SanityImage, options?: SanityImageUrlOptions): string => {
     const projectId = "fcb9r3pv";
     const dataset = "production";
 
@@ -30,14 +32,14 @@ export const sanityImageUrl = (image: any, options?: SanityImageUrlOptions): str
         return '';
     }
 
-    const imageId = image.asset._ref.split('-'); // [image, id, width x height, format]
-    const imageDimensions = imageId[2].split('x'); // [width, height]
-    let imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${imageId[1]}-${imageId[2]}.${imageId[3]}`;
+    const [, imgID, imgDimensions, imgFormat] = image.asset._ref.split('-');
+    const [width, height] = imgDimensions.split('x').map(Number);
+    let imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${imgID}-${imgDimensions}.${imgFormat}`;
 
     let params = [];
     if (image.hotspot && options && options.w && options.h && !options.ignoreImageParams) {
-        const croppedWidth = imageDimensions[0] * (1 - image.crop.left - image.crop.right);
-        const croppedHeight = imageDimensions[1] * (1 - image.crop.bottom - image.crop.top);
+        const croppedWidth = width * (1 - image.crop.left - image.crop.right);
+        const croppedHeight = height * (1 - image.crop.bottom - image.crop.top);
 
         // calculate the scale ratio between original image and target size
         const scaleRatio = Math.min(croppedWidth / options.w, croppedHeight / options.h);
@@ -47,12 +49,12 @@ export const sanityImageUrl = (image: any, options?: SanityImageUrlOptions): str
         const hsHeight = Math.round(options.h * scaleRatio);
 
         // calculate hotspot position, scaled up but centered around original hotspot center
-        let rectLeft = Math.round(image.hotspot.x * imageDimensions[0] - hsWidth / 2);
-        let rectTop = Math.round(image.hotspot.y * imageDimensions[1] - hsHeight / 2);
+        let rectLeft = Math.round(image.hotspot.x * width - hsWidth / 2);
+        let rectTop = Math.round(image.hotspot.y * height - hsHeight / 2);
 
         // ensure that the rectangle is within the image dimensions
-        rectLeft = Math.max(0, Math.min(rectLeft, imageDimensions[0] - hsWidth));
-        rectTop = Math.max(0, Math.min(rectTop, imageDimensions[1] - hsHeight));
+        rectLeft = Math.max(0, Math.min(rectLeft, width - hsWidth));
+        rectTop = Math.max(0, Math.min(rectTop, height - hsHeight));
 
         params.push(`rect=${rectLeft},${rectTop},${hsWidth},${hsHeight}`);
     }

@@ -1,7 +1,7 @@
 import {useMemo, useState} from 'react';
-import {GetStaticProps, InferGetStaticPropsType} from 'next';
+import {GetStaticProps} from 'next';
 import Layout from '../components/layout/layout';
-import {Puppy} from "../types";
+import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
 import FinancingContainer from "../components/financing/financingContainer";
@@ -15,7 +15,7 @@ import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import {FilterOrCloseIcon} from "../components/svgs";
 
-const Puppies = ({pageData, financingText}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Puppies = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
     const {puppies, metaDescription, financing} = pageData;
 

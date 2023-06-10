@@ -1,14 +1,16 @@
-import {GetStaticProps, InferGetStaticPropsType} from 'next';
+import {GetStaticProps} from 'next';
 import Layout from "../components/layout/layout";
 import CustomCarousel from "../components/carousel/customCarousel";
 import fetchPageData from "../lib/fetchPageData";
-import {TeamMember} from "../types";
+import {PageData, TeamMember} from "../types";
 import {sanityImageUrl} from "../lib/sanityImageUrl";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 
-const About = ({
-                   pageData, aboutContent, aboutTeamDescription,
-               }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const About = ({pageData, aboutContent, aboutTeamDescription}: {
+    pageData: PageData,
+    aboutContent: string,
+    aboutTeamDescription: string
+}) => {
     const {about, metaDescription} = pageData;
     return (<Layout pageTitle="About Us"
                     metaDesc={metaDescription.description}

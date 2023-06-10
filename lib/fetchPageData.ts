@@ -1,32 +1,5 @@
-import {
-    About,
-    CompanyInfo,
-    ContactInfo,
-    Financing,
-    HomePage,
-    MetaDescription,
-    Parent,
-    Parents,
-    Puppies,
-    Puppy,
-    YoutubeSettings
-} from '../types';
+import {PageData} from '../types';
 import axios from "axios";
-
-interface PageData {
-    contactInfo: ContactInfo | null;
-    companyInfo: CompanyInfo | null;
-    puppies: Puppies | null;
-    homepage: HomePage | null;
-    youtubeSettings: YoutubeSettings | null;
-    about: About | null;
-    parents: Parents | null;
-    parent: Parent | null;
-    puppy: Puppy | null;
-    financing: Financing | null;
-    metaDescription: MetaDescription | null;
-    additionalQuery?: string;
-}
 
 export interface FetchParams {
     name?: string;
@@ -39,7 +12,7 @@ const sanityConfig = {
     useCdn: process.env.NEXT_PUBLIC_SANITY_USE_CDN === 'true', // `false` if you want to ensure fresh data
 };
 
-const deserializeToPageData = (rawData: any): PageData => {
+const deserializeToPageData = (rawData: PageData): PageData => {
     return {
         contactInfo: rawData.contactInfo || {},
         companyInfo: rawData.companyInfo || {},
@@ -52,7 +25,6 @@ const deserializeToPageData = (rawData: any): PageData => {
         puppy: rawData.puppy || {},
         financing: rawData.financing || {},
         metaDescription: rawData.metaDescription || {},
-        additionalQuery: rawData.additionalQuery || {},
     };
 };
 

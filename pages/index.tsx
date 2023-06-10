@@ -1,9 +1,9 @@
 import Layout from "../components/layout/layout";
-import {GetStaticProps, InferGetStaticPropsType} from "next";
+import {GetStaticProps} from "next";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
-import {Puppy} from "../types";
+import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 import DogCard from "../components/dogCard";
@@ -21,7 +21,7 @@ function separateAndShufflePuppies(array: Puppy[]) {
     return [...shuffledAvailable, ...shuffledReserved, ...shuffledSold];
 }
 
-function shuffleArray(array: any) {
+function shuffleArray(array: Puppy[]) {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -30,7 +30,7 @@ function shuffleArray(array: any) {
     return shuffledArray;
 }
 
-const HomePage = ({pageData, homepageContent}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageContent: string }) => {
     const {puppies, metaDescription, youtubeSettings} = pageData;
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +65,7 @@ const HomePage = ({pageData, homepageContent}: InferGetStaticPropsType<typeof ge
                 </div>
                 <div
                     className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
-                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: homepageContent}} />
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{__html: homepageContent}}/>
                 </div>
             </div>
             <div className="flex flex-wrap justify-center gap-4 mb-4">
@@ -120,7 +120,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const pageData = await fetchPageData(additionalQuery);
 
-    const homepageContent = sanitizeHTML(pageData.homepage?.content);
+    const homepageContent = sanitizeHTML(pageData.homepage.content);
 
     return {
         props: {

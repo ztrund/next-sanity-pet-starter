@@ -1,16 +1,12 @@
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {SiteInfo} from "../../types";
+import {PageData} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
 import {useEffect, useState} from "react";
 import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 import {CloseIcon, MenuIcon} from "../svgs";
 
-interface HeaderProps {
-    pageData?: SiteInfo;
-}
-
-const Header = ({pageData}: HeaderProps) => {
+const Header = ({pageData}: { pageData: PageData }) => {
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
     const {companyInfo} = pageData || {};
