@@ -10,6 +10,7 @@ import {Parent} from "../types";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import FinancingContainer from "../components/financing/financingContainer";
+import {FilterOrCloseIcon} from "../components/svgs";
 
 const Parents = ({pageData, financingText}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const {parents, metaDescription, financing} = pageData;
@@ -56,11 +57,10 @@ const Parents = ({pageData, financingText}: InferGetStaticPropsType<typeof getSt
                             <h1 className="text-3xl font-bold px-2">Parents</h1>
                             <button
                                 onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-                                className="lg:hidden flex flex-row justify-center items-center h-full px-4 border-l rounded-r-lg bg-main-brand-color text-light-shades focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dark-accent"
+                                className="lg:hidden flex flex-row justify-center items-center h-full px-4 border-l rounded-r-lg bg-main-brand-color text-light-shades focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dark-accent stroke-white hover:stroke-dark-accent"
                                 aria-label={isFiltersOpen ? "Close filters" : "Open filters"}
                             >
-                                {isFiltersOpen ? <img src="/images/x.svg" width="24" height="24" alt="Close Filters"/> :
-                                    <img src="/images/filter.svg" width="24" height="24" alt="Open Filters"/>}
+                                <FilterOrCloseIcon isOpen={isFiltersOpen}/>
                             </button>
                         </div>
                         <div

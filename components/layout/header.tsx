@@ -4,6 +4,7 @@ import {SiteInfo} from "../../types";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
 import {useEffect, useState} from "react";
 import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
+import {CloseIcon, MenuIcon} from "../svgs";
 
 interface HeaderProps {
     pageData?: SiteInfo;
@@ -93,18 +94,17 @@ const Header = ({pageData}: HeaderProps) => {
                     <div className="w-full">
                         <div className="flex justify-between">
                             <Link href="/"
-                                  className="text-xl font-bold px-4 h-16 flex items-center">
+                                  className="text-xl font-bold px-4 h-16 flex items-center hover:text-dark-accent">
                                 {companyLogoElement}
                             </Link>
                             <div className="hidden lg:flex">
                                 <NavigationLinks isVertical={false}/>
                             </div>
                             <button
-                                onClick={() => setIsOpen(!isOpen)}
-                                className="lg:hidden focus:outline-none px-4 h-16 flex items-center"
+                                onClick={() => setIsOpen(true)}
+                                className="lg:hidden focus:outline-none px-4 h-16 flex items-center stroke-white hover:stroke-dark-accent"
                                 aria-label="Menu Toggle">
-                                {isOpen ? <img src="/images/x.svg" width="24" height="24" alt="Close Menu"/> :
-                                    <img src="/images/menu.svg" width="24" height="24" alt="Open Menu"/>}
+                                <MenuIcon/>
                             </button>
                         </div>
                         <button
@@ -121,9 +121,9 @@ const Header = ({pageData}: HeaderProps) => {
                                 <div className="flex flex-col h-16 items-end justify-center">
                                     <button
                                         onClick={() => setIsOpen(false)}
-                                        className="text-white focus:outline-none px-4 w-full h-16 flex items-center justify-end"
+                                        className="text-white focus:outline-none px-4 w-full h-16 flex items-center justify-end stroke-white hover:stroke-dark-accent"
                                         aria-label="Close Menu">
-                                        <img src="/images/x.svg" width="24" height="24" alt="Close Menu"/>
+                                        <CloseIcon/>
                                     </button>
                                 </div>
                                 <NavigationLinks isVertical={true}/>

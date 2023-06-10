@@ -1,9 +1,10 @@
 import Layout from '../components/layout/layout';
-import {GetStaticProps, InferGetStaticPropsType} from "next";
+import {GetStaticProps} from "next";
 import fetchPageData from "../lib/fetchPageData";
-import {BusinessHour, SocialMediaLink} from "../types";
+import {BusinessHour, PageData, SocialMediaLink} from "../types";
+import {CustomSVGIcon} from "../components/svgs";
 
-const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const ContactPage = ({pageData}: { pageData: PageData }) => {
     const {contactInfo, metaDescription} = pageData;
 
     return (
@@ -40,11 +41,9 @@ const ContactPage = ({pageData}: InferGetStaticPropsType<typeof getStaticProps>)
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-2 hover:fill-dark-accent hover:text-dark-accent inline-flex items-center"
+                                className="p-2 hover:fill-dark-accent hover:text-dark-accent inline-flex items-center gap-2"
                             >
-                                <svg viewBox={viewBox} className="h-4 mr-2">
-                                    <path d={path} />
-                                </svg>
+                                <CustomSVGIcon viewBox={viewBox} path={path}/>
                                 {link.platform}
                             </a>
                         );

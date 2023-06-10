@@ -1,11 +1,8 @@
-import {SiteInfo} from '../../types';
+import {PageData} from '../../types';
 import Link from "next/link";
+import {CustomSVGIcon} from "../svgs";
 
-interface FooterProps {
-    pageData?: SiteInfo;
-}
-
-const Footer = ({pageData}: FooterProps) => {
+const Footer = ({pageData}: { pageData: PageData }) => {
 
     const pages = [
         {
@@ -47,11 +44,9 @@ const Footer = ({pageData}: FooterProps) => {
                                             href={link.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="fill-white hover:fill-dark-accent hover:text-dark-accent flex justify-center items-center"
+                                            className="fill-white hover:fill-dark-accent hover:text-dark-accent flex justify-center items-center gap-2"
                                         >
-                                            <svg viewBox={viewBox} className="h-4 mr-2">
-                                                <path d={path} />
-                                            </svg>
+                                            <CustomSVGIcon viewBox={viewBox} path={path}/>
                                             {link.platform}
                                         </a>
                                     </li>
