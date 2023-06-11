@@ -10,7 +10,7 @@ import {PageData, Parent} from "../types";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import FinancingContainer from "../components/financing/financingContainer";
-import {FilterOrCloseIcon} from "../components/svgs";
+import {FilterOrCloseIcon} from "../components/svgIcons";
 
 const Parents = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parents, metaDescription, financing} = pageData;

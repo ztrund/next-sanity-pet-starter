@@ -2,7 +2,9 @@ import Layout from '../components/layout/layout';
 import {GetStaticProps} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {BusinessHour, PageData, SocialMediaLink} from "../types";
-import {CustomSVGIcon} from "../components/svgs";
+import dynamic from "next/dynamic";
+
+const CustomSVGIcon = dynamic(() => import("../components/svgIcons").then(mod => mod.CustomSVGIcon), {ssr: false});
 
 const ContactPage = ({pageData}: { pageData: PageData }) => {
     const {contactInfo, metaDescription} = pageData;

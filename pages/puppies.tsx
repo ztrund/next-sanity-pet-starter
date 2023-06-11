@@ -13,7 +13,7 @@ import SortFilter from "../components/filters/sortFilter";
 import NameFilter from "../components/filters/nameFilter";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
-import {FilterOrCloseIcon} from "../components/svgs";
+import {FilterOrCloseIcon} from "../components/svgIcons";
 
 const Puppies = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);

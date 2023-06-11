@@ -1,5 +1,5 @@
 import React from "react";
-import {ChevronLeftIcon} from "./svgs";
+import {ChevronLeftIcon} from "./svgIcons";
 
 type PaginationProps = {
     currentPage: number,

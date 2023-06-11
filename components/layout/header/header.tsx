@@ -1,14 +1,16 @@
 import Link from "next/link";
-import {useRouter} from "next/router";
-import {PageData} from "../../types";
-import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import {PageData} from "../../../types";
+import {sanityImageUrl} from "../../../lib/sanityImageUrl";
 import {useEffect, useState} from "react";
-import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
-import {CloseIcon, MenuIcon} from "../svgs";
+import {imageDimensionExtractor} from "../../../helpers/imageDimensionExtractor";
+import dynamic from "next/dynamic";
+
+const MenuIcon = dynamic(() => import('../../svgIcons').then(mod => mod.MenuIcon), {ssr: false});
+const CloseIcon = dynamic(() => import('../../svgIcons').then(mod => mod.CloseIcon), {ssr: false});
+const NavLinks = dynamic(() => import('./navLinks'), {ssr: false});
 
 const Header = ({pageData}: { pageData: PageData }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter();
     const {companyInfo} = pageData || {};
     const {companyName, companyLogo} = companyInfo || {};
     let companyLogoElement = <span>{companyName}</span>;
@@ -46,15 +48,6 @@ const Header = ({pageData}: { pageData: PageData }) => {
         );
     }
 
-    const getLinkClassName = (href: string, isVertical: boolean) => {
-        const isActive = router.pathname === href;
-        const baseClass = `hover:text-dark-accent focus:outline-none h-16 flex items-center ${isVertical ? "px-4 w-full text-end justify-end" : "px-2"}`;
-        const activeClass = "text-main-brand-color";
-        const inactiveClass = "text-gray-100";
-
-        return `${baseClass} ${isActive ? activeClass : inactiveClass}`;
-    };
-
     useEffect(() => {
         if (isOpen) {
             document.body.classList.add("overflow-hidden", "lg:overflow-auto");
@@ -62,26 +55,6 @@ const Header = ({pageData}: { pageData: PageData }) => {
             document.body.classList.remove("overflow-hidden", "lg:overflow-auto");
         }
     }, [isOpen]);
-
-    const NavigationLinks = ({isVertical}: { isVertical: boolean }) => (
-        <div className={`flex items-center ${isVertical && "flex-col"}`}>
-            <Link href="/" className={getLinkClassName("/", isVertical)}>
-                Home
-            </Link>
-            <Link href="/about" className={getLinkClassName("/about", isVertical)}>
-                About Us
-            </Link>
-            <Link href="/puppies" className={getLinkClassName("/puppies", isVertical)}>
-                Puppies
-            </Link>
-            <Link href="/parents" className={getLinkClassName("/parents", isVertical)}>
-                Parents
-            </Link>
-            <Link href="/contact" className={getLinkClassName("/contact", isVertical)}>
-                Contact Us
-            </Link>
-        </div>
-    );
 
     return (
         <div className="fixed w-full h-16 top-0 z-10 bg-dark-shades shadow-lg">
@@ -94,7 +67,7 @@ const Header = ({pageData}: { pageData: PageData }) => {
                                 {companyLogoElement}
                             </Link>
                             <div className="hidden lg:flex">
-                                <NavigationLinks isVertical={false}/>
+                                <NavLinks isVertical={false}/>
                             </div>
                             <button
                                 onClick={() => setIsOpen(true)}
@@ -122,7 +95,7 @@ const Header = ({pageData}: { pageData: PageData }) => {
                                         <CloseIcon/>
                                     </button>
                                 </div>
-                                <NavigationLinks isVertical={true}/>
+                                <NavLinks isVertical={true}/>
                             </div>
                         </div>
                     </div>

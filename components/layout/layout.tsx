@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import {sanityImageUrl} from "../../lib/sanityImageUrl";
 import React from "react";
 import {PageData} from "../../types";
+import Header from "./header/header";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -12,7 +13,6 @@ interface LayoutProps {
     metaDesc?: string;
 }
 
-const Header = dynamic(() => import("./header"), {ssr: false});
 const Footer = dynamic(() => import("./footer"), {ssr: false});
 
 const Layout = ({
