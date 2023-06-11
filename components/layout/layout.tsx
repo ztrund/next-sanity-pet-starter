@@ -44,9 +44,13 @@ const Layout = ({
                 <meta name="theme-color" content="hsl(39, 76%, 52%)"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
-            <Header pageData={pageData}/>
+            <header className="fixed w-full h-16 top-0 z-10 bg-dark-shades shadow-lg text-white">
+                <Header pageData={pageData}/>
+            </header>
             <main className="container mx-auto p-4 flex-grow flex-shrink-0 mt-16">{children}</main>
-            <Footer pageData={pageData}/>
+            <footer className="min-h-[324px] bg-dark-shades text-white">
+                <Footer pageData={pageData}/>
+            </footer>
         </div>
     );
 };

@@ -1,7 +1,6 @@
 import {GetStaticProps} from "next";
 import Link from "next/link";
-import {useEffect, useState} from "react";
-import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
+import React, {useEffect, useState} from "react";
 import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
@@ -10,6 +9,10 @@ import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
+const LiteYouTubeEmbed = dynamic(() => import("react-lite-youtube-embed"), {
+    loading: () => <div className="aspect-video"/>,
+    ssr: false
+});
 
 function separateAndShufflePuppies(array: Puppy[]) {
     const availablePuppies = array.filter(puppy => puppy.availability === 'Available');
@@ -63,7 +66,13 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
                     className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
-                    <YoutubeLiveEmbed liveVideoId={liveVideoId}/>
+                    <LiteYouTubeEmbed
+                        id={liveVideoId}
+                        title="YouTube Live"
+                        webp={true}
+                        poster="hqdefault"
+                        params="autoplay=1&mute=1"
+                    />
                 </div>
                 <div
                     className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
