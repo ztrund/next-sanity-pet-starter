@@ -24,7 +24,7 @@ interface SanityImageUrlOptions {
     ignoreImageParams?: boolean;
 }
 
-export const sanityImageUrl = (image: SanityImage, options?: SanityImageUrlOptions): string => {
+export const sanityImgUrl = (image: SanityImage, options?: SanityImageUrlOptions): string => {
     const projectId = "fcb9r3pv";
     const dataset = "production";
 

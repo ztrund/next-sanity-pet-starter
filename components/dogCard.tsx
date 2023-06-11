@@ -1,7 +1,7 @@
 import {FunctionComponent} from 'react';
 import Link from 'next/link';
 import {Parent, Puppy} from '../types';
-import {sanityImageUrl} from "../lib/sanityImageUrl";
+import {sanityImgUrl} from "../lib/sanityImgUrl";
 
 interface DogCardProps {
     dog: Puppy | Parent;
@@ -34,7 +34,7 @@ const DogCard: FunctionComponent<DogCardProps> = ({
         const widths = [300, 364, 488,].map(w => [w, w * 1.5, w * 2]);
         srcSet = widths.flat().map(w => {
             const h = Math.round(w / aspectRatio);
-            return `${sanityImageUrl(imageItem.image, {w, h, auto: "format", q: 75, fit: "min"})} ${w}w`;
+            return `${sanityImgUrl(imageItem.image, {w, h, auto: "format", q: 75, fit: "min"})} ${w}w`;
         }).join(', ');
     }
 
@@ -46,12 +46,12 @@ const DogCard: FunctionComponent<DogCardProps> = ({
                     {!lazy && <link
                         rel="preload"
                         as="image"
-                        href={sanityImageUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
+                        href={sanityImgUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
                         imageSrcSet={srcSet}
                         imageSizes={imageSizes}
                     />}
                     <img
-                        src={sanityImageUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
+                        src={sanityImgUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
                         srcSet={srcSet}
                         sizes={imageSizes}
                         alt={dog.name}

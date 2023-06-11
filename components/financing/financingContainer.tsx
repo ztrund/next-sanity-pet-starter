@@ -1,6 +1,6 @@
 import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 import {Financing} from "../../types";
-import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import {sanityImgUrl} from "../../lib/sanityImgUrl";
 import React from "react";
 
 interface FinancingContainerProps {
@@ -23,7 +23,7 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing, finan
     }
 
     const DPR_VALUES = [1, 1.5, 2];
-    const srcSet = DPR_VALUES.map(dpr => `${sanityImageUrl(financing.logo, {
+    const srcSet = DPR_VALUES.map(dpr => `${sanityImgUrl(financing.logo, {
         h: 48,
         auto: "format",
         q: 75,
@@ -39,11 +39,11 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing, finan
                     <link
                         rel="preload"
                         as="image"
-                        href={sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1, fit: "min"})}
+                        href={sanityImgUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1, fit: "min"})}
                         imageSrcSet={srcSet}
                     />
                     <img
-                        src={sanityImageUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1, fit: "min"})}
+                        src={sanityImgUrl(financing.logo, {h: 48, auto: "format", q: 75, dpr: 1, fit: "min"})}
                         srcSet={srcSet}
                         alt="Fiancing Logo"
                         loading="eager"

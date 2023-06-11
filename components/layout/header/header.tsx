@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {PageData} from "../../../types";
-import {sanityImageUrl} from "../../../lib/sanityImageUrl";
 import {useEffect, useState} from "react";
 import {imageDimensionExtractor} from "../../../helpers/imageDimensionExtractor";
 import dynamic from "next/dynamic";
@@ -11,23 +10,13 @@ const NavLinks = dynamic(() => import('./navLinks'), {ssr: false});
 
 const Header = ({pageData}: { pageData: PageData }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const {companyInfo} = pageData || {};
-    const {companyName, companyLogo} = companyInfo || {};
+    const {companyInfo} = pageData;
+    const {companyName, companyLogo} = companyInfo;
     let companyLogoElement = <span>{companyName}</span>;
 
     if (companyLogo) {
-        const DPR_VALUES = [1, 1.5, 2];
-        const imageUrlParams = {
-            h: 64,
-            auto: 'format',
-            q: 75,
-            fit: 'min'
-        };
-        const imageUrl = sanityImageUrl(companyLogo, {...imageUrlParams, dpr: 1});
-        const srcSet = DPR_VALUES.map(dpr => `${sanityImageUrl(companyLogo, {
-            ...imageUrlParams,
-            dpr
-        })} ${dpr}x`).join(', ');
+        const imageUrl = companyLogo.imageUrl;
+        const srcSet = companyLogo.srcSet;
 
         const altText = `${companyName} Logo`;
         const imgDimensions = imageDimensionExtractor(companyLogo.asset._ref);

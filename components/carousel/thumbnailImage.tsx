@@ -1,5 +1,5 @@
 import {MediaItem} from "../../types";
-import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import {sanityImgUrl} from "../../lib/sanityImgUrl";
 import React from "react";
 
 interface ThumbnailImageProps {
@@ -22,8 +22,8 @@ const ThumbnailImage: React.FC<ThumbnailImageProps> = ({mediaItem, index}) => {
         {dpr: 2},
     ];
 
-    const src = sanityImageUrl(mediaItem.image, {...baseProps, ...sizes[0]});
-    const srcSet = sizes.map(size => `${sanityImageUrl(mediaItem.image, {...baseProps, ...size})} ${size.dpr}x`).join(', ');
+    const src = sanityImgUrl(mediaItem.image, {...baseProps, ...sizes[0]});
+    const srcSet = sizes.map(size => `${sanityImgUrl(mediaItem.image, {...baseProps, ...size})} ${size.dpr}x`).join(', ');
 
     return <img
         src={src}

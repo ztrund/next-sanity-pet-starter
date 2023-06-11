@@ -1,7 +1,7 @@
 import {GetStaticProps} from 'next';
 import fetchPageData from "../lib/fetchPageData";
 import {PageData, TeamMember} from "../types";
-import {sanityImageUrl} from "../lib/sanityImageUrl";
+import {sanityImgUrl} from "../lib/sanityImgUrl";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import dynamic from "next/dynamic";
 
@@ -30,17 +30,17 @@ const About = ({pageData, aboutContent, aboutTeamDescription}: {
                             <div key={teamMember.name} className="flex flex-col lg:flex-row items-center">
                                 <div className="flex flex-col items-center">
                                     <img
-                                        src={sanityImageUrl(teamMember.image, {
+                                        src={sanityImgUrl(teamMember.image, {
                                             w: 128, h: 128, auto: "format", q: 75, fit: "min"
                                         })}
                                         srcSet={`
-        ${sanityImageUrl(teamMember.image, {
+        ${sanityImgUrl(teamMember.image, {
                                             h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "min"
                                         })} 1x,
-        ${sanityImageUrl(teamMember.image, {
+        ${sanityImgUrl(teamMember.image, {
                                             h: 128, w: 128, auto: "format", q: 75, dpr: 1.5, fit: "min"
                                         })} 1.5x,
-        ${sanityImageUrl(teamMember.image, {
+        ${sanityImgUrl(teamMember.image, {
                                             h: 128, w: 128, auto: "format", q: 75, dpr: 2, fit: "min"
                                         })} 2x
     `}

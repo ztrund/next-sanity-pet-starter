@@ -1,5 +1,7 @@
 import {PageData} from '../types';
 import axios from "axios";
+import generateFaviconUrls from "../helpers/generateFaviconUrls";
+import {sanityImgUrl} from "./sanityImgUrl";
 
 export interface FetchParams {
     name?: string;
@@ -64,7 +66,25 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
         const response = await axios.get(url, {
             headers: {'Content-Type': 'application/json'}
         });
-        return deserializeToPageData(response.data.result);
+        let pageData = deserializeToPageData(response.data.result);
+        if (pageData.companyInfo.favicon) {
+            pageData.companyInfo.faviconUrls = generateFaviconUrls(pageData.companyInfo.favicon);
+        }
+        if (pageData.companyInfo.companyLogo) {
+            const imageUrlParams = {
+                h: 64,
+                auto: 'format',
+                q: 75,
+                fit: 'min'
+            };
+            const companyLogo = pageData.companyInfo.companyLogo;
+            pageData.companyInfo.companyLogo.imageUrl = sanityImgUrl(companyLogo, {...imageUrlParams, dpr: 1});
+            pageData.companyInfo.companyLogo.srcSet = [1, 1.5, 2].map(dpr => `${sanityImgUrl(companyLogo, {
+                ...imageUrlParams,
+                dpr
+            })} ${dpr}x`).join(', ');
+        }
+        return pageData;
     } catch (error) {
         console.error('Error fetching page data:', error);
         throw error;

@@ -1,6 +1,6 @@
 import {imageDimensionExtractor} from "../../helpers/imageDimensionExtractor";
 import {Financing} from "../../types";
-import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import {sanityImgUrl} from "../../lib/sanityImgUrl";
 import React from "react";
 
 interface FinancingBannerProps {
@@ -26,24 +26,24 @@ const FinancingBanner: React.FC<FinancingBannerProps> = ({financing}) => {
             className="h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
             <a href={financing.link} target="_blank" rel="noopener noreferrer">
                 <img
-                    src={sanityImageUrl(financing.banner, {w: 488, auto: "format", q: 75, fit: "min"})}
+                    src={sanityImgUrl(financing.banner, {w: 488, auto: "format", q: 75, fit: "min"})}
                     srcSet={`
-        ${sanityImageUrl(financing.banner, {
+        ${sanityImgUrl(financing.banner, {
                         w: 488, auto: "format", q: 75, fit: "min",
                     })} 488w,
-        ${sanityImageUrl(financing.banner, {
+        ${sanityImgUrl(financing.banner, {
                         w: 616, auto: "format", q: 75, fit: "min",
                     })} 616w,
-        ${sanityImageUrl(financing.banner, {
+        ${sanityImgUrl(financing.banner, {
                         w: 744, auto: "format", q: 75, fit: "min",
                     })} 744w,
-        ${sanityImageUrl(financing.banner, {
+        ${sanityImgUrl(financing.banner, {
                         w: 976, auto: "format", q: 75, fit: "min",
                     })} 976w,
-        ${sanityImageUrl(financing.banner, {
+        ${sanityImgUrl(financing.banner, {
                         w: 1232, auto: "format", q: 75, fit: "min",
                     })} 1232w,
-        ${sanityImageUrl(financing.banner, {
+        ${sanityImgUrl(financing.banner, {
                         w: 1488, auto: "format", q: 75, fit: "min",
                     })} 1488w,
     `}

@@ -1,4 +1,4 @@
-import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import {sanityImgUrl} from "../../lib/sanityImgUrl";
 import {MediaItem} from "../../types";
 import React from "react";
 
@@ -24,8 +24,8 @@ const ImageSlide: React.FC<ImageSlideProps> = ({mediaItem, index, onClick}) => {
         {w: 1488, h: 1488}
     ];
 
-    const src = sanityImageUrl(mediaItem.image, {...baseProps, ...dimensions[0]});
-    const srcSet = dimensions.map(size => `${sanityImageUrl(mediaItem.image, {...baseProps, ...size})} ${size.w}w`).join(', ');
+    const src = sanityImgUrl(mediaItem.image, {...baseProps, ...dimensions[0]});
+    const srcSet = dimensions.map(size => `${sanityImgUrl(mediaItem.image, {...baseProps, ...size})} ${size.w}w`).join(', ');
     const sizes = "(max-width: 1023px) calc(100vw - 32px), (max-width: 1536px) calc(50vw - 24px), 744px";
 
     return (<>

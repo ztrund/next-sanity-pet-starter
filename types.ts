@@ -23,6 +23,9 @@ export interface SanityImage {
         x: number;
         y: number;
     }
+    imageUrl?: string;
+    srcSet?: string;
+    sizes?: string;
 }
 
 export interface SocialMediaLink {
@@ -52,6 +55,14 @@ export interface CompanyInfo {
     companyDescription: string;
     companyLogo: SanityImage;
     favicon: SanityImage;
+    faviconUrls: {
+        default: string;
+        png512: string;
+        png192: string;
+        png32: string;
+        png16: string;
+        appleTouch: string;
+    }
     pwaIcon: SanityImage;
 }
 

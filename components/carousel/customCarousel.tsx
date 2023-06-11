@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {MediaItem} from "../../types";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import {sanityImageUrl} from "../../lib/sanityImageUrl";
+import {sanityImgUrl} from "../../lib/sanityImgUrl";
 import {createPortal} from "react-dom";
 import VideoSlide from "./videoSlide";
 import ThumbnailImage from "./thumbnailImage";
@@ -80,7 +80,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                 >
                     {mediaItem.type === "image" &&
                         <ImageSlide mediaItem={mediaItem} index={index} onClick={() => {
-                            setCurrentImage(sanityImageUrl(mediaItem.image, {auto: "format", q: 75}));
+                            setCurrentImage(sanityImgUrl(mediaItem.image, {auto: "format", q: 75}));
                             setShowModal(true);
                         }}/>}
                     {mediaItem.type === "video" && <VideoSlide mediaItem={mediaItem} index={index}/>}
