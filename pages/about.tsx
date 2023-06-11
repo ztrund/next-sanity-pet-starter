@@ -1,10 +1,12 @@
 import {GetStaticProps} from 'next';
-import Layout from "../components/layout/layout";
-import CustomCarousel from "../components/carousel/customCarousel";
 import fetchPageData from "../lib/fetchPageData";
 import {PageData, TeamMember} from "../types";
 import {sanityImageUrl} from "../lib/sanityImageUrl";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
+const CustomCarousel = dynamic(() => import("../components/carousel/customCarousel"), {ssr: false});
 
 const About = ({pageData, aboutContent, aboutTeamDescription}: {
     pageData: PageData,

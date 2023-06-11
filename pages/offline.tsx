@@ -1,7 +1,9 @@
-import Layout from '../components/layout/layout';
 import {GetStaticProps} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {PageData} from "../types";
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
 
 const OfflinePage = ({pageData}: {pageData: PageData}) => {
 

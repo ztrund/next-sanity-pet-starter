@@ -1,18 +1,20 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
-import Layout from '../../components/layout/layout';
-import CustomCarousel from "../../components/carousel/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {PageData, Puppy} from "../../types";
 import DogCard from "../../components/dogCard";
 import sanityClient from "../../lib/sanityClient";
-import FinancingBanner from "../../components/financing/financingBanner";
 import {useState} from "react";
-import FinancingContainer from "../../components/financing/financingContainer";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
 import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
+const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {ssr: false});
+const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {ssr: false});
+const FinancingBanner = dynamic(() => import("../../components/financing/financingBanner"), {ssr: false});
 
 const Parent = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parent, financing, metaDescription} = pageData;

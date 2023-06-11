@@ -1,15 +1,17 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
 import sanityClient from '../../lib/sanityClient';
-import Layout from '../../components/layout/layout';
-import CustomCarousel from "../../components/carousel/customCarousel";
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import DogCard from "../../components/dogCard";
 import {PageData, Parent} from "../../types";
-import FinancingBanner from "../../components/financing/financingBanner";
-import FinancingContainer from "../../components/financing/financingContainer";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
+const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {ssr: false});
+const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {ssr: false});
+const FinancingBanner = dynamic(() => import("../../components/financing/financingBanner"), {ssr: false});
 
 const Puppy = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {puppy, financing, metaDescription} = pageData;

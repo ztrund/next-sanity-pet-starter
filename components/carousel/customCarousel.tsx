@@ -72,11 +72,11 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
 
     return (<>
         {modalNode && createPortal(modal, modalNode)}
-        <div className="embla overflow-hidden" ref={viewportRef}>
-            <div className="embla__container flex items-center">
+        <div className="overflow-hidden" ref={viewportRef}>
+            <div className="flex items-center">
                 {mediaItems.map((mediaItem: MediaItem, index: number) => (<div
                     key={mediaItem._key}
-                    className="embla__slide flex-grow-0 flex-shrink-0 basis-full min-w-0"
+                    className="flex-grow-0 flex-shrink-0 basis-full min-w-0"
                 >
                     {mediaItem.type === "image" &&
                         <ImageSlide mediaItem={mediaItem} index={index} onClick={() => {
@@ -87,16 +87,16 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                 </div>))}
             </div>
         </div>
-        <div className="embla-thumbs overflow-hidden" ref={thumbViewportRef}>
-            <div className="embla-thumbs__container flex flex-row">
+        <div className="overflow-hidden" ref={thumbViewportRef}>
+            <div className="flex flex-row">
                 {mediaItems.map((mediaItem: MediaItem, index: number) => (<div
                     key={mediaItem._key}
-                    className={`embla-thumbs__slide flex ${selectedIndex === index ? 'border-4 border-main-brand-color' : 'border-4'}`}
+                    className={`flex ${selectedIndex === index ? 'border-4 border-main-brand-color' : 'border-4'}`}
                     onClick={() => {
                         scrollTo(index)
                     }}
                 >
-                    <button className="embla-thumbs__slide__button h-32 w-32" type="button"
+                    <button className="h-32 w-32" type="button"
                             title={"Slide " + index + " Button"}>
                         {mediaItem.type === "image" && <ThumbnailImage mediaItem={mediaItem} index={index}/>}
                         {mediaItem.type === "video" && <ThumbnailVideo mediaItem={mediaItem} index={index}/>}

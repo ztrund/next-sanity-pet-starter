@@ -1,4 +1,3 @@
-import Layout from "../components/layout/layout";
 import {GetStaticProps} from "next";
 import Link from "next/link";
 import {useEffect, useState} from "react";
@@ -8,6 +7,9 @@ import fetchPageData from "../lib/fetchPageData";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 import DogCard from "../components/dogCard";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
 
 function separateAndShufflePuppies(array: Puppy[]) {
     const availablePuppies = array.filter(puppy => puppy.availability === 'Available');

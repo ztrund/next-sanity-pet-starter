@@ -1,10 +1,8 @@
 import {useMemo, useState} from 'react';
 import {GetStaticProps} from 'next';
-import Layout from '../components/layout/layout';
 import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import DogCard from "../components/dogCard";
-import FinancingContainer from "../components/financing/financingContainer";
 import GenderFilter from "../components/filters/genderFilter";
 import AvailabilityFilter from "../components/filters/availabilityFilter";
 import ColorFilter from "../components/filters/colorFilter";
@@ -13,7 +11,11 @@ import SortFilter from "../components/filters/sortFilter";
 import NameFilter from "../components/filters/nameFilter";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
-import {FilterOrCloseIcon} from "../components/svgIcons";
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
+const FinancingContainer = dynamic(() => import("../components/financing/financingContainer"), {ssr: false});
+const FilterOrCloseIcon = dynamic(() => import("../components/svgIcons").then(mod => mod.FilterOrCloseIcon), {ssr: false});
 
 const Puppies = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
