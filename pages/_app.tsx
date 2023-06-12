@@ -4,7 +4,7 @@ import '../styles/globals.css';
 
 // import {useEffect} from "react";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({Component, pageProps}: AppProps) {
     // useEffect(() => {
     //     if ('serviceWorker' in navigator) {
     //         window.addEventListener('load', function() {

@@ -1,11 +1,13 @@
 import React from "react";
-import {ChevronLeftIcon} from "./svgIcons";
+import dynamic from "next/dynamic";
 
 type PaginationProps = {
     currentPage: number,
     setCurrentPage: (page: number) => void,
     totalPages: number,
 };
+
+const ChevronLeftIcon = dynamic(() => import('../components/svgIcons').then(mod => mod.ChevronLeftIcon), {ssr: false});
 
 export const Pagination: React.FC<PaginationProps> = ({currentPage, setCurrentPage, totalPages}) => {
     const maxItems = 7;  // Maximum items to show at a time including numbers and ...
