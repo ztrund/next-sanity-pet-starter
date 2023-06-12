@@ -4,13 +4,20 @@ import React, {useEffect, useState} from "react";
 import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
-import DogCard from "../components/dogCard";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
 const LiteYouTubeEmbed = dynamic(() => import("react-lite-youtube-embed"), {
     loading: () => <div className="aspect-video"/>,
+    ssr: false
+});
+const DogCard = dynamic(() => import("../components/dogCard"), {
+    loading: () =>
+        <div className="bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)] xl:w-[calc(25%-12px)]">
+            <div className="aspect-video"/>
+            <div className="h-24"/>
+        </div>,
     ssr: false
 });
 
@@ -88,7 +95,11 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
                 ) : (
                     randomPuppies.length > 0 ? (
                         randomPuppies.map((puppy) => (
-                            <DogCard dog={puppy} key={puppy._id}/>
+                            <DogCard
+                                dog={puppy}
+                                cardWidth='w-full sm:w-[calc(50%-8px)] xl:w-[calc(25%-12px)]'
+                                key={puppy._id}
+                            />
                         ))
                     ) : (
                         <div

@@ -1,8 +1,7 @@
-import {useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {GetStaticProps} from 'next';
 import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
-import DogCard from "../components/dogCard";
 import GenderFilter from "../components/filters/genderFilter";
 import AvailabilityFilter from "../components/filters/availabilityFilter";
 import ColorFilter from "../components/filters/colorFilter";
@@ -14,7 +13,19 @@ import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
-const FinancingContainer = dynamic(() => import("../components/financing/financingContainer"), {ssr: false});
+const DogCard = dynamic(() => import("../components/dogCard"), {
+    loading: () =>
+        <div
+            className="bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)] xl:w-[calc(100%/3-10.66px)] 2xl:w-[calc(25%-12px)]">
+            <div className="aspect-video"/>
+            <div className="h-24"/>
+        </div>,
+    ssr: false
+});
+const FinancingContainer = dynamic(() => import("../components/financing/financingContainer"), {
+    loading: () => <div className="w-full h-32 md:h-16"/>,
+    ssr: false
+});
 const FilterOrCloseIcon = dynamic(() => import("../components/svgIcons").then(mod => mod.FilterOrCloseIcon), {ssr: false});
 
 const Puppies = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {

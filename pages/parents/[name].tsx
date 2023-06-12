@@ -2,9 +2,8 @@ import {GetStaticPaths, GetStaticProps} from 'next';
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {PageData, Puppy} from "../../types";
-import DogCard from "../../components/dogCard";
 import sanityClient from "../../lib/sanityClient";
-import {useState} from "react";
+import React, {useState} from "react";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
@@ -12,12 +11,33 @@ import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
 import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
-const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {ssr: false});
-const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {ssr: false});
-const FinancingBanner = dynamic(() => import("../../components/financing/financingBanner"), {ssr: false});
+const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {
+    loading: () =>
+        <>
+            <div className="aspect-square"/>
+            <div className="h-[136px]"/>
+        </>,
+    ssr: false
+});
+const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {
+    loading: () => <div className="w-full h-32 md:h-16"/>,
+    ssr: false
+});
+const FinancingBanner = dynamic(() => import("../../components/financing/financingBanner"), {
+    ssr: false
+});
 
 const Parent = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parent, financing, metaDescription} = pageData;
+    const DogCard = dynamic(() => import("../../components/dogCard"), {
+        loading: () =>
+            <div
+                className={`bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)] ${financing.displayOption == "banner" && "lg:w-[calc(100%/3-10.66px)] xl:w-[calc(25%-12px)]"}`}>
+                <div className="aspect-video"/>
+                <div className="h-24"/>
+            </div>,
+        ssr: false
+    });
     const windowSize = useWindowSize();
 
     let puppiesPerPage;  // Set the number of puppies to display per page

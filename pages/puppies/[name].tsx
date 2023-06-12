@@ -2,15 +2,33 @@ import {GetStaticPaths, GetStaticProps} from 'next';
 import sanityClient from '../../lib/sanityClient';
 import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
-import DogCard from "../../components/dogCard";
 import {PageData, Parent} from "../../types";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
 import dynamic from "next/dynamic";
+import React from "react";
 
 const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
-const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {ssr: false});
-const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {ssr: false});
+const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {
+    loading: () =>
+        <>
+            <div className="aspect-square"/>
+            <div className="h-[136px]"/>
+        </>,
+    ssr: false
+});
+const DogCard = dynamic(() => import("../../components/dogCard"), {
+    loading: () =>
+        <div className="bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)]">
+            <div className="aspect-video"/>
+            <div className="h-24"/>
+        </div>,
+    ssr: false
+});
+const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {
+    loading: () => <div className="w-full h-32 md:h-16"/>,
+    ssr: false
+});
 const FinancingBanner = dynamic(() => import("../../components/financing/financingBanner"), {ssr: false});
 
 const Puppy = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {

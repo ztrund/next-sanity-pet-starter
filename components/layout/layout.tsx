@@ -48,7 +48,8 @@ const Layout = ({
                 <Header pageData={pageData}/>
             </header>
             <main className="container mx-auto p-4 flex-grow flex-shrink-0 mt-16">{children}</main>
-            <footer className="min-h-[324px] bg-dark-shades text-white">
+            {/*Find better way to do this??? Height changes based on link amount*/}
+            <footer className="min-h-[652px] md:min-h-[324px] bg-dark-shades text-white">
                 <Footer pageData={pageData}/>
             </footer>
         </div>

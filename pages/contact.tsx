@@ -4,7 +4,10 @@ import {BusinessHour, PageData, SocialMediaLink} from "../types";
 import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
-const CustomSVGIcon = dynamic(() => import("../components/svgIcons").then(mod => mod.CustomSVGIcon), {ssr: false});
+const CustomSVGIcon = dynamic(() => import("../components/svgIcons").then(mod => mod.CustomSVGIcon), {
+    loading: () => <div className="h-4 w-4"/>,
+    ssr: false
+});
 
 const ContactPage = ({pageData}: { pageData: PageData }) => {
     const {contactInfo, metaDescription} = pageData;

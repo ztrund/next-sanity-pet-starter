@@ -1,4 +1,4 @@
-import {PageData} from '../types';
+import {PageData, TeamMember} from '../types';
 import axios from "axios";
 import generateFaviconUrls from "../helpers/generateFaviconUrls";
 import {sanityImgUrl} from "./sanityImgUrl";
@@ -83,6 +83,22 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
                 ...imageUrlParams,
                 dpr
             })} ${dpr}x`).join(', ');
+        }
+        if (pageData.about?.team) {
+            pageData.about.team.map((teamMember: TeamMember) => {
+                const imageUrlParams = {
+                    h: 128,
+                    w: 128,
+                    auto: 'format',
+                    q: 75,
+                    fit: 'min'
+                };
+                teamMember.image.imageUrl = sanityImgUrl(teamMember.image, {...imageUrlParams, dpr: 1});
+                teamMember.image.srcSet = [1, 1.5, 2].map(dpr => `${sanityImgUrl(teamMember.image, {
+                    ...imageUrlParams,
+                    dpr
+                })} ${dpr}x`).join(', ');
+            })
         }
         return pageData;
     } catch (error) {

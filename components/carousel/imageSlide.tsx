@@ -42,7 +42,7 @@ const ImageSlide: React.FC<ImageSlideProps> = ({mediaItem, index, onClick}) => {
             sizes={sizes}
             alt={`Slide ${index}`}
             loading={index === 0 ? "eager" : "lazy"}
-            className="w-full aspect-[1] object-cover"
+            className="w-full aspect-square object-cover"
             onClick={onClick}
         />
     </>);
