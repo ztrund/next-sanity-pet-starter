@@ -4,6 +4,7 @@ import generateFaviconUrls from "../helpers/generateFaviconUrls";
 import {sanityImgUrl} from "./sanityImgUrl";
 import {imageDimensionExtractor} from "../helpers/imageDimensionExtractor";
 import generateCarouselUrls from "../helpers/generateCarouselUrls";
+import generateDogCardUrls from "../helpers/generateDogCardUrls";
 
 export interface FetchParams {
     name?: string;
@@ -141,9 +142,21 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
         }
         if (pageData.puppy.mediaItems) {
             generateCarouselUrls(pageData.puppy.mediaItems);
+            if (pageData.puppy.parents.length > 0) {
+                generateDogCardUrls(pageData.puppy.parents.filter(Boolean));
+            }
         }
         if (pageData.parent.mediaItems) {
             generateCarouselUrls(pageData.parent.mediaItems);
+            if (pageData.parent.puppies.length > 0) {
+                generateDogCardUrls(pageData.parent.puppies);
+            }
+        }
+        if (pageData.puppies.length > 0) {
+            generateDogCardUrls(pageData.puppies);
+        }
+        if (pageData.parents.length > 0) {
+            generateDogCardUrls(pageData.parents);
         }
         return pageData;
     } catch (error) {

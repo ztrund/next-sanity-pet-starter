@@ -126,7 +126,7 @@ export const getStaticProps: GetStaticProps = async () => {
       name,
       gender,
       color,
-      mediaItems,
+      'picture': mediaItems[type == "image"][0],
       availability,
     },
     "homepage": *[_type == "homepage"][0] {

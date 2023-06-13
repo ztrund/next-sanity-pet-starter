@@ -89,7 +89,7 @@ export interface Puppy {
     price: number;
     mediaItems: MediaItem[];
     parents: Parent[];
-    picture?: SanityImage;
+    picture: MediaItem;
 }
 
 export interface Homepage {
@@ -124,7 +124,7 @@ export interface Parent {
     description: string;
     mediaItems: MediaItem[];
     puppies: Puppy[];
-    picture?: SanityImage;
+    picture: MediaItem;
 }
 
 export interface Financing {
