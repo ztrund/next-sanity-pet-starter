@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {PageData} from "../../../types";
 import {useEffect, useState} from "react";
-import {imageDimensionExtractor} from "../../../helpers/imageDimensionExtractor";
 import dynamic from "next/dynamic";
 
 const MenuIcon = dynamic(() => import('../../svgIcons').then(mod => mod.MenuIcon), {ssr: false});
@@ -15,23 +14,16 @@ const Header = ({pageData}: { pageData: PageData }) => {
     let companyLogoElement = <span>{companyName}</span>;
 
     if (companyLogo) {
-        const imageUrl = companyLogo.imageUrl;
-        const srcSet = companyLogo.srcSet;
-
-        const altText = `${companyName} Logo`;
-        const imgDimensions = imageDimensionExtractor(companyLogo.asset._ref);
-        const adjustedWidth = imgDimensions.width / imgDimensions.height * 64;
-
         companyLogoElement = (
             <>
-                <link rel="preload" as="image" href={imageUrl} imageSrcSet={srcSet}/>
+                <link rel="preload" as="image" href={companyLogo.imageUrl} imageSrcSet={companyLogo.srcSet}/>
                 <img
-                    src={imageUrl}
-                    srcSet={srcSet}
-                    alt={altText}
+                    src={companyLogo.imageUrl}
+                    srcSet={companyLogo.srcSet}
+                    alt={`${companyName} Logo`}
                     loading="eager"
-                    width={adjustedWidth}
-                    height="64"
+                    width={companyLogo.width}
+                    height={companyLogo.height}
                 />
             </>
         );

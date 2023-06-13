@@ -81,11 +81,14 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
                 fit: 'min'
             };
             const companyLogo = pageData.companyInfo.companyLogo;
-            pageData.companyInfo.companyLogo.imageUrl = sanityImgUrl(companyLogo, {...imageUrlParams, dpr: 1});
-            pageData.companyInfo.companyLogo.srcSet = [1, 1.5, 2].map(dpr => `${sanityImgUrl(companyLogo, {
+            companyLogo.imageUrl = sanityImgUrl(companyLogo, {...imageUrlParams, dpr: 1});
+            companyLogo.srcSet = [1, 1.5, 2].map(dpr => `${sanityImgUrl(companyLogo, {
                 ...imageUrlParams,
                 dpr
             })} ${dpr}x`).join(', ');
+            const imgDimensions = imageDimensionExtractor(companyLogo.asset._ref);
+            companyLogo.width = imgDimensions.width / imgDimensions.height * 64;
+            companyLogo.height = 64
         }
         if (pageData.about.team) {
             const imageUrlParams = {
