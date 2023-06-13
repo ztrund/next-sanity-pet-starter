@@ -19,9 +19,16 @@ module.exports = withBundleAnalyzer({
                     reuseExistingChunk: true,
                     enforce: true,
                 },
-                shared: {
-                    name: 'shared',
-                    test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]shared[\\/]lib[\\/]/,
+                shared_lib_router: {
+                    name: 'shared_lib_router',
+                    test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]shared[\\/]lib[\\/]router[\\/]/,
+                    chunks: 'all',
+                    reuseExistingChunk: true,
+                    enforce: true,
+                },
+                shared_lib_others: {
+                    name: 'shared_lib_others',
+                    test: new RegExp(`[\\\\/]node_modules[\\\\/]next[\\\\/]dist[\\\\/]shared[\\\\/]lib[\\\\/](?!router[\\\\/]).*`),
                     chunks: 'all',
                     reuseExistingChunk: true,
                     enforce: true,
