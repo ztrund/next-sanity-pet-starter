@@ -5,6 +5,15 @@ export interface MediaItem {
     type: "image" | "video";
     image: SanityImage;
     videoUrl: string;
+    imageSlide: {
+        imageUrl?: string;
+        srcSet?: string;
+        sizes?: string;
+    };
+    thumbnailImage: {
+        imageUrl?: string;
+        srcSet?: string;
+    };
 }
 
 export interface SanityImage {
@@ -26,6 +35,8 @@ export interface SanityImage {
     imageUrl?: string;
     srcSet?: string;
     sizes?: string;
+    height?: number;
+    width?: number;
 }
 
 export interface SocialMediaLink {
@@ -78,6 +89,7 @@ export interface Puppy {
     price: number;
     mediaItems: MediaItem[];
     parents: Parent[];
+    picture?: SanityImage;
 }
 
 export interface Homepage {
@@ -112,6 +124,7 @@ export interface Parent {
     description: string;
     mediaItems: MediaItem[];
     puppies: Puppy[];
+    picture?: SanityImage;
 }
 
 export interface Financing {

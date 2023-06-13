@@ -21,7 +21,7 @@ const DogCard = dynamic(() => import("../components/dogCard"), {
     ssr: false
 });
 const FinancingContainer = dynamic(() => import("../components/financing/financingContainer"), {
-    loading: () => <div className="w-full h-32 md:h-16"/>,
+    loading: () => <div className="w-full h-32 md:h-16 bg-light-shades rounded-lg shadow-lg"/>,
     ssr: false
 });
 const FilterOrCloseIcon = dynamic(() => import("../components/svgIcons").then(mod => mod.FilterOrCloseIcon), {ssr: false});
@@ -134,7 +134,7 @@ export const getStaticProps: GetStaticProps = async () => {
       name,
       gender,
       color,
-      mediaItems,
+      mediaItems[type == "image"],
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
       'description': parents,

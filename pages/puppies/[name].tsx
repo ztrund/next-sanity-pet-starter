@@ -27,7 +27,7 @@ const DogCard = dynamic(() => import("../../components/dogCard"), {
     ssr: false
 });
 const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {
-    loading: () => <div className="w-full h-32 md:h-16"/>,
+    loading: () => <div className="w-full h-32 md:h-16 bg-light-shades rounded-lg shadow-lg"/>,
     ssr: false
 });
 const FinancingBanner = dynamic(() => import("../../components/financing/financingBanner"), {ssr: false});
