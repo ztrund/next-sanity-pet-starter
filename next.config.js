@@ -12,17 +12,16 @@ module.exports = withBundleAnalyzer({
             })
             config.optimization.splitChunks.cacheGroups = {
                 ...config.optimization.splitChunks.cacheGroups,
-                // Define a cache group for your common module
                 preact: {
                     name: 'preact',
-                    test: /[\\/]node_modules[\\/](preact)[\\/]/,
+                    test: /[\\/]node_modules[\\/]preact[\\/]/,
                     chunks: 'all',
                     reuseExistingChunk: true,
                     enforce: true,
                 },
-                dynamic: {
-                    name: 'next/dynamic',
-                    test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]shared[\\/]lib[\\/](dynamic.js|loadable.js|loadable-context.js)/,
+                shared: {
+                    name: 'shared',
+                    test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]shared[\\/]lib[\\/]/,
                     chunks: 'all',
                     reuseExistingChunk: true,
                     enforce: true,
