@@ -11,8 +11,9 @@ import NameFilter from "../components/filters/nameFilter";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import dynamic from "next/dynamic";
+import Layout from "../components/layout/layout";
 
-const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
+// const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
 const DogCard = dynamic(() => import("../components/dogCard"), {
     loading: () =>
         <div

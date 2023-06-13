@@ -7,8 +7,9 @@ import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
 import dynamic from "next/dynamic";
 import React from "react";
+import Layout from "../../components/layout/layout";
 
-const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
+// const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
 const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {
     loading: () =>
         <>

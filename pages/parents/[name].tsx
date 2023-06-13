@@ -9,8 +9,9 @@ import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
 import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
 import dynamic from "next/dynamic";
+import Layout from "../../components/layout/layout";
 
-const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
+// const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
 const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {
     loading: () =>
         <>

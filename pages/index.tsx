@@ -6,8 +6,9 @@ import fetchPageData from "../lib/fetchPageData";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import dynamic from "next/dynamic";
+import Layout from "../components/layout/layout";
 
-const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
+// const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
 const LiteYouTubeEmbed = dynamic(() => import("react-lite-youtube-embed"), {
     loading: () => <div className="aspect-video"/>,
     ssr: false

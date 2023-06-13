@@ -25,7 +25,15 @@ module.exports = withBundleAnalyzer({
                     chunks: 'all',
                     reuseExistingChunk: true,
                     enforce: true,
-                }
+                },
+                layout: {
+                    name: 'layout',
+                    test: /[\\/]components[\\/]layout[\\/]/,
+                    chunks: 'all',
+                    minChunks: 2,
+                    reuseExistingChunk: true,
+                    enforce: true,
+                },
             }
         }
         return config
