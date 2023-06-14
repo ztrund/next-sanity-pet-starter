@@ -1,13 +1,12 @@
-import Layout from "../components/layout/layout";
 import {GetStaticProps} from "next";
-import Link from "next/link";
-import {useEffect, useState} from "react";
-import YoutubeLiveEmbed from "../components/youtubeLiveEmbed";
+import React, {useEffect, useState} from "react";
 import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
-import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
-import DogCard from "../components/dogCard";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
+import Layout from "../components/layout/layout";
+import DogCard from "../components/dogCard";
+import LiteYouTubeEmbed from "react-lite-youtube-embed";
+import Link from "next/link";
 
 function separateAndShufflePuppies(array: Puppy[]) {
     const availablePuppies = array.filter(puppy => puppy.availability === 'Available');
@@ -34,8 +33,8 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
     const {puppies, metaDescription, youtubeSettings} = pageData;
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const channelId = extractYoutubeChannelId(youtubeSettings.channelUrl || '') || '';
-    const fallbackVideoId = extractYoutubeVideoId(youtubeSettings.fallbackVideoUrl || '') || '';
+    const channelId = youtubeSettings.channelId;
+    const fallbackVideoId = youtubeSettings.fallbackVideoId;
     const [liveVideoId, setLiveVideoId] = useState(fallbackVideoId);
 
     useEffect(() => {
@@ -61,7 +60,13 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
                     className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
-                    <YoutubeLiveEmbed liveVideoId={liveVideoId}/>
+                    <LiteYouTubeEmbed
+                        id={liveVideoId}
+                        title="YouTube Live"
+                        webp={true}
+                        poster="hqdefault"
+                        params="autoplay=1&mute=1"
+                    />
                 </div>
                 <div
                     className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
@@ -77,7 +82,11 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
                 ) : (
                     randomPuppies.length > 0 ? (
                         randomPuppies.map((puppy) => (
-                            <DogCard dog={puppy} key={puppy._id}/>
+                            <DogCard
+                                dog={puppy}
+                                cardWidth='w-full sm:w-[calc(50%-8px)] xl:w-[calc(25%-12px)]'
+                                key={puppy._id}
+                            />
                         ))
                     ) : (
                         <div
@@ -103,7 +112,7 @@ export const getStaticProps: GetStaticProps = async () => {
       name,
       gender,
       color,
-      mediaItems,
+      'picture': mediaItems[type == "image"][0],
       availability,
     },
     "homepage": *[_type == "homepage"][0] {

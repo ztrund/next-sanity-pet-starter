@@ -1,9 +1,9 @@
-import Layout from '../components/layout/layout';
 import {GetStaticProps} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {PageData} from "../types";
+import Layout from "../components/layout/layout";
 
-const OfflinePage = ({pageData}: {pageData: PageData}) => {
+const OfflinePage = ({pageData}: { pageData: PageData }) => {
 
     return (
         <Layout pageTitle="Offline - Page Not Available"

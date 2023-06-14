@@ -1,10 +1,10 @@
 import {GetStaticProps} from 'next';
-import Layout from "../components/layout/layout";
-import CustomCarousel from "../components/carousel/customCarousel";
 import fetchPageData from "../lib/fetchPageData";
 import {PageData, TeamMember} from "../types";
-import {sanityImageUrl} from "../lib/sanityImageUrl";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
+import React from "react";
+import Layout from "../components/layout/layout";
+import CustomCarousel from "../components/carousel/customCarousel";
 
 const About = ({pageData, aboutContent, aboutTeamDescription}: {
     pageData: PageData,
@@ -28,21 +28,10 @@ const About = ({pageData, aboutContent, aboutTeamDescription}: {
                             <div key={teamMember.name} className="flex flex-col lg:flex-row items-center">
                                 <div className="flex flex-col items-center">
                                     <img
-                                        src={sanityImageUrl(teamMember.image, {
-                                            w: 128, h: 128, auto: "format", q: 75, fit: "min"
-                                        })}
-                                        srcSet={`
-        ${sanityImageUrl(teamMember.image, {
-                                            h: 128, w: 128, auto: "format", q: 75, dpr: 1, fit: "min"
-                                        })} 1x,
-        ${sanityImageUrl(teamMember.image, {
-                                            h: 128, w: 128, auto: "format", q: 75, dpr: 1.5, fit: "min"
-                                        })} 1.5x,
-        ${sanityImageUrl(teamMember.image, {
-                                            h: 128, w: 128, auto: "format", q: 75, dpr: 2, fit: "min"
-                                        })} 2x
-    `}
-                                        alt={teamMember.name} className="h-32 w-32 rounded-full shadow-lg"
+                                        src={teamMember.image.imageUrl}
+                                        srcSet={teamMember.image.srcSet}
+                                        alt={teamMember.name}
+                                        className="h-32 w-32 rounded-full shadow-lg"
                                         loading="lazy"
                                     />
                                     <h3 className="text-xl font-bold mt-2 text-center">{teamMember.name}</h3>

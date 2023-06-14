@@ -1,18 +1,16 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
-import Layout from '../../components/layout/layout';
-import CustomCarousel from "../../components/carousel/customCarousel";
-import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {PageData, Puppy} from "../../types";
-import DogCard from "../../components/dogCard";
 import sanityClient from "../../lib/sanityClient";
-import FinancingBanner from "../../components/financing/financingBanner";
-import {useState} from "react";
-import FinancingContainer from "../../components/financing/financingContainer";
+import React, {useState} from "react";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
-import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
+import Layout from "../../components/layout/layout";
+import DogCard from "../../components/dogCard";
+import FinancingContainer from "../../components/financing/financingContainer";
+import FinancingBanner from "../../components/financing/financingBanner";
+import CustomCarousel from "../../components/carousel/customCarousel";
 
 const Parent = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parent, financing, metaDescription} = pageData;
@@ -30,8 +28,6 @@ const Parent = ({pageData, financingText}: { pageData: PageData, financingText: 
     }
     const pages = Math.ceil(parent.puppies?.length / puppiesPerPage);
     const [currentPage, setCurrentPage] = useState(1);
-
-    const {years, weeks, days} = getAge(parent.birthdate);
 
     const meetTheirPuppies = (
         <div className="flex flex-col gap-4">
@@ -58,7 +54,7 @@ const Parent = ({pageData, financingText}: { pageData: PageData, financingText: 
 
     return (
         <Layout pageTitle={parent.name}
-                metaDesc={replaceTemplateLiterals(metaDescription.description, parent)}
+                metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
                 {financing.displayOption == "container" &&
@@ -74,7 +70,7 @@ const Parent = ({pageData, financingText}: { pageData: PageData, financingText: 
                     <div className="w-full lg:w-7/12 xl:w-1/2 flex flex-col gap-4">
                         <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
                             <p>
-                                <strong>Age:</strong> {years > 0 && `${years} ${years === 1 ? 'year' : 'years'},`} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
+                                <strong>Age:</strong> {parent.age}
                             </p>
                             <p>
                                 <strong>Gender:</strong> {parent.gender}
@@ -123,7 +119,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
         name,
         gender,
         color,
-        mediaItems,
+        'picture': mediaItems[type == "image"][0],
         availability,
         price,
       },

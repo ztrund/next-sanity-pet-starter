@@ -4,7 +4,17 @@ export interface MediaItem {
     _key: string;
     type: "image" | "video";
     image: SanityImage;
+    imageSlide: {
+        imageUrl?: string;
+        srcSet?: string;
+        sizes?: string;
+    };
+    thumbnailImage: {
+        imageUrl?: string;
+        srcSet?: string;
+    };
     videoUrl: string;
+    videoId: string;
 }
 
 export interface SanityImage {
@@ -23,6 +33,11 @@ export interface SanityImage {
         x: number;
         y: number;
     }
+    imageUrl?: string;
+    srcSet?: string;
+    sizes?: string;
+    height?: number;
+    width?: number;
 }
 
 export interface SocialMediaLink {
@@ -52,6 +67,14 @@ export interface CompanyInfo {
     companyDescription: string;
     companyLogo: SanityImage;
     favicon: SanityImage;
+    faviconUrls: {
+        default: string;
+        png512: string;
+        png192: string;
+        png32: string;
+        png16: string;
+        appleTouch: string;
+    }
     pwaIcon: SanityImage;
 }
 
@@ -59,6 +82,7 @@ export interface Puppy {
     _id: string;
     name: string;
     birthdate: string;
+    age: string;
     gender: string;
     color: string;
     weight: number;
@@ -67,22 +91,28 @@ export interface Puppy {
     price: number;
     mediaItems: MediaItem[];
     parents: Parent[];
+    picture: MediaItem;
 }
 
 export interface Homepage {
     content: PortableTextBlock[];
+    sanitizedContent: string;
 }
 
 export interface YoutubeSettings {
     channelUrl: string;
+    channelId: string;
     fallbackVideoUrl: string;
+    fallbackVideoId: string;
 }
 
 export interface About {
     content: PortableTextBlock[];
+    sanitizedContent: string;
     mediaItems: MediaItem[];
     team: TeamMember[];
     teamDescription: PortableTextBlock[];
+    sanitizedTeamDescription: string;
 }
 
 export interface TeamMember {
@@ -95,12 +125,14 @@ export interface Parent {
     _id: string;
     name: string;
     birthdate: string;
+    age: string;
     gender: string;
     color: string;
     weight: number;
     description: string;
     mediaItems: MediaItem[];
     puppies: Puppy[];
+    picture: MediaItem;
 }
 
 export interface Financing {
@@ -108,6 +140,7 @@ export interface Financing {
     link: string;
     logo: SanityImage;
     text: PortableTextBlock[];
+    sanitizedText: string;
     displayOption: string;
 }
 

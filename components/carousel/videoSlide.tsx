@@ -1,5 +1,4 @@
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
-import {extractYoutubeVideoId} from "../../helpers/youtubeLinkExtractor";
 import {MediaItem} from "../../types";
 import React from "react";
 
@@ -10,7 +9,7 @@ interface VideoSlideProps {
 
 const VideoSlide: React.FC<VideoSlideProps> = ({mediaItem, index}) => {
     return <LiteYouTubeEmbed
-        id={extractYoutubeVideoId(mediaItem.videoUrl)}
+        id={mediaItem.videoId}
         title={`Slide ${index} Video`}
         webp={true}
         poster="hqdefault"

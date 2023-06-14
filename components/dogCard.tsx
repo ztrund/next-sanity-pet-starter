@@ -1,7 +1,6 @@
 import {FunctionComponent} from 'react';
-import Link from 'next/link';
 import {Parent, Puppy} from '../types';
-import {sanityImageUrl} from "../lib/sanityImageUrl";
+import Link from "next/link";
 
 interface DogCardProps {
     dog: Puppy | Parent;
@@ -18,7 +17,6 @@ const DogCard: FunctionComponent<DogCardProps> = ({
                                                       imageSizes = '(max-width: 639px) calc(100vw-32px), (max-width: 767px) 296px, (max-width: 1023px) 360px, (max-width: 1279px) 488px, (max-width: 1535px) 300px, 364px',
                                                       lazy = true,
                                                   }) => {
-    const imageItem = dog.mediaItems?.find(item => item.type === 'image');
 
     const isPuppy = (pet: Puppy | Parent): pet is Puppy => {
         return (pet as Puppy).availability !== undefined;
@@ -26,40 +24,26 @@ const DogCard: FunctionComponent<DogCardProps> = ({
 
     const url = isPuppy(dog) ? `/puppies/${dog.name.toLowerCase()}` : `/parents/${dog.name.toLowerCase()}`;
 
-    const aspectRatio = 16 / 9;
-
-    let srcSet = "";
-    if (imageItem) {
-        // Calculate width for 1x, 1.5x, 2x DPR at each breakpoint
-        const widths = [300, 364, 488,].map(w => [w, w * 1.5, w * 2]);
-        srcSet = widths.flat().map(w => {
-            const h = Math.round(w / aspectRatio);
-            return `${sanityImageUrl(imageItem.image, {w, h, auto: "format", q: 75, fit: "min"})} ${w}w`;
-        }).join(', ');
-    }
+    const dogImage = dog.picture.image;
 
     return (<Link href={url}
                   className={`primary-container bg-light-shades rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 ${cardWidth}`}>
         <div className="aspect-video overflow-hidden flex items-center justify-center">
-            {imageItem
-                ? <>
-                    {!lazy && <link
-                        rel="preload"
-                        as="image"
-                        href={sanityImageUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
-                        imageSrcSet={srcSet}
-                        imageSizes={imageSizes}
-                    />}
-                    <img
-                        src={sanityImageUrl(imageItem.image, {w: 300, h: 169, auto: "format", q: 75, fit: "min"})}
-                        srcSet={srcSet}
-                        sizes={imageSizes}
-                        alt={dog.name}
-                        className="w-full h-full object-cover"
-                        loading={lazy ? "lazy" : "eager"}
-                    />
-                </>
-                : <img src="/images/paw-solid.svg" alt={dog.name} className="w-full h-full object-contain"/>}
+            {!lazy && <link
+                rel="preload"
+                as="image"
+                href={dogImage.imageUrl}
+                imageSrcSet={dogImage.srcSet}
+                imageSizes={imageSizes}
+            />}
+            <img
+                src={dogImage.imageUrl}
+                srcSet={dogImage.srcSet}
+                sizes={imageSizes}
+                alt={dog.name}
+                className="w-full h-full object-cover"
+                loading={lazy ? "lazy" : "eager"}
+            />
         </div>
         <div className="p-2 h-24 flex justify-between items-center">
             <div>

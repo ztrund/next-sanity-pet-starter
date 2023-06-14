@@ -1,8 +1,8 @@
-import Layout from '../components/layout/layout';
 import {GetStaticProps} from "next";
 import fetchPageData from "../lib/fetchPageData";
 import {BusinessHour, PageData, SocialMediaLink} from "../types";
-import {CustomSVGIcon} from "../components/svgs";
+import Layout from "../components/layout/layout";
+import {CustomSVGIcon} from "../components/svgIcons";
 
 const ContactPage = ({pageData}: { pageData: PageData }) => {
     const {contactInfo, metaDescription} = pageData;

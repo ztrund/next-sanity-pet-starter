@@ -1,16 +1,16 @@
-import {useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {GetStaticProps} from 'next';
-import Layout from '../components/layout/layout';
 import fetchPageData from "../lib/fetchPageData";
-import DogCard from "../components/dogCard";
 import NameFilter from "../components/filters/nameFilter";
 import GenderFilter from "../components/filters/genderFilter";
 import ColorFilter from "../components/filters/colorFilter";
 import {PageData, Parent} from "../types";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
+import Layout from "../components/layout/layout";
+import {FilterOrCloseIcon} from "../components/svgIcons";
+import DogCard from "../components/dogCard";
 import FinancingContainer from "../components/financing/financingContainer";
-import {FilterOrCloseIcon} from "../components/svgs";
 
 const Parents = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parents, metaDescription, financing} = pageData;
@@ -120,7 +120,7 @@ export const getStaticProps: GetStaticProps = async () => {
       name,
       gender,
       color,
-      mediaItems,
+      'picture': mediaItems[type == "image"][0],
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
       'description': parents,

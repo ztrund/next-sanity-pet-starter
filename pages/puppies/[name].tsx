@@ -1,24 +1,21 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
 import sanityClient from '../../lib/sanityClient';
-import Layout from '../../components/layout/layout';
-import CustomCarousel from "../../components/carousel/customCarousel";
-import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
-import DogCard from "../../components/dogCard";
 import {PageData, Parent} from "../../types";
-import FinancingBanner from "../../components/financing/financingBanner";
-import FinancingContainer from "../../components/financing/financingContainer";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
-import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
+import React from "react";
+import Layout from "../../components/layout/layout";
+import DogCard from "../../components/dogCard";
+import FinancingContainer from "../../components/financing/financingContainer";
+import FinancingBanner from "../../components/financing/financingBanner";
+import CustomCarousel from "../../components/carousel/customCarousel";
 
 const Puppy = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {puppy, financing, metaDescription} = pageData;
 
-    const {years, weeks, days} = getAge(puppy.birthdate);
-
     return (
         <Layout pageTitle={puppy.name}
-                metaDesc={replaceTemplateLiterals(metaDescription.description, puppy)}
+                metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
                 {financing.displayOption == "container" &&
@@ -34,7 +31,7 @@ const Puppy = ({pageData, financingText}: { pageData: PageData, financingText: s
                     <div className="w-full lg:w-1/2 flex flex-col gap-4">
                         <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg">
                             <p>
-                                <strong>Age:</strong> {years > 0 && `${years} ${years === 1 ? 'year' : 'years'},`} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
+                                <strong>Age:</strong> {puppy.age}
                             </p>
                             <p>
                                 <strong>Gender:</strong> {puppy.gender}
@@ -96,14 +93,14 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
           name,
           gender,
           color,
-          mediaItems,
+          'picture': mediaItems[type == "image"][0],
         },
         parents.father->{
           _id,
           name,
           gender,
           color,
-          mediaItems,
+          'picture': mediaItems[type == "image"][0],
         },
       ],
     },
