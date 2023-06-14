@@ -8,18 +8,6 @@ import DogCard from "../components/dogCard";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import Link from "next/link";
 
-function separateAndShufflePuppies(array: Puppy[]) {
-    const availablePuppies = array.filter(puppy => puppy.availability === 'Available');
-    const reservedPuppies = array.filter(puppy => puppy.availability === 'Reserved');
-    const soldPuppies = array.filter(puppy => puppy.availability === 'Sold');
-
-    const shuffledAvailable = shuffleArray(availablePuppies);
-    const shuffledReserved = shuffleArray(reservedPuppies);
-    const shuffledSold = shuffleArray(soldPuppies);
-
-    return [...shuffledAvailable, ...shuffledReserved, ...shuffledSold];
-}
-
 function shuffleArray(array: Puppy[]) {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -38,7 +26,28 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
     const [liveVideoId, setLiveVideoId] = useState(fallbackVideoId);
 
     useEffect(() => {
-        const sortedPuppies = separateAndShufflePuppies(puppies);
+        const shuffledPuppies = shuffleArray(puppies);
+        const availablePuppies: Puppy[] = [];
+        const reservedPuppies: Puppy[] = [];
+        const soldPuppies: Puppy[] = [];
+
+        shuffledPuppies.forEach(puppy => {
+            switch (puppy.availability) {
+                case 'Available':
+                    availablePuppies.push(puppy);
+                    break;
+                case 'Reserved':
+                    reservedPuppies.push(puppy);
+                    break;
+                case 'Sold':
+                    soldPuppies.push(puppy);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        const sortedPuppies = [...availablePuppies, ...reservedPuppies, ...soldPuppies];
         setRandomPuppies(sortedPuppies.slice(0, 4));
         setIsLoading(false);
 
@@ -74,13 +83,17 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
                 </div>
             </div>
             <div className="flex flex-wrap justify-center gap-4 mb-4">
-                {isLoading ? (
-                    <div
-                        className="h-72 w-full flex items-center justify-center text-xl">
-                        Loading Puppies...
-                    </div>
-                ) : (
-                    randomPuppies.length > 0 ? (
+                {puppies.length > 0 ? (
+                    !isLoading ? (
+                        Array.from({length: Math.min(puppies.length, 4)}, (_, i) => (
+                            <div
+                                key={i}
+                                className="bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)] xl:w-[calc(25%-12px)]">
+                                <div className="aspect-video"/>
+                                <div className="h-24"/>
+                            </div>
+                        ))
+                    ) : (
                         randomPuppies.map((puppy) => (
                             <DogCard
                                 dog={puppy}
@@ -88,13 +101,13 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
                                 key={puppy._id}
                             />
                         ))
-                    ) : (
-                        <div
-                            className="h-72 w-full bg-light-shades rounded-lg flex items-center justify-center text-xl p-2">
-                            We're sorry, but we currently have no puppies available. We're constantly adding new
-                            puppies, so please check back soon!
-                        </div>
                     )
+                ) : (
+                    <div
+                        className="h-72 w-full bg-light-shades rounded-lg flex items-center justify-center text-xl p-2">
+                        We're sorry, but we currently have no puppies available. We're constantly adding new
+                        puppies, so please check back soon!
+                    </div>
                 )}
             </div>
             <Link href="/puppies"

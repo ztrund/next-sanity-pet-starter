@@ -13,16 +13,30 @@ module.exports = withBundleAnalyzer({
             config.optimization.splitChunks.minSize = 1;
             config.optimization.splitChunks.cacheGroups = {
                 ...config.optimization.splitChunks.cacheGroups,
-                preact: {
-                    name: 'preact',
-                    test: /[\\/]node_modules[\\/]preact[\\/]/,
+                preact_dist: {
+                    name: 'preact_dist',
+                    test: /[\\/]node_modules[\\/]preact[\\/]dist[\\/]/,
                     chunks: 'all',
                     reuseExistingChunk: true,
                     enforce: true,
                 },
-                shared_lib_router: {
-                    name: 'shared_lib_router',
-                    test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]shared[\\/]lib[\\/]router[\\/]/,
+                preact_compat: {
+                    name: 'preact_compat',
+                    test: /[\\/]node_modules[\\/]preact[\\/]compat[\\/]/,
+                    chunks: 'all',
+                    reuseExistingChunk: true,
+                    enforce: true,
+                },
+                router: {
+                    name: 'router',
+                    test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]shared[\\/]lib[\\/]router[\\/]router.js/,
+                    chunks: 'all',
+                    reuseExistingChunk: true,
+                    enforce: true,
+                },
+                router_utils: {
+                    name: 'router_utils',
+                    test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]shared[\\/]lib[\\/]router[\\/]utils[\\/]/,
                     chunks: 'all',
                     reuseExistingChunk: true,
                     enforce: true,
@@ -34,14 +48,6 @@ module.exports = withBundleAnalyzer({
                     reuseExistingChunk: true,
                     enforce: true,
                 },
-                // layout: {
-                //     name: 'layout',
-                //     test: /[\\/]components[\\/]layout[\\/]/,
-                //     chunks: 'all',
-                //     minChunks: 2,
-                //     reuseExistingChunk: true,
-                //     enforce: true,
-                // },
             }
         }
         return config
