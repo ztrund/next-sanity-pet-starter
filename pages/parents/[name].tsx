@@ -6,25 +6,11 @@ import React, {useState} from "react";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
-import dynamic from "next/dynamic";
 import Layout from "../../components/layout/layout";
 import DogCard from "../../components/dogCard";
-
-const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {
-    loading: () =>
-        <>
-            <div className="aspect-square"/>
-            <div className="h-[136px]"/>
-        </>,
-    ssr: false
-});
-const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {
-    loading: () => <div className="w-full h-32 md:h-16 bg-light-shades rounded-lg shadow-lg"/>,
-    ssr: false
-});
-const FinancingBanner = dynamic(() => import("../../components/financing/financingBanner"), {
-    ssr: false
-});
+import FinancingContainer from "../../components/financing/financingContainer";
+import FinancingBanner from "../../components/financing/financingBanner";
+import CustomCarousel from "../../components/carousel/customCarousel";
 
 const Parent = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parent, financing, metaDescription} = pageData;

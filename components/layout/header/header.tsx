@@ -1,10 +1,8 @@
 import {PageData} from "../../../types";
 import {useEffect, useState} from "react";
-import dynamic from "next/dynamic";
 import {CloseIcon, MenuIcon} from "../../svgIcons";
 import NavLinks from "./navLinks";
-
-const Link = dynamic(() => import('next/link'), {ssr: false});
+import Link from "next/link";
 
 const Header = ({pageData}: { pageData: PageData }) => {
     const [isOpen, setIsOpen] = useState(false);

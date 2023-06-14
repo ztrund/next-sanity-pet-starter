@@ -3,15 +3,10 @@ import React, {useEffect, useState} from "react";
 import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
-import dynamic from "next/dynamic";
 import Layout from "../components/layout/layout";
 import DogCard from "../components/dogCard";
-
-const LiteYouTubeEmbed = dynamic(() => import("react-lite-youtube-embed"), {
-    loading: () => <div className="aspect-video"/>,
-    ssr: false
-});
-const Link = dynamic(() => import('next/link'), {ssr: false});
+import LiteYouTubeEmbed from "react-lite-youtube-embed";
+import Link from "next/link";
 
 function separateAndShufflePuppies(array: Puppy[]) {
     const availablePuppies = array.filter(puppy => puppy.availability === 'Available');

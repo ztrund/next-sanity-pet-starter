@@ -10,15 +10,10 @@ import SortFilter from "../components/filters/sortFilter";
 import NameFilter from "../components/filters/nameFilter";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
-import dynamic from "next/dynamic";
 import Layout from "../components/layout/layout";
 import {FilterOrCloseIcon} from "../components/svgIcons";
 import DogCard from "../components/dogCard";
-
-const FinancingContainer = dynamic(() => import("../components/financing/financingContainer"), {
-    loading: () => <div className="w-full h-32 md:h-16 bg-light-shades rounded-lg shadow-lg"/>,
-    ssr: false
-});
+import FinancingContainer from "../components/financing/financingContainer";
 
 const Puppies = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);

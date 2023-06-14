@@ -2,18 +2,9 @@ import {GetStaticProps} from 'next';
 import fetchPageData from "../lib/fetchPageData";
 import {PageData, TeamMember} from "../types";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
-import dynamic from "next/dynamic";
 import React from "react";
 import Layout from "../components/layout/layout";
-
-const CustomCarousel = dynamic(() => import("../components/carousel/customCarousel"), {
-    loading: () =>
-        <>
-            <div className="aspect-square"/>
-            <div className="h-[136px]"/>
-        </>,
-    ssr: false
-});
+import CustomCarousel from "../components/carousel/customCarousel";
 
 const About = ({pageData, aboutContent, aboutTeamDescription}: {
     pageData: PageData,

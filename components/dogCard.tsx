@@ -1,6 +1,6 @@
 import {FunctionComponent} from 'react';
 import {Parent, Puppy} from '../types';
-import dynamic from "next/dynamic";
+import Link from "next/link";
 
 interface DogCardProps {
     dog: Puppy | Parent;
@@ -9,8 +9,6 @@ interface DogCardProps {
     imageSizes?: string;
     lazy?: boolean;
 }
-
-const Link = dynamic(() => import('next/link'), {ssr: false});
 
 const DogCard: FunctionComponent<DogCardProps> = ({
                                                       dog,

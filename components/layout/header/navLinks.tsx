@@ -1,7 +1,5 @@
 import {useRouter} from "next/router";
-import dynamic from "next/dynamic";
-
-const Link = dynamic(() => import('next/link'), {ssr: false});
+import Link from "next/link";
 
 const getLinkClassName = (href: string, isVertical: boolean) => {
     const router = useRouter();

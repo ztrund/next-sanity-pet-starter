@@ -27,13 +27,13 @@ module.exports = withBundleAnalyzer({
                     reuseExistingChunk: true,
                     enforce: true,
                 },
-                // shared_lib_others: {
-                //     name: 'shared_lib_others',
-                //     test: new RegExp(`[\\\\/]node_modules[\\\\/]next[\\\\/]dist[\\\\/]shared[\\\\/]lib[\\\\/](?!router[\\\\/]).*`),
-                //     chunks: 'all',
-                //     reuseExistingChunk: true,
-                //     enforce: true,
-                // },
+                shared_lib_others: {
+                    name: 'shared_lib_others',
+                    test: new RegExp(`[\\\\/]node_modules[\\\\/]next[\\\\/]dist[\\\\/]shared[\\\\/]lib[\\\\/](?!router[\\\\/]).*`),
+                    chunks: 'all',
+                    reuseExistingChunk: true,
+                    enforce: true,
+                },
                 // layout: {
                 //     name: 'layout',
                 //     test: /[\\/]components[\\/]layout[\\/]/,
