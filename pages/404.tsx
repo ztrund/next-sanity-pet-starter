@@ -3,8 +3,6 @@ import fetchPageData from "../lib/fetchPageData";
 import {PageData} from "../types";
 import Layout from "../components/layout/layout";
 
-// const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
-
 const ContactPage = ({pageData}: { pageData: PageData }) => {
 
     return (

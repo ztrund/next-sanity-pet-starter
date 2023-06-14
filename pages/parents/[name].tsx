@@ -1,5 +1,4 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
-import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {PageData, Puppy} from "../../types";
 import sanityClient from "../../lib/sanityClient";
@@ -7,11 +6,10 @@ import React, {useState} from "react";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
-import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
 import dynamic from "next/dynamic";
 import Layout from "../../components/layout/layout";
+import DogCard from "../../components/dogCard";
 
-// const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
 const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {
     loading: () =>
         <>
@@ -30,15 +28,6 @@ const FinancingBanner = dynamic(() => import("../../components/financing/financi
 
 const Parent = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parent, financing, metaDescription} = pageData;
-    const DogCard = dynamic(() => import("../../components/dogCard"), {
-        loading: () =>
-            <div
-                className={`bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)] ${financing.displayOption == "banner" && "lg:w-[calc(100%/3-10.66px)] xl:w-[calc(25%-12px)]"}`}>
-                <div className="aspect-video"/>
-                <div className="h-24"/>
-            </div>,
-        ssr: false
-    });
     const windowSize = useWindowSize();
 
     let puppiesPerPage;  // Set the number of puppies to display per page
@@ -53,8 +42,6 @@ const Parent = ({pageData, financingText}: { pageData: PageData, financingText: 
     }
     const pages = Math.ceil(parent.puppies?.length / puppiesPerPage);
     const [currentPage, setCurrentPage] = useState(1);
-
-    const {years, weeks, days} = getAge(parent.birthdate);
 
     const meetTheirPuppies = (
         <div className="flex flex-col gap-4">
@@ -81,7 +68,7 @@ const Parent = ({pageData, financingText}: { pageData: PageData, financingText: 
 
     return (
         <Layout pageTitle={parent.name}
-                metaDesc={replaceTemplateLiterals(metaDescription.description, parent)}
+                metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
                 {financing.displayOption == "container" &&
@@ -97,7 +84,7 @@ const Parent = ({pageData, financingText}: { pageData: PageData, financingText: 
                     <div className="w-full lg:w-7/12 xl:w-1/2 flex flex-col gap-4">
                         <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
                             <p>
-                                <strong>Age:</strong> {years > 0 && `${years} ${years === 1 ? 'year' : 'years'},`} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
+                                <strong>Age:</strong> {parent.age}
                             </p>
                             <p>
                                 <strong>Gender:</strong> {parent.gender}

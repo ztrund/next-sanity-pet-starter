@@ -1,5 +1,6 @@
 import {MediaItem} from "../types";
 import {sanityImgUrl} from "../lib/sanityImgUrl";
+import {extractYoutubeVideoId} from "./youtubeLinkExtractor";
 
 const generateCarouselUrls = (mediaItems: MediaItem[]) => {
     const imageUrlParams = {
@@ -28,6 +29,9 @@ const generateCarouselUrls = (mediaItems: MediaItem[]) => {
                     dpr: dpr
                 })} ${dpr}x`).join(', '),
             };
+        }
+        if (mediaItem.type === 'video') {
+            mediaItem.videoId = extractYoutubeVideoId(mediaItem.videoUrl);
         }
     });
 }

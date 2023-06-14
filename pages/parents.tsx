@@ -9,22 +9,13 @@ import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import dynamic from "next/dynamic";
 import Layout from "../components/layout/layout";
+import {FilterOrCloseIcon} from "../components/svgIcons";
+import DogCard from "../components/dogCard";
 
-// const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
-const DogCard = dynamic(() => import("../components/dogCard"), {
-    loading: () =>
-        <div
-            className="bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)] xl:w-[calc(100%/3-10.66px)] 2xl:w-[calc(25%-12px)]">
-            <div className="aspect-video"/>
-            <div className="h-24"/>
-        </div>,
-    ssr: false
-});
 const FinancingContainer = dynamic(() => import("../components/financing/financingContainer"), {
     loading: () => <div className="w-full h-32 md:h-16 bg-light-shades rounded-lg shadow-lg"/>,
     ssr: false
 });
-const FilterOrCloseIcon = dynamic(() => import("../components/svgIcons").then(mod => mod.FilterOrCloseIcon), {ssr: false});
 
 const Parents = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {parents, metaDescription, financing} = pageData;

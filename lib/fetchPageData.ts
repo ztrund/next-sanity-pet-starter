@@ -5,6 +5,9 @@ import {sanityImgUrl} from "./sanityImgUrl";
 import {imageDimensionExtractor} from "../helpers/imageDimensionExtractor";
 import generateCarouselUrls from "../helpers/generateCarouselUrls";
 import generateDogCardUrls from "../helpers/generateDogCardUrls";
+import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
+import {replaceTemplateLiterals} from "../helpers/replaceTemplateLiterals";
+import {getAge} from "../helpers/getAge";
 
 export interface FetchParams {
     name?: string;
@@ -145,12 +148,16 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
         }
         if (pageData.puppy.mediaItems) {
             generateCarouselUrls(pageData.puppy.mediaItems);
+            pageData.metaDescription.description = replaceTemplateLiterals(pageData.metaDescription.description, pageData.puppy);
+            pageData.puppy.age = getAge(pageData.puppy.birthdate);
             if (pageData.puppy.parents.length > 0) {
                 generateDogCardUrls(pageData.puppy.parents.filter(Boolean));
             }
         }
         if (pageData.parent.mediaItems) {
             generateCarouselUrls(pageData.parent.mediaItems);
+            pageData.metaDescription.description = replaceTemplateLiterals(pageData.metaDescription.description, pageData.parent);
+            pageData.parent.age = getAge(pageData.parent.birthdate);
             if (pageData.parent.puppies.length > 0) {
                 generateDogCardUrls(pageData.parent.puppies);
             }
@@ -160,6 +167,10 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
         }
         if (pageData.parents.length > 0) {
             generateDogCardUrls(pageData.parents);
+        }
+        if (pageData.youtubeSettings) {
+            pageData.youtubeSettings.channelId = extractYoutubeChannelId(pageData.youtubeSettings.channelUrl);
+            pageData.youtubeSettings.fallbackVideoId = extractYoutubeVideoId(pageData.youtubeSettings.fallbackVideoUrl);
         }
         return pageData;
     } catch (error) {

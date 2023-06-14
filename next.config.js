@@ -10,6 +10,7 @@ module.exports = withBundleAnalyzer({
                 "react-dom": "preact/compat",
                 "react/jsx-runtime": "preact/jsx-runtime"
             })
+            config.optimization.splitChunks.minSize = 1;
             config.optimization.splitChunks.cacheGroups = {
                 ...config.optimization.splitChunks.cacheGroups,
                 preact: {
@@ -26,21 +27,21 @@ module.exports = withBundleAnalyzer({
                     reuseExistingChunk: true,
                     enforce: true,
                 },
-                shared_lib_others: {
-                    name: 'shared_lib_others',
-                    test: new RegExp(`[\\\\/]node_modules[\\\\/]next[\\\\/]dist[\\\\/]shared[\\\\/]lib[\\\\/](?!router[\\\\/]).*`),
-                    chunks: 'all',
-                    reuseExistingChunk: true,
-                    enforce: true,
-                },
-                layout: {
-                    name: 'layout',
-                    test: /[\\/]components[\\/]layout[\\/]/,
-                    chunks: 'all',
-                    minChunks: 2,
-                    reuseExistingChunk: true,
-                    enforce: true,
-                },
+                // shared_lib_others: {
+                //     name: 'shared_lib_others',
+                //     test: new RegExp(`[\\\\/]node_modules[\\\\/]next[\\\\/]dist[\\\\/]shared[\\\\/]lib[\\\\/](?!router[\\\\/]).*`),
+                //     chunks: 'all',
+                //     reuseExistingChunk: true,
+                //     enforce: true,
+                // },
+                // layout: {
+                //     name: 'layout',
+                //     test: /[\\/]components[\\/]layout[\\/]/,
+                //     chunks: 'all',
+                //     minChunks: 2,
+                //     reuseExistingChunk: true,
+                //     enforce: true,
+                // },
             }
         }
         return config

@@ -1,11 +1,10 @@
-import Link from "next/link";
 import {PageData} from "../../../types";
 import {useEffect, useState} from "react";
 import dynamic from "next/dynamic";
+import {CloseIcon, MenuIcon} from "../../svgIcons";
+import NavLinks from "./navLinks";
 
-const MenuIcon = dynamic(() => import('../../svgIcons').then(mod => mod.MenuIcon), {ssr: false});
-const CloseIcon = dynamic(() => import('../../svgIcons').then(mod => mod.CloseIcon), {ssr: false});
-const NavLinks = dynamic(() => import('./navLinks'), {ssr: false});
+const Link = dynamic(() => import('next/link'), {ssr: false});
 
 const Header = ({pageData}: { pageData: PageData }) => {
     const [isOpen, setIsOpen] = useState(false);

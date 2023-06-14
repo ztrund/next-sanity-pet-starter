@@ -4,7 +4,6 @@ export interface MediaItem {
     _key: string;
     type: "image" | "video";
     image: SanityImage;
-    videoUrl: string;
     imageSlide: {
         imageUrl?: string;
         srcSet?: string;
@@ -14,6 +13,8 @@ export interface MediaItem {
         imageUrl?: string;
         srcSet?: string;
     };
+    videoUrl: string;
+    videoId: string;
 }
 
 export interface SanityImage {
@@ -81,6 +82,7 @@ export interface Puppy {
     _id: string;
     name: string;
     birthdate: string;
+    age: string;
     gender: string;
     color: string;
     weight: number;
@@ -94,18 +96,23 @@ export interface Puppy {
 
 export interface Homepage {
     content: PortableTextBlock[];
+    sanitizedContent: string;
 }
 
 export interface YoutubeSettings {
     channelUrl: string;
+    channelId: string;
     fallbackVideoUrl: string;
+    fallbackVideoId: string;
 }
 
 export interface About {
     content: PortableTextBlock[];
+    sanitizedContent: string;
     mediaItems: MediaItem[];
     team: TeamMember[];
     teamDescription: PortableTextBlock[];
+    sanitizedTeamDescription: string;
 }
 
 export interface TeamMember {
@@ -118,6 +125,7 @@ export interface Parent {
     _id: string;
     name: string;
     birthdate: string;
+    age: string;
     gender: string;
     color: string;
     weight: number;
@@ -132,6 +140,7 @@ export interface Financing {
     link: string;
     logo: SanityImage;
     text: PortableTextBlock[];
+    sanitizedText: string;
     displayOption: string;
 }
 

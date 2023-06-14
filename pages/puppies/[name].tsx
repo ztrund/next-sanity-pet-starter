@@ -1,29 +1,19 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
 import sanityClient from '../../lib/sanityClient';
-import {getAge} from "../../helpers/getAge";
 import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {PageData, Parent} from "../../types";
 import {sanitizeHTML} from "../../helpers/sanitizeHTML";
-import {replaceTemplateLiterals} from "../../helpers/replaceTemplateLiterals";
 import dynamic from "next/dynamic";
 import React from "react";
 import Layout from "../../components/layout/layout";
+import DogCard from "../../components/dogCard";
 
-// const Layout = dynamic(() => import("../../components/layout/layout"), {ssr: false});
 const CustomCarousel = dynamic(() => import("../../components/carousel/customCarousel"), {
     loading: () =>
         <>
             <div className="aspect-square"/>
             <div className="h-[136px]"/>
         </>,
-    ssr: false
-});
-const DogCard = dynamic(() => import("../../components/dogCard"), {
-    loading: () =>
-        <div className="bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)]">
-            <div className="aspect-video"/>
-            <div className="h-24"/>
-        </div>,
     ssr: false
 });
 const FinancingContainer = dynamic(() => import("../../components/financing/financingContainer"), {
@@ -35,11 +25,9 @@ const FinancingBanner = dynamic(() => import("../../components/financing/financi
 const Puppy = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
     const {puppy, financing, metaDescription} = pageData;
 
-    const {years, weeks, days} = getAge(puppy.birthdate);
-
     return (
         <Layout pageTitle={puppy.name}
-                metaDesc={replaceTemplateLiterals(metaDescription.description, puppy)}
+                metaDesc={metaDescription.description}
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
                 {financing.displayOption == "container" &&
@@ -55,7 +43,7 @@ const Puppy = ({pageData, financingText}: { pageData: PageData, financingText: s
                     <div className="w-full lg:w-1/2 flex flex-col gap-4">
                         <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg">
                             <p>
-                                <strong>Age:</strong> {years > 0 && `${years} ${years === 1 ? 'year' : 'years'},`} {weeks} {weeks === 1 ? 'week' : 'weeks'} and {days} {days === 1 ? 'day' : 'days'} old
+                                <strong>Age:</strong> {puppy.age}
                             </p>
                             <p>
                                 <strong>Gender:</strong> {puppy.gender}

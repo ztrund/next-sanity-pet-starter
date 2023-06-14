@@ -1,7 +1,8 @@
 import Head from "next/head";
-import dynamic from "next/dynamic";
 import React from "react";
 import {PageData} from "../../types";
+import Footer from "./footer";
+import Header from "./header/header";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -9,9 +10,6 @@ interface LayoutProps {
     pageData: PageData;
     metaDesc?: string;
 }
-
-const Header = dynamic(() => import("./header/header"), {ssr: false});
-const Footer = dynamic(() => import("./footer"), {ssr: false});
 
 const Layout = ({
                     children,

@@ -1,26 +1,17 @@
 import {GetStaticProps} from "next";
-import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
-import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import dynamic from "next/dynamic";
 import Layout from "../components/layout/layout";
+import DogCard from "../components/dogCard";
 
-// const Layout = dynamic(() => import("../components/layout/layout"), {ssr: false});
 const LiteYouTubeEmbed = dynamic(() => import("react-lite-youtube-embed"), {
     loading: () => <div className="aspect-video"/>,
     ssr: false
 });
-const DogCard = dynamic(() => import("../components/dogCard"), {
-    loading: () =>
-        <div className="bg-light-shades rounded-lg shadow-lg w-full sm:w-[calc(50%-8px)] xl:w-[calc(25%-12px)]">
-            <div className="aspect-video"/>
-            <div className="h-24"/>
-        </div>,
-    ssr: false
-});
+const Link = dynamic(() => import('next/link'), {ssr: false});
 
 function separateAndShufflePuppies(array: Puppy[]) {
     const availablePuppies = array.filter(puppy => puppy.availability === 'Available');
@@ -47,8 +38,8 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
     const {puppies, metaDescription, youtubeSettings} = pageData;
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const channelId = extractYoutubeChannelId(youtubeSettings.channelUrl || '') || '';
-    const fallbackVideoId = extractYoutubeVideoId(youtubeSettings.fallbackVideoUrl || '') || '';
+    const channelId = youtubeSettings.channelId;
+    const fallbackVideoId = youtubeSettings.fallbackVideoId;
     const [liveVideoId, setLiveVideoId] = useState(fallbackVideoId);
 
     useEffect(() => {

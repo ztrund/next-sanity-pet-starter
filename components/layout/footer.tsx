@@ -1,11 +1,8 @@
 import {PageData} from '../../types';
-import Link from "next/link";
 import dynamic from "next/dynamic";
+import {CustomSVGIcon} from "../svgIcons";
 
-const CustomSVGIcon = dynamic(() => import("../svgIcons").then(mod => mod.CustomSVGIcon), {
-    loading: () => <div className="h-4 w-4"/>,
-    ssr: false
-});
+const Link = dynamic(() => import('next/link'), {ssr: false});
 
 const Footer = ({pageData}: { pageData: PageData }) => {
 
