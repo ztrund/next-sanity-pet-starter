@@ -84,7 +84,7 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
             </div>
             <div className="flex flex-wrap justify-center gap-4 mb-4">
                 {puppies.length > 0 ? (
-                    !isLoading ? (
+                    isLoading ? (
                         Array.from({length: Math.min(puppies.length, 4)}, (_, i) => (
                             <div
                                 key={i}
