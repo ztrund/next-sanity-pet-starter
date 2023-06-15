@@ -21,7 +21,7 @@ const Puppy = ({pageData}: { pageData: PageData }) => {
                     <FinancingContainer financing={financing}/>}
                 <div className="flex justify-between items-center p-2 bg-light-shades shadow-lg rounded-lg">
                     <h1 className="text-3xl font-bold">{puppy.name}</h1>
-                    <h1 className="text-2xl font-normal">{puppy.availability} - ${puppy.price}</h1>
+                    <h1 className="text-2xl font-normal">{puppy.availability}{puppy.price && ` - $${puppy.price}`}</h1>
                 </div>
                 <div className="flex flex-col lg:flex-row gap-4">
                     <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden">
@@ -30,20 +30,26 @@ const Puppy = ({pageData}: { pageData: PageData }) => {
                     <div className="w-full lg:w-1/2 flex flex-col gap-4">
                         <div className="h-min p-2 bg-light-shades shadow-lg rounded-lg">
                             <p>
-                                <strong>Age:</strong> {puppy.age}
-                            </p>
-                            <p>
                                 <strong>Gender:</strong> {puppy.gender}
                             </p>
                             <p>
                                 <strong>Color:</strong> {puppy.color}
                             </p>
-                            <p>
-                                <strong>Weight:</strong> {puppy.weight} lbs
-                            </p>
-                            <p>
-                                <strong>Description:</strong> {puppy.description}
-                            </p>
+                            {puppy.birthdate && (
+                                <p>
+                                    <strong>Age:</strong> {puppy.age}
+                                </p>
+                            )}
+                            {puppy.weight && (
+                                <p>
+                                    <strong>Weight:</strong> {puppy.weight} lbs
+                                </p>
+                            )}
+                            {puppy.description && (
+                                <p>
+                                    <strong>Description:</strong> {puppy.description}
+                                </p>
+                            )}
                         </div>
                         {financing.displayOption == "banner" && <FinancingBanner financing={financing}/>}
                         {puppy.parents?.filter((parent: Parent) => parent).length > 0 && (

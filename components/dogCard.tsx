@@ -51,7 +51,7 @@ const DogCard: FunctionComponent<DogCardProps> = ({
                 <p className="">{dog.gender} - {dog.color}</p>
                 {isPuppy(dog) && <p className="">{dog.availability}</p>}
             </div>
-            {isPuppy(dog) && showPrice && <div><p className="font-medium">${dog.price}</p></div>}
+            {isPuppy(dog) && showPrice && <div><p className="font-medium">{dog.price && `$${dog.price}`}</p></div>}
         </div>
     </Link>);
 }
