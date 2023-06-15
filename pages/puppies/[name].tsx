@@ -1,13 +1,13 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
-import sanityClient from '../../lib/sanityClient';
-import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
-import {PageData, Parent} from "../../types";
+import fetchPageData from "../../lib/fetchPageData";
+import {FetchParams, PageData, Parent} from "../../types";
 import React from "react";
 import Layout from "../../components/layout/layout";
 import DogCard from "../../components/dogCard";
 import FinancingContainer from "../../components/financing/financingContainer";
 import FinancingBanner from "../../components/financing/financingBanner";
 import CustomCarousel from "../../components/carousel/customCarousel";
+import fetchPagePaths from "../../lib/fetchPagePaths";
 
 const Puppy = ({pageData}: { pageData: PageData }) => {
     const {puppy, financing, metaDescription} = pageData;
@@ -66,11 +66,7 @@ const Puppy = ({pageData}: { pageData: PageData }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const puppies = await sanityClient.fetch(`*[_type == "puppies"]{ name }`);
-    const paths = puppies.map((puppy: { name: string }) => ({
-        params: {name: puppy.name.toLowerCase()},
-    }));
-
+    const paths = await fetchPagePaths(`*[_type == "puppies"]{ name }`);
     return {paths, fallback: false};
 };
 

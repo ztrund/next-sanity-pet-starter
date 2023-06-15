@@ -161,3 +161,7 @@ export interface PageData {
     parents: Parent[];
     parent: Parent;
 }
+
+export interface FetchParams {
+    name?: string;
+}

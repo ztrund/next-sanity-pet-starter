@@ -1,4 +1,4 @@
-import {PageData, TeamMember} from '../types';
+import {FetchParams, PageData, TeamMember} from '../types';
 import axios from "axios";
 import generateFaviconUrls from "../helpers/generateFaviconUrls";
 import {sanityImgUrl} from "./sanityImgUrl";
@@ -9,17 +9,7 @@ import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtube
 import {replaceTemplateLiterals} from "../helpers/replaceTemplateLiterals";
 import {getAge} from "../helpers/getAge";
 import {sanitizeHTML} from "../helpers/sanitizeHTML";
-
-export interface FetchParams {
-    name?: string;
-}
-
-const sanityConfig = {
-    projectId: "fcb9r3pv",
-    dataset: "production",
-    apiVersion: "2023-04-12", // use current UTC date - see "specifying API version"!
-    useCdn: process.env.NEXT_PUBLIC_SANITY_USE_CDN === 'true', // `false` if you want to ensure fresh data
-};
+import sanityConfig from "./sanityConfig";
 
 const deserializeToPageData = (rawData: PageData): PageData => {
     return {

@@ -1,7 +1,6 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
-import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
-import {PageData, Puppy} from "../../types";
-import sanityClient from "../../lib/sanityClient";
+import fetchPageData from "../../lib/fetchPageData";
+import {FetchParams, PageData, Puppy} from "../../types";
 import React, {useState} from "react";
 import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
@@ -10,6 +9,7 @@ import DogCard from "../../components/dogCard";
 import FinancingContainer from "../../components/financing/financingContainer";
 import FinancingBanner from "../../components/financing/financingBanner";
 import CustomCarousel from "../../components/carousel/customCarousel";
+import fetchPagePaths from "../../lib/fetchPagePaths";
 
 const Parent = ({pageData}: { pageData: PageData }) => {
     const {parent, financing, metaDescription} = pageData;
@@ -95,11 +95,7 @@ const Parent = ({pageData}: { pageData: PageData }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const parents = await sanityClient.fetch(`*[_type == "parents"]{ name }`);
-    const paths = parents.map((parent: { name: string }) => ({
-        params: {name: parent.name.toLowerCase()},
-    }));
-
+    const paths = await fetchPagePaths(`*[_type == "parents"]{ name }`);
     return {paths, fallback: false};
 };
 
