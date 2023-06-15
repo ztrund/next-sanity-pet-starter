@@ -1,16 +1,11 @@
 import {GetStaticProps} from 'next';
 import fetchPageData from "../lib/fetchPageData";
 import {PageData, TeamMember} from "../types";
-import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import React from "react";
 import Layout from "../components/layout/layout";
 import CustomCarousel from "../components/carousel/customCarousel";
 
-const About = ({pageData, aboutContent, aboutTeamDescription}: {
-    pageData: PageData,
-    aboutContent: string,
-    aboutTeamDescription: string
-}) => {
+const About = ({pageData}: { pageData: PageData }) => {
     const {about, metaDescription} = pageData;
     return (<Layout pageTitle="About Us"
                     metaDesc={metaDescription.description}
@@ -19,7 +14,7 @@ const About = ({pageData, aboutContent, aboutTeamDescription}: {
             <div className="flex flex-col w-full lg:w-1/2 h-min gap-4">
                 <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
                     <h2 className="text-4xl font-extrabold text-center mb-2">About Us</h2>
-                    <div className="prose max-w-none" dangerouslySetInnerHTML={{__html: aboutContent}}/>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{__html: about.sanitizedContent}}/>
                 </div>
                 <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
                     <h2 className="text-4xl font-extrabold text-center mb-2">Our Team</h2>
@@ -39,7 +34,8 @@ const About = ({pageData, aboutContent, aboutTeamDescription}: {
                                 </div>
                             </div>))}
                     </div>
-                    <div className="prose max-w-none" dangerouslySetInnerHTML={{__html: aboutTeamDescription}}/>
+                    <div className="prose max-w-none"
+                         dangerouslySetInnerHTML={{__html: about.sanitizedTeamDescription}}/>
                 </div>
             </div>
             <div className="w-full lg:w-1/2 h-min p-0 bg-light-shades drop-shadow-lg rounded-lg overflow-hidden">
@@ -68,12 +64,9 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const pageData = await fetchPageData(additionalQuery);
 
-    const aboutContent = sanitizeHTML(pageData.about?.content);
-    const aboutTeamDescription = sanitizeHTML(pageData.about?.teamDescription);
-
     return {
         props: {
-            pageData, aboutContent, aboutTeamDescription,
+            pageData
         },
     };
 };

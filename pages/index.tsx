@@ -2,7 +2,6 @@ import {GetStaticProps} from "next";
 import React, {useEffect, useState} from "react";
 import {PageData, Puppy} from "../types";
 import fetchPageData from "../lib/fetchPageData";
-import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import Layout from "../components/layout/layout";
 import DogCard from "../components/dogCard";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
@@ -17,8 +16,8 @@ function shuffleArray(array: Puppy[]) {
     return shuffledArray;
 }
 
-const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageContent: string }) => {
-    const {puppies, metaDescription, youtubeSettings} = pageData;
+const HomePage = ({pageData}: { pageData: PageData }) => {
+    const {puppies, metaDescription, youtubeSettings, homepage} = pageData;
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const channelId = youtubeSettings.channelId;
@@ -79,7 +78,8 @@ const HomePage = ({pageData, homepageContent}: { pageData: PageData, homepageCon
                 </div>
                 <div
                     className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
-                    <div className="prose max-w-none" dangerouslySetInnerHTML={{__html: homepageContent}}/>
+                    <div className="prose max-w-none"
+                         dangerouslySetInnerHTML={{__html: homepage.sanitizedContent}}/>
                 </div>
             </div>
             <div className="flex flex-wrap justify-center gap-4 mb-4">
@@ -142,12 +142,9 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const pageData = await fetchPageData(additionalQuery);
 
-    const homepageContent = sanitizeHTML(pageData.homepage.content);
-
     return {
         props: {
-            pageData,
-            homepageContent
+            pageData
         },
     };
 };

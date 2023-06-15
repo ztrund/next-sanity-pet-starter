@@ -1,12 +1,7 @@
 import {Financing} from "../../types";
 import React from "react";
 
-interface FinancingContainerProps {
-    financing: Financing
-    financingText: string
-}
-
-const FinancingContainer: React.FC<FinancingContainerProps> = ({financing, financingText}) => {
+const FinancingContainer = ({financing}: { financing: Financing }) => {
 
     // Render nothing if there's no logo
     if (!financing.logo) {
@@ -36,7 +31,7 @@ const FinancingContainer: React.FC<FinancingContainerProps> = ({financing, finan
                 {financing.text && (
                     <div className="flex items-center justify-center">
                         <div className="text-center text-md font-semibold overflow-clip"
-                             dangerouslySetInnerHTML={{__html: financingText}}/>
+                             dangerouslySetInnerHTML={{__html: financing.sanitizedText}}/>
                     </div>
                 )}
             </a>

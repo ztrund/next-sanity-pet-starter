@@ -6,13 +6,12 @@ import GenderFilter from "../components/filters/genderFilter";
 import ColorFilter from "../components/filters/colorFilter";
 import {PageData, Parent} from "../types";
 import {handleCheckboxChange} from "../helpers/handleCheckboxChange";
-import {sanitizeHTML} from "../helpers/sanitizeHTML";
 import Layout from "../components/layout/layout";
 import {FilterOrCloseIcon} from "../components/svgIcons";
 import DogCard from "../components/dogCard";
 import FinancingContainer from "../components/financing/financingContainer";
 
-const Parents = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
+const Parents = ({pageData}: { pageData: PageData }) => {
     const {parents, metaDescription, financing} = pageData;
     const uniqueColors = Array.from(new Set<string>(parents.map((parent: Parent) => parent.color)));
 
@@ -40,7 +39,7 @@ const Parents = ({pageData, financingText}: { pageData: PageData, financingText:
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
                 {financing.displayOption == "container" &&
-                    <FinancingContainer financing={financing} financingText={financingText}/>}
+                    <FinancingContainer financing={financing}/>}
                 <div className="flex flex-row gap-4">
                     <div
                         className={`hidden lg:flex justify-center flex-col w-48 h-min gap-2 divide-black divide-y bg-light-shades shadow-lg rounded-lg p-2 overflow-hidden`}>
@@ -135,12 +134,9 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const pageData = await fetchPageData(additionalQuery);
 
-    const financingText = sanitizeHTML(pageData.financing?.text);
-
     return {
         props: {
-            pageData,
-            financingText,
+            pageData
         },
     };
 };

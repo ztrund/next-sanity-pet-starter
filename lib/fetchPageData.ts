@@ -8,6 +8,7 @@ import generateDogCardUrls from "../helpers/generateDogCardUrls";
 import {extractYoutubeChannelId, extractYoutubeVideoId} from "../helpers/youtubeLinkExtractor";
 import {replaceTemplateLiterals} from "../helpers/replaceTemplateLiterals";
 import {getAge} from "../helpers/getAge";
+import {sanitizeHTML} from "../helpers/sanitizeHTML";
 
 export interface FetchParams {
     name?: string;
@@ -109,22 +110,27 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
                 })} ${dpr}x`).join(', ');
             })
         }
-        if (pageData.financing.displayOption === 'container' && pageData.financing.logo) {
-            const imageUrlParams = {
-                h: 48,
-                auto: 'format',
-                q: 75,
-                fit: 'min'
-            };
-            const financingLogo = pageData.financing.logo;
-            financingLogo.imageUrl = sanityImgUrl(financingLogo, {...imageUrlParams, dpr: 1});
-            financingLogo.srcSet = [1, 1.5, 2].map(dpr => `${sanityImgUrl(financingLogo, {
-                ...imageUrlParams,
-                dpr
-            })} ${dpr}x`).join(', ');
-            const imgDimensions = imageDimensionExtractor(financingLogo.asset._ref);
-            financingLogo.width = imgDimensions.width / imgDimensions.height * 48;
-            financingLogo.height = 48
+        if (pageData.financing.displayOption === 'container') {
+            if (pageData.financing.logo) {
+                const imageUrlParams = {
+                    h: 48,
+                    auto: 'format',
+                    q: 75,
+                    fit: 'min'
+                };
+                const financingLogo = pageData.financing.logo;
+                financingLogo.imageUrl = sanityImgUrl(financingLogo, {...imageUrlParams, dpr: 1});
+                financingLogo.srcSet = [1, 1.5, 2].map(dpr => `${sanityImgUrl(financingLogo, {
+                    ...imageUrlParams,
+                    dpr
+                })} ${dpr}x`).join(', ');
+                const imgDimensions = imageDimensionExtractor(financingLogo.asset._ref);
+                financingLogo.width = imgDimensions.width / imgDimensions.height * 48;
+                financingLogo.height = 48
+            }
+            if (pageData.financing.text) {
+                pageData.financing.sanitizedText = sanitizeHTML(pageData.financing.text);
+            }
         }
         if (pageData.financing.displayOption === 'banner' && pageData.financing.banner) {
             const imageUrlParams = {
@@ -171,6 +177,15 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
         if (pageData.youtubeSettings) {
             pageData.youtubeSettings.channelId = extractYoutubeChannelId(pageData.youtubeSettings.channelUrl);
             pageData.youtubeSettings.fallbackVideoId = extractYoutubeVideoId(pageData.youtubeSettings.fallbackVideoUrl);
+        }
+        if (pageData.homepage.content) {
+            pageData.homepage.sanitizedContent = sanitizeHTML(pageData.homepage.content);
+        }
+        if (pageData.about.content) {
+            pageData.about.sanitizedContent = sanitizeHTML(pageData.about.content);
+        }
+        if (pageData.about.teamDescription) {
+            pageData.about.sanitizedTeamDescription = sanitizeHTML(pageData.about.teamDescription);
         }
         return pageData;
     } catch (error) {

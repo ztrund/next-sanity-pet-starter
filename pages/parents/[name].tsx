@@ -3,7 +3,6 @@ import fetchPageData, {FetchParams} from "../../lib/fetchPageData";
 import {PageData, Puppy} from "../../types";
 import sanityClient from "../../lib/sanityClient";
 import React, {useState} from "react";
-import {sanitizeHTML} from "../../helpers/sanitizeHTML";
 import useWindowSize from "../../helpers/useWindowSize";
 import {Pagination} from "../../components/pagination";
 import Layout from "../../components/layout/layout";
@@ -12,7 +11,7 @@ import FinancingContainer from "../../components/financing/financingContainer";
 import FinancingBanner from "../../components/financing/financingBanner";
 import CustomCarousel from "../../components/carousel/customCarousel";
 
-const Parent = ({pageData, financingText}: { pageData: PageData, financingText: string }) => {
+const Parent = ({pageData}: { pageData: PageData }) => {
     const {parent, financing, metaDescription} = pageData;
     const windowSize = useWindowSize();
 
@@ -58,7 +57,7 @@ const Parent = ({pageData, financingText}: { pageData: PageData, financingText: 
                 pageData={pageData}>
             <div className="flex flex-col gap-4">
                 {financing.displayOption == "container" &&
-                    <FinancingContainer financing={financing} financingText={financingText}/>}
+                    <FinancingContainer financing={financing}/>}
                 <div className="flex justify-between items-center p-2 bg-light-shades shadow-lg rounded-lg">
                     <h1 className="text-3xl font-bold">{parent.name}</h1>
                 </div>
@@ -142,12 +141,9 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
     const pageData = await fetchPageData(additionalQuery, fetchParams);
 
-    const financingText = sanitizeHTML(pageData.financing?.text);
-
     return {
         props: {
-            pageData,
-            financingText,
+            pageData
         },
     };
 };
