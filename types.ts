@@ -63,8 +63,6 @@ export interface ContactInfo {
 
 export interface CompanyInfo {
     companyName: string;
-    companyNameShort: string;
-    companyDescription: string;
     companyLogo: SanityImage;
     favicon: SanityImage;
     faviconUrls: {
@@ -75,7 +73,6 @@ export interface CompanyInfo {
         png16: string;
         appleTouch: string;
     }
-    pwaIcon: SanityImage;
 }
 
 export interface Puppy {

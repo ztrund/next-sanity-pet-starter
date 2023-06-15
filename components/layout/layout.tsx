@@ -23,7 +23,6 @@ const Layout = ({
         <div id="root" className="flex flex-col min-h-screen bg-light-accent">
             <Head>
                 <title>{pageTitle}</title>
-                {/*<link rel="manifest" href="/manifest.json"/>*/}
                 <link rel="icon" href={faviconUrls.default}/>
                 <link rel="icon" type="image/png" sizes="512x512"
                       href={faviconUrls.png512}/>
