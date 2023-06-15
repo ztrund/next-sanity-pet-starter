@@ -69,20 +69,26 @@ const Parent = ({pageData}: { pageData: PageData }) => {
                     <div className="w-full lg:w-7/12 xl:w-1/2 flex flex-col gap-4">
                         <div className="p-2 bg-light-shades drop-shadow-lg rounded-lg">
                             <p>
-                                <strong>Age:</strong> {parent.age}
-                            </p>
-                            <p>
                                 <strong>Gender:</strong> {parent.gender}
                             </p>
                             <p>
                                 <strong>Color:</strong> {parent.color}
                             </p>
-                            <p>
-                                <strong>Weight:</strong> {parent.weight} lbs
-                            </p>
-                            <p>
-                                <strong>Description:</strong> {parent.description}
-                            </p>
+                            {parent.birthdate && (
+                                <p>
+                                    <strong>Age:</strong> {parent.age}
+                                </p>
+                            )}
+                            {parent.weight && (
+                                <p>
+                                    <strong>Weight:</strong> {parent.weight} lbs
+                                </p>
+                            )}
+                            {parent.description && (
+                                <p>
+                                    <strong>Description:</strong> {parent.description}
+                                </p>
+                            )}
                         </div>
                         {financing.displayOption == "banner" && <FinancingBanner financing={financing}/>}
                         {parent.puppies?.length > 0 && financing.displayOption != "banner" && (meetTheirPuppies)}
