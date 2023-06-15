@@ -8,15 +8,15 @@ import ThumbnailImage from "./thumbnailImage";
 import ThumbnailVideo from "./thumbnailVideo";
 import ImageSlide from "./imageSlide";
 
-interface CustomCarouselProps {
-    mediaItems: MediaItem[];
-}
-
-const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
+const CustomCarousel = ({mediaItems}: { mediaItems: MediaItem[] }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [currentImage, setCurrentImage] = useState("");
     const [modalNode, setModalNode] = useState<Element | null>(null);
+
+    if (!mediaItems) {
+        return null;
+    }
 
     useEffect(() => {
         setModalNode(document.getElementById('root'));
@@ -97,7 +97,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({mediaItems}) => {
                 >
                     <button className="h-32 w-32" type="button"
                             title={"Slide " + index + " Button"}>
-                        {mediaItem.type === "image" && <ThumbnailImage thumbnailImage={mediaItem.thumbnailImage} index={index}/>}
+                        {mediaItem.type === "image" &&
+                            <ThumbnailImage thumbnailImage={mediaItem.thumbnailImage} index={index}/>}
                         {mediaItem.type === "video" && <ThumbnailVideo mediaItem={mediaItem} index={index}/>}
                     </button>
                 </div>))}
