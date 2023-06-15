@@ -6,17 +6,12 @@ import Header from "./header/header";
 
 interface LayoutProps {
     children: React.ReactNode;
-    pageTitle?: string;
+    pageTitle: string;
     pageData: PageData;
     metaDesc?: string;
 }
 
-const Layout = ({
-                    children,
-                    pageTitle = "All In One Frenchie Enterprise",
-                    metaDesc = "All In One Frenchie Enterprise is a small family-owned business that specializes in breeding and selling French Bulldogs.",
-                    pageData,
-                }: LayoutProps) => {
+const Layout = ({children, pageTitle, metaDesc, pageData}: LayoutProps) => {
     const faviconUrls = pageData.companyInfo.faviconUrls;
 
     return (
