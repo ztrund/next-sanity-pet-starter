@@ -13,19 +13,16 @@ const FinancingBanner: React.FC<FinancingBannerProps> = ({financing}) => {
     }
 
     return (
-        <div
-            className="h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-            <a href={financing.link} target="_blank" rel="noopener noreferrer">
-                <img
-                    src={financing.banner.imageUrl}
-                    srcSet={financing.banner.srcSet}
-                    sizes={financing.banner.sizes}
-                    alt="Financing Available"
-                    loading="lazy"
-                    style={{aspectRatio: `${financing.banner.width} / ${financing.banner.height}`}}
-                />
-            </a>
-        </div>
+        <a href={financing.link} target="_blank" rel="noopener noreferrer" className={`h-min p-0 bg-light-shades shadow-lg rounded-lg overflow-hidden ${financing.link && 'hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1'}`}>
+            <img
+                src={financing.banner.imageUrl}
+                srcSet={financing.banner.srcSet}
+                sizes={financing.banner.sizes}
+                alt="Financing Available"
+                loading="lazy"
+                style={{aspectRatio: `${financing.banner.width} / ${financing.banner.height}`}}
+            />
+        </a>
     );
 }
 
