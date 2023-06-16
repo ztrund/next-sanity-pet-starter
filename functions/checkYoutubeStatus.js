@@ -1,38 +1,44 @@
 function createResponse(body, status = 200) {
     return new Response(body, {
-        status,
-        headers: {
+        status, headers: {
             "Cache-Control": "max-age=60"
         }
     });
 }
 
 export async function onRequest(context) {
+    const {YOUTUBE_API_KEY, API_BASE_URL} = context.env;
+
+    if (!YOUTUBE_API_KEY || !API_BASE_URL) {
+        console.error('Missing required environment variables');
+        return createResponse('Internal server error', 500);
+    }
+
     const url = new URL(context.request.url);
     const channelId = url.searchParams.get('channelId');
     const fallbackVideoId = url.searchParams.get('fallbackVideoId');
-    const apiKey = context.env.YOUTUBE_API_KEY;
 
     const origin = context.request.headers.get('Origin') || context.request.headers.get('Referer');
-    if (!origin || !origin.includes(context.env.API_BASE_URL)) {
-        return createResponse('Unauthorized', 403);
+    if (!origin || !origin.includes(API_BASE_URL)) {
+        return createResponse('Unauthorized: invalid origin', 403);
     }
 
     if (!channelId || !fallbackVideoId) {
-        return createResponse('Missing channelId or fallbackVideoId', 400);
+        return createResponse('Bad Request: Missing channelId or fallbackVideoId', 400);
     }
 
     try {
-        const response = await fetch(
-            `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=live&type=video&key=${apiKey}`,
-            {
-                cf: {
-                    cacheTtl: 60,
-                    // cacheTtlByStatus: { "200-299": 86400, 404: 1, "500-599": 0 }, Set Later
-                    cacheEverything: true,
-                }
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=live&type=video&key=${YOUTUBE_API_KEY}`, {
+            cf: {
+                cacheTtl: 60, cacheEverything: true,
             }
-        )
+        })
+
+        if (!response.ok) {
+            console.error('YouTube API request failed:', response.status);
+            return createResponse(fallbackVideoId, 500);
+        }
+
         const data = await response.json()
 
         let responseBody;
@@ -44,7 +50,7 @@ export async function onRequest(context) {
 
         return createResponse(responseBody);
     } catch (error) {
-        console.error('Error fetching livestream data:', error)
+        console.error('Error fetching livestream data:', error);
         return createResponse(fallbackVideoId, 500);
     }
 }

@@ -17,7 +17,6 @@ const deserializeToPageData = (rawData: PageData): PageData => {
         companyInfo: rawData.companyInfo || {},
         puppies: rawData.puppies || {},
         homepage: rawData.homepage || {},
-        youtubeSettings: rawData.youtubeSettings || {},
         about: rawData.about || {},
         parents: rawData.parents || {},
         parent: rawData.parent || {},
@@ -164,9 +163,11 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
         if (pageData.parents.length > 0) {
             generateDogCardUrls(pageData.parents);
         }
-        if (pageData.youtubeSettings) {
-            pageData.youtubeSettings.channelId = extractYoutubeChannelId(pageData.youtubeSettings.channelUrl);
-            pageData.youtubeSettings.fallbackVideoId = extractYoutubeVideoId(pageData.youtubeSettings.fallbackVideoUrl);
+        if (pageData.homepage.channelUrl) {
+            pageData.homepage.channelId = extractYoutubeChannelId(pageData.homepage.channelUrl);
+        }
+        if (pageData.homepage.fallbackVideoUrl) {
+            pageData.homepage.fallbackVideoId = extractYoutubeVideoId(pageData.homepage.fallbackVideoUrl);
         }
         if (pageData.homepage.content) {
             pageData.homepage.sanitizedContent = sanitizeHTML(pageData.homepage.content);

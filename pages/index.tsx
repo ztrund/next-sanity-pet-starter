@@ -17,12 +17,10 @@ function shuffleArray(array: Puppy[]) {
 }
 
 const HomePage = ({pageData}: { pageData: PageData }) => {
-    const {puppies, metaDescription, youtubeSettings, homepage} = pageData;
+    const {puppies, metaDescription, homepage} = pageData;
     const [randomPuppies, setRandomPuppies] = useState<Puppy[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const channelId = youtubeSettings.channelId;
-    const fallbackVideoId = youtubeSettings.fallbackVideoId;
-    const [liveVideoId, setLiveVideoId] = useState(fallbackVideoId);
+    const [liveVideoId, setLiveVideoId] = useState(homepage.fallbackVideoId);
 
     useEffect(() => {
         const shuffledPuppies = shuffleArray(puppies);
@@ -50,15 +48,25 @@ const HomePage = ({pageData}: { pageData: PageData }) => {
         setRandomPuppies(sortedPuppies.slice(0, 4));
         setIsLoading(false);
 
-        (async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/checkYoutubeStatus?channelId=${channelId}&fallbackVideoId=${fallbackVideoId}`);
-                const liveVideoId = await response.text();
-                setLiveVideoId(liveVideoId);
-            } catch (error) {
-                console.error('Failed to fetch live video ID:', error);
+        if (homepage.channelUrl) {
+            const fetchLiveVideoId = async () => {
+                try {
+                    const response = await fetch(`/checkYoutubeStatus?channelId=${homepage.channelId}&fallbackVideoId=${homepage.fallbackVideoId}`);
+
+                    if (!response.ok) {
+                        console.error('Failed to fetch live video ID, status:', response.status);
+                        return;
+                    }
+
+                    const liveVideoId = await response.text();
+                    setLiveVideoId(liveVideoId);
+                } catch (error) {
+                    console.error('Failed to fetch live video ID:', error);
+                }
             }
-        })();
+
+            fetchLiveVideoId();
+        }
     }, []);
 
     return (
@@ -67,7 +75,7 @@ const HomePage = ({pageData}: { pageData: PageData }) => {
                 pageData={pageData}>
             <div className="flex flex-col xl:flex-row gap-4 mb-4 items-center">
                 <div
-                    className="w-full xl:w-1/2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
+                    className="w-full bg-light-shades shadow-lg rounded-lg flex flex-col justify-center overflow-hidden">
                     <LiteYouTubeEmbed
                         id={liveVideoId}
                         title="YouTube Live"
@@ -77,7 +85,7 @@ const HomePage = ({pageData}: { pageData: PageData }) => {
                     />
                 </div>
                 <div
-                    className="w-full xl:w-1/2 p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
+                    className="w-full p-2 bg-light-shades shadow-lg rounded-lg flex flex-col justify-center">
                     <div className="prose max-w-none"
                          dangerouslySetInnerHTML={{__html: homepage.sanitizedContent}}/>
                 </div>
@@ -129,11 +137,9 @@ export const getStaticProps: GetStaticProps = async () => {
       availability,
     },
     "homepage": *[_type == "homepage"][0] {
-      content
-    },
-    "youtubeSettings": *[_type == "youtubeSettings"][0] {
+      content,
       channelUrl,
-      fallbackVideoUrl
+      fallbackVideoUrl,
     },
     "metaDescription": *[_type == "metaDescriptions"][0]{
       'description': home,

@@ -94,9 +94,6 @@ export interface Puppy {
 export interface Homepage {
     content: PortableTextBlock[];
     sanitizedContent: string;
-}
-
-export interface YoutubeSettings {
     channelUrl: string;
     channelId: string;
     fallbackVideoUrl: string;
@@ -148,7 +145,6 @@ export interface MetaDescription {
 export interface PageData {
     companyInfo: CompanyInfo;
     homepage: Homepage;
-    youtubeSettings: YoutubeSettings;
     about: About;
     contactInfo: ContactInfo;
     financing: Financing;
