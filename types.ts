@@ -45,6 +45,8 @@ export interface SocialMediaLink {
     url: string;
     icon: {
         icon: string;
+        viewBox: string;
+        path: string;
     };
 }
 

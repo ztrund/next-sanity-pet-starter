@@ -1,4 +1,4 @@
-import {FetchParams, PageData, TeamMember} from '../types';
+import {FetchParams, PageData, SocialMediaLink, TeamMember} from '../types';
 import axios from "axios";
 import generateFaviconUrls from "../helpers/generateFaviconUrls";
 import {sanityImgUrl} from "./sanityImgUrl";
@@ -177,6 +177,13 @@ const fetchPageData = async (additionalQuery: string = '', fetchParams: FetchPar
         }
         if (pageData.about.teamDescription) {
             pageData.about.sanitizedTeamDescription = sanitizeHTML(pageData.about.teamDescription);
+        }
+        if (pageData.contactInfo.socialMediaLinks) {
+            pageData.contactInfo.socialMediaLinks.map((socialMediaLink: SocialMediaLink) => {
+                if (socialMediaLink.icon) {
+                    [, socialMediaLink.icon.viewBox, socialMediaLink.icon.path] = socialMediaLink.icon.icon.split(" ~~ ");
+                }
+            });
         }
         return pageData;
     } catch (error) {

@@ -3,6 +3,7 @@ import {CustomSVGIcon} from "../svgIcons";
 import Link from "next/link";
 
 const Footer = ({pageData}: { pageData: PageData }) => {
+    const {contactInfo, companyInfo} = pageData;
 
     const pages = [
         {
@@ -29,31 +30,33 @@ const Footer = ({pageData}: { pageData: PageData }) => {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="flex flex-wrap">
-                <div className="w-full md:w-1/3 mb-4 text-center">
-                    <div className="text-lg font-bold mb-2">Social Media</div>
-                    <ul>
-                        {pageData?.contactInfo?.socialMediaLinks.map((link) => {
-                            const [, viewBox, path] = link.icon.icon.split(" ~~ ");
-
-                            return (
-                                <li key={link.platform} className="mb-2">
-                                    <a
-                                        key={link.platform}
-                                        href={link.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="fill-white hover:fill-dark-accent hover:text-dark-accent flex justify-center items-center gap-2"
-                                    >
-                                        <CustomSVGIcon viewBox={viewBox} path={path}/>
-                                        {link.platform}
-                                    </a>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-                <div className="w-full md:w-1/3 mb-4 text-center">
+            <div className="flex flex-col md:flex-row">
+                {contactInfo.socialMediaLinks && (
+                    <div className="w-full mb-4 text-center">
+                        <div className="text-lg font-bold mb-2">Social Media</div>
+                        <ul>
+                            {contactInfo.socialMediaLinks.map((link) => {
+                                return (
+                                    <li key={link.platform} className="mb-2">
+                                        <a
+                                            key={link.platform}
+                                            href={link.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="fill-white hover:fill-dark-accent hover:text-dark-accent flex justify-center items-center gap-2"
+                                        >
+                                            {link.icon && (
+                                                <CustomSVGIcon viewBox={link.icon.viewBox} path={link.icon.path}/>
+                                            )}
+                                            {link.platform}
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
+                <div className="w-full mb-4 text-center">
                     <div className="text-lg font-bold mb-2">Pages</div>
                     <ul>
                         {pages.map((page) => (
@@ -63,22 +66,36 @@ const Footer = ({pageData}: { pageData: PageData }) => {
                         ))}
                     </ul>
                 </div>
-                <div className="w-full md:w-1/3 mb-4 text-center">
-                    <div className="text-lg font-bold mb-2">Business Hours</div>
-                    <ul>
-                        {pageData?.contactInfo?.businessHours.map((hours) => (
-                            <li key={hours.day} className="mb-2">
-                                <strong>{hours.day}:</strong> {hours.hours}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                {contactInfo.businessHours && (
+                    <div className="w-full mb-4 text-center">
+                        <div className="text-lg font-bold mb-2">Business Hours</div>
+                        <ul>
+                            {contactInfo.businessHours.map((hours) => (
+                                <li key={hours.day} className="mb-2">
+                                    <strong>{hours.day}:</strong> {hours.hours}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </div>
-            <div className="text-sm text-center">
-                <p>&copy; {new Date().getFullYear()} {pageData?.companyInfo?.companyName}</p>
-                <p>Email: {pageData?.contactInfo?.email}</p>
-                <p>Phone: {pageData?.contactInfo?.phone}</p>
-                <p>{pageData?.contactInfo?.location}</p>
+            <div className="flex flex-col gap-2 text-sm text-center">
+                <p>&copy; {new Date().getFullYear()} {companyInfo.companyName}</p>
+                {contactInfo.email &&
+                    <a className="hover:text-dark-accent" href={`mailto:${contactInfo.email}`} target="_blank" rel="noopener noreferrer">
+                        {contactInfo.email}
+                    </a>
+                }
+                {contactInfo.phone &&
+                    <a className="hover:text-dark-accent" href={`tel:${contactInfo.phone}`}>
+                        {contactInfo.phone}
+                    </a>
+                }
+                {contactInfo.location &&
+                    <a className="hover:text-dark-accent" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contactInfo.location)}`} target="_blank" rel="noopener noreferrer">
+                        {contactInfo.location}
+                    </a>
+                }
             </div>
         </div>
     );
