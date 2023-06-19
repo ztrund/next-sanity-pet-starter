@@ -9,7 +9,7 @@
     "start": "serve out",
     "lint": "next lint",
     "prepages": "npm run build",
-    "pages": "npx wrangler pages dev ./out --compatibility-date=2023-04-12"
+    "pages": "npx wrangler pages dev --compatibility-date=2023-04-12 ./out"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^13.3.4",

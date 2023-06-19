@@ -7,9 +7,9 @@ function createResponse(body, status = 200) {
 }
 
 export async function onRequest(context) {
-    const {YOUTUBE_API_KEY, API_BASE_URL} = context.env;
+    const {YOUTUBE_API_KEY} = context.env;
 
-    if (!YOUTUBE_API_KEY || !API_BASE_URL) {
+    if (!YOUTUBE_API_KEY) {
         console.error('Missing required environment variables');
         return createResponse('Internal server error', 500);
     }
@@ -19,7 +19,10 @@ export async function onRequest(context) {
     const fallbackVideoId = url.searchParams.get('fallbackVideoId');
 
     const origin = context.request.headers.get('Origin') || context.request.headers.get('Referer');
-    if (!origin || !origin.includes(API_BASE_URL)) {
+    const host = context.request.headers.get('Host');
+
+    if (!origin || !(origin === `http://${host}/` || origin === `https://${host}/`)) {
+        console.log('Unauthorized: invalid origin', origin, `https://${host}/`)
         return createResponse('Unauthorized: invalid origin', 403);
     }
 
