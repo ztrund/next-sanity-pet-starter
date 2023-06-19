@@ -1,8 +1,12 @@
 {
   "private": true,
+  "engines": {
+    "node": ">= 16.13"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "analyze": "cross-env ANALYZE=true next build",
     "preexport": "npm run build",
     "export": "next export",
     "prestart": "npm run export",
@@ -14,6 +18,7 @@
   "dependencies": {
     "@next/bundle-analyzer": "^13.3.4",
     "@portabletext/to-html": "^2.0.0",
+    "@portabletext/types": "^2.0.2",
     "@tailwindcss/forms": "^0.5.3",
     "axios": "^1.4.0",
     "dompurify": "^3.0.3",
@@ -36,6 +41,7 @@
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "autoprefixer": "^10.4.14",
+    "cross-env": "^7.0.3",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.0",
     "postcss": "^8.4.23",

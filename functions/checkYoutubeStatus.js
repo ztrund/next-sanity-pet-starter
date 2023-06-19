@@ -22,7 +22,6 @@ export async function onRequest(context) {
     const host = context.request.headers.get('Host');
 
     if (!origin || !(origin === `http://${host}/` || origin === `https://${host}/`)) {
-        console.log('Unauthorized: invalid origin', origin, `https://${host}/`)
         return createResponse('Unauthorized: invalid origin', 403);
     }
 
