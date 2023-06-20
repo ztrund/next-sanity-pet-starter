@@ -1,7 +1,9 @@
+import {apiVersion, dataset, projectId} from "./environment";
+
 const sanityConfig = {
-    projectId: "fcb9r3pv",
-    dataset: "production",
-    apiVersion: "2023-04-12",
+    projectId: projectId,
+    dataset: dataset,
+    apiVersion: apiVersion,
 };
 
 export default sanityConfig;

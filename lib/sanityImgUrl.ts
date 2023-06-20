@@ -1,4 +1,5 @@
 import {SanityImage} from "../types";
+import {dataset, projectId} from "./environment";
 
 interface SanityImageUrlOptions {
     w?: number;
@@ -25,8 +26,6 @@ interface SanityImageUrlOptions {
 }
 
 export const sanityImgUrl = (image: SanityImage, options?: SanityImageUrlOptions): string => {
-    const projectId = "fcb9r3pv";
-    const dataset = "production";
 
     if (!image || !image.asset || !image.asset._ref) {
         return '';
