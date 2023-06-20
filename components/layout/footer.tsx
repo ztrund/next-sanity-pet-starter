@@ -30,14 +30,14 @@ const Footer = ({pageData}: { pageData: PageData }) => {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row mb-4">
                 {contactInfo.socialMediaLinks && (
                     <div className="w-full mb-4 text-center">
                         <div className="text-lg font-bold mb-2">Social Media</div>
-                        <ul>
+                        <ul className="flex flex-col gap-2">
                             {contactInfo.socialMediaLinks.map((link) => {
                                 return (
-                                    <li key={link.platform} className="mb-2">
+                                    <li key={link.platform}>
                                         <a
                                             key={link.platform}
                                             href={link.url}
@@ -58,10 +58,10 @@ const Footer = ({pageData}: { pageData: PageData }) => {
                 )}
                 <div className="w-full mb-4 text-center">
                     <div className="text-lg font-bold mb-2">Pages</div>
-                    <ul>
+                    <ul className="flex flex-col gap-2">
                         {pages.map((page) => (
-                            <li key={page.name} className="mb-2">
-                                <Link href={page.url} className="hover:text-dark-accent">{page.name}</Link>
+                            <li key={page.name}>
+                                <Link href={page.url} className="flex justify-center items-center hover:text-dark-accent">{page.name}</Link>
                             </li>
                         ))}
                     </ul>
@@ -69,9 +69,9 @@ const Footer = ({pageData}: { pageData: PageData }) => {
                 {contactInfo.businessHours && (
                     <div className="w-full mb-4 text-center">
                         <div className="text-lg font-bold mb-2">Business Hours</div>
-                        <ul>
+                        <ul className="flex flex-col gap-2">
                             {contactInfo.businessHours.map((hours) => (
-                                <li key={hours.day} className="mb-2">
+                                <li key={hours.day}>
                                     <strong>{hours.day}:</strong> {hours.hours}
                                 </li>
                             ))}
@@ -79,7 +79,7 @@ const Footer = ({pageData}: { pageData: PageData }) => {
                     </div>
                 )}
             </div>
-            <div className="flex flex-col gap-2 text-sm text-center">
+            <div className="flex flex-col gap-3 text-sm text-center">
                 <p>&copy; {new Date().getFullYear()} {companyInfo.companyName}</p>
                 {contactInfo.email &&
                     <a className="hover:text-dark-accent" href={`mailto:${contactInfo.email}`} target="_blank" rel="noopener noreferrer">
