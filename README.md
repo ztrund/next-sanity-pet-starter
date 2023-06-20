@@ -56,6 +56,13 @@ to set up the CMS.
   YouTube videos.
 - [Preact](https://preactjs.com/) for a smaller overall bundle size.
 
+## Acknowledgments
+
+### Icons
+
+- Icons from [Lucide](https://lucide.dev/) are used under the ISC License. Copyright (c) Lucide Contributors 2022.
+- Icons from [Font Awesome](https://fontawesome.com/) are used under the [Font Awesome Free License](https://fontawesome.com/license/free).
+
 ## License
 
 [MIT](LICENSE)
