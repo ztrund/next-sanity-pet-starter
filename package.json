@@ -1,4 +1,5 @@
 {
+  "name": "next-sanity-pet-starter",
   "private": true,
   "engines": {
     "node": ">= 16.13"
