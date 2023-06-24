@@ -1,4 +1,4 @@
-# Next-Sanity-Pet-Starter
+# Next Sanity Pet Starter
 
 This is a starter template for creating pet adoption or breeding websites using Next.js, Sanity CMS, and Cloudflare
 Pages. It's a fully-fledged solution for anyone who wants to create a modern, efficient, and fully customizable pet
@@ -41,7 +41,7 @@ YOUTUBE_API_KEY=
 ## CMS (Sanity)
 
 The CMS for this project is hosted on another
-repo [next-sanity-pet-starter-cms](https://github.com/ztrund/next-sanity-pet-starter-cms). Follow the instructions there
+repo [Next Sanity Pet Starter CMS](https://github.com/ztrund/next-sanity-pet-starter-cms). Follow the instructions there
 to set up the CMS.
 
 ## Dependencies
